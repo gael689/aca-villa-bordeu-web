@@ -39,3 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# extra
+!.env.example
+dist/
+.venv/
+__pycache__/
+Thumbs.db
+desktop.ini
