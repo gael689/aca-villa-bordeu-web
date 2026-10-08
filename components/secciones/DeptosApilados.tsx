@@ -15,7 +15,7 @@ export function DeptosApilados() {
               Departamentos
             </p>
             <h2 className="t-h2 mt-4" data-split>
-              Veintiséis puertas, <span className="rojo-txt">una cochera</span> en cada una
+              26 departamentos, <span className="rojo-txt">cochera en cada uno</span>
             </h2>
           </div>
           <div data-reveal>

@@ -50,7 +50,8 @@ export type PuntoPredio = {
   icono: IconoNombre;
   x: number;
   y: number;
-  foto: [string, string];
+  /** null = no hay foto de ese lugar: el índice muestra el ícono */
+  foto: [string, string] | null;
   href?: string;
 };
 
@@ -61,6 +62,6 @@ export const PREDIO: PuntoPredio[] = [
   { id: "cafeteria", titulo: "Recepción y cafetería", texto: "Atención las 24 horas y el café con el logo en la espuma.", icono: "campana", x: 27, y: 40, foto: ["cafeteria", "01-recepcion-cafeteria.jpg"] },
   { id: "gym", titulo: "Gimnasio", texto: "Máquinas, bicis y pesas, con ventanales al parque.", icono: "pesa", x: 57, y: 56, foto: ["gimnasio", "01-gym-pared-verde.jpg"] },
   { id: "sala", titulo: "Sala de reuniones", texto: "Mesa para el equipo y pantalla para presentar.", icono: "reunion", x: 50, y: 46, foto: ["sala-reuniones", "01-mesa.jpg"], href: "/sala-de-reuniones" },
-  { id: "ypf", titulo: "Estación YPF", texto: "Combustible para seguir viaje o para la flota del equipo.", icono: "surtidor", x: 15, y: 41, foto: ["cafeteria", "02-cafeteria-mesas.jpg"], href: "/estacion-de-servicio" },
-  { id: "parque", titulo: "Parque y juegos", texto: "Espacio verde para estirar las piernas y para los chicos.", icono: "arbol", x: 86, y: 68, foto: ["gimnasio", "02-gym-ventanales.jpg"] },
+  { id: "ypf", titulo: "Estación YPF", texto: "Combustible para seguir viaje o para la flota del equipo.", icono: "surtidor", x: 15, y: 41, foto: null, href: "/estacion-de-servicio" },
+  { id: "parque", titulo: "Parque y juegos", texto: "Espacio verde para estirar las piernas y para los chicos.", icono: "arbol", x: 86, y: 68, foto: null },
 ];
