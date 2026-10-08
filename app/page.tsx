@@ -16,7 +16,7 @@ export default function Inicio() {
     <>
       <Hero />
       <Cinta />
-      <section className="seccion">
+      <section id="predio" className="seccion scroll-mt-[var(--header-h)]">
         <div className="contenedor">
           <Predio />
         </div>

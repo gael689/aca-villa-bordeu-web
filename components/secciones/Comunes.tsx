@@ -50,10 +50,8 @@ export function PortadaPagina({
       </div>
       <div data-hero-contenido className="contenedor relative flex w-full flex-col justify-end pt-[calc(var(--header-h)+40px)] pb-10 md:pb-16">
         <Migas items={migas} />
-        <p className="etiqueta hero-in mt-6 !text-ambar" style={{ ["--i" as string]: 0 }}>
-          {etiqueta}
-        </p>
-        <h1 className="t-h1 hero-in mt-4 max-w-[16ch]" style={{ ["--i" as string]: 1 }}>
+        {/* `etiqueta` queda como dato (no se muestra): la portada va sin pre-título. */}
+        <h1 className="t-h1 hero-in mt-5 max-w-[18ch]" data-etiqueta={etiqueta} style={{ ["--i" as string]: 1 }}>
           {titulo}
         </h1>
         {bajada && (

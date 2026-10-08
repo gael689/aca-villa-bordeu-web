@@ -13,13 +13,13 @@ export function RestoBloque() {
     <section className="seccion overflow-hidden">
       <div className="contenedor">
         <div className="grid gap-4 lg:grid-cols-12">
-          <div className="tarjeta relative min-h-[420px] lg:col-span-8 lg:min-h-[640px]" data-clip>
+          <div className="tarjeta relative min-h-[420px] lg:col-span-8 lg:min-h-[560px]" data-clip>
             <div className="absolute inset-x-0 -inset-y-[9%]" data-parallax="7">
               <Image src={salon.src} alt={salon.alt} fill sizes="(min-width: 1024px) 66vw, 100vw" placeholder="blur" blurDataURL={salon.blurDataURL} className="object-cover" />
             </div>
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-6 text-white md:p-10">
-              <p className="font-display text-[clamp(64px,10vw,180px)] leading-[0.8] font-bold">
+              <p className="font-display text-[clamp(56px,7vw,120px)] leading-[0.8] font-bold">
                 <span className="num" data-contador="1984">1984</span>
               </p>
               <p className="mt-2 font-display text-[22px] font-semibold uppercase md:text-[28px]">El año en que abrió el Resto</p>

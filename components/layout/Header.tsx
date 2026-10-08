@@ -15,15 +15,13 @@ import { bloquearScroll } from "@/components/motion/scroll";
 
 /**
  * Encabezado flotante. Sobre la portada es transparente y claro; al bajar se
- * vuelve una píldora de vidrio. Se esconde al bajar y vuelve al subir.
+ * vuelve una píldora de vidrio. Siempre fijo: nunca se esconde.
  */
 export function Header() {
   const pathname = usePathname();
   const [arriba, setArriba] = useState(true);
-  const [oculto, setOculto] = useState(false);
   const [menu, setMenu] = useState(false);
   const [mega, setMega] = useState(false);
-  const ultimo = useRef(0);
   const cierreMega = useRef<number | undefined>(undefined);
 
   useEffect(() => {
@@ -31,11 +29,7 @@ export function Header() {
     const on = () => {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
-        const y = window.scrollY;
-        setArriba(y < 40);
-        setOculto(y > 420 && y > ultimo.current + 4);
-        if (y < ultimo.current - 4 || y < 420) setOculto(false);
-        ultimo.current = y;
+        setArriba(window.scrollY < 40);
       });
     };
     on();
@@ -64,10 +58,7 @@ export function Header() {
   return (
     <>
       <header
-        className={[
-          "fixed inset-x-0 top-0 z-[110] transition-transform duration-500 ease-[var(--ease-pt)]",
-          oculto && !menu ? "-translate-y-[120%]" : "translate-y-0",
-        ].join(" ")}
+        className="fixed inset-x-0 top-0 z-[110]"
       >
         <div className={`transition-[padding] duration-500 ease-[var(--ease-pt)] ${claro ? "px-0 pt-0" : "px-2 pt-2 md:px-4 md:pt-3"}`}>
           <div

@@ -4,7 +4,6 @@ import { RUBROS } from "@/lib/rubros";
 import { FAQ_EMPRESAS } from "@/lib/faq";
 import { SITIO } from "@/lib/sitio";
 import { JsonLd, motelJsonLd } from "@/lib/schema";
-import { Icono } from "@/components/marca/Icono";
 import { BotonConsultar } from "@/components/consulta/ConsultaContext";
 import { Cierre, Citable, FaqLista, PortadaPagina, Servicios, TarjetaEnlace } from "@/components/secciones/Comunes";
 import { Distancias } from "@/components/secciones/Distancias";
@@ -29,7 +28,7 @@ export default function Empresas() {
   return (
     <>
       <PortadaPagina
-        foto={foto("predio", "cocheras-noche.jpg", "Galería de cocheras cubiertas de noche frente a los departamentos")}
+        foto={foto("sala-reuniones", "01-mesa.jpg", "Sala de reuniones con mesa larga, sillas blancas y pantalla")}
         etiqueta="Para empresas"
         titulo={
           <>
@@ -54,19 +53,15 @@ export default function Empresas() {
       {/* Cómo funciona */}
       <section className="seccion-chica">
         <div className="contenedor">
-          <ol className="grid gap-3 md:grid-cols-3">
+          <p className="etiqueta" data-reveal>
+            Cómo funciona
+          </p>
+          <ol className="mt-8 grid border-t border-[color:var(--linea)] md:grid-cols-3">
             {PASOS.map((p, i) => (
-              <li key={p.n} className="relative overflow-hidden rounded-[var(--radio)] bg-white p-7 shadow-[inset_0_0_0_1px_var(--linea)] md:p-9" data-reveal data-delay={String(i * 0.1)}>
-                <p aria-hidden="true" className="absolute -top-4 -right-2 font-display text-[130px] leading-none font-bold text-hormigon">
-                  {p.n}
-                </p>
-                <div className="relative">
-                  <span className="grid size-11 place-items-center rounded-full bg-rojo text-white">
-                    <Icono nombre={i === 0 ? "telefono" : i === 1 ? "whatsapp" : "casco"} className="size-5" grosor={1.8} />
-                  </span>
-                  <p className="mt-6 font-display text-[34px] leading-none font-bold uppercase">{p.titulo}</p>
-                  <p className="mt-3 text-asfalto">{p.texto}</p>
-                </div>
+              <li key={p.n} className="border-b border-[color:var(--linea)] py-8 md:border-b-0 md:py-10 md:pr-10 md:[&+li]:border-l md:[&+li]:pl-10" data-reveal data-delay={String(i * 0.1)}>
+                <p className="num font-display text-[56px] leading-none font-bold text-rojo">{p.n}</p>
+                <p className="mt-4 font-display text-[28px] leading-none font-bold uppercase">{p.titulo}</p>
+                <p className="mt-3 max-w-[34ch] text-asfalto">{p.texto}</p>
               </li>
             ))}
           </ol>

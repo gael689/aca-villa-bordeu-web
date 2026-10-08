@@ -11,7 +11,7 @@ export function ViajeSocios() {
   return (
     <section className="seccion gris">
       <div className="contenedor grid gap-4 lg:grid-cols-2">
-        <Link href="/como-llegar" className="group tarjeta relative flex min-h-[520px] flex-col justify-between bg-grafito p-7 text-white md:p-10" data-reveal>
+        <Link href="/como-llegar" className="group tarjeta relative flex min-h-[440px] flex-col justify-between bg-grafito p-7 text-white md:p-10" data-reveal>
           <Image src={deptos.src} alt={deptos.alt} fill sizes="(min-width: 1024px) 50vw, 100vw" placeholder="blur" blurDataURL={deptos.blurDataURL} className="object-cover opacity-55 transition-transform duration-[1.4s] ease-[var(--ease-pt)] group-hover:scale-105" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/85" />
           <div className="relative flex gap-2">
@@ -26,7 +26,7 @@ export function ViajeSocios() {
           </div>
         </Link>
 
-        <Link href="/socios-aca" className="group tarjeta relative flex min-h-[520px] flex-col justify-between bg-rojo p-7 text-white md:p-10" data-reveal data-delay="0.1">
+        <Link href="/socios-aca" className="group tarjeta relative flex min-h-[440px] flex-col justify-between bg-rojo p-7 text-white md:p-10" data-reveal data-delay="0.1">
           <LogoACA className="h-12 w-auto self-start text-white" />
           <p aria-hidden="true" className="pointer-events-none absolute -right-6 -bottom-10 font-display text-[min(46vw,340px)] leading-none font-bold text-white/10">
             1904

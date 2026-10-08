@@ -72,7 +72,7 @@ export const RUBROS: Rubro[] = [
         r: "Puerto Rosales, en Punta Alta, queda a 43 km: unos 55 minutos. Para el Polo y Puerto Galván, en cambio, son 12 km.",
       },
     ],
-    foto: "predio/cocheras-noche.jpg",
+    foto: "habitaciones/02-doble-escritorio.jpg",
     cerca: "polo-petroquimico",
   },
   {
@@ -204,7 +204,7 @@ export const RUBROS: Rubro[] = [
         r: "En la estación de servicio YPF que está dentro del predio, a metros de los departamentos.",
       },
     ],
-    foto: "predio/aerea-dia.jpg",
+    foto: "cafeteria/01-recepcion-cafeteria.jpg",
   },
   {
     slug: "agro",
@@ -269,7 +269,7 @@ export const RUBROS: Rubro[] = [
         r: "Sí, el complejo es pet friendly. Avisanos al consultar que viajás con mascota.",
       },
     ],
-    foto: "predio/fachada.jpg",
+    foto: "restaurante/01-salon-noche.jpg",
     cerca: "la-rural",
   },
 ];

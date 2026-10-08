@@ -18,7 +18,7 @@ const BLOQUES = [
     id: "cocheras",
     titulo: "Cocheras cubiertas",
     texto: "Una por departamento, techada y enfrente de la puerta. La camioneta del trabajo o el auto de la familia quedan a la vista toda la noche.",
-    fotos: [foto("predio", "cocheras-noche.jpg", "Galería de cocheras cubiertas de noche")],
+    fotos: [foto("habitaciones", "06-pasillo.jpg", "Pasillo de los departamentos, con la puerta de cada uno")],
   },
   {
     id: "gimnasio",
@@ -107,7 +107,7 @@ export default function ElComplejo() {
       <section className="seccion">
         <div className="contenedor grid gap-3 md:grid-cols-2">
           <TarjetaEnlace href="/sala-de-reuniones" foto={foto("sala-reuniones", "01-mesa.jpg", "Sala de reuniones")} titulo="Sala de reuniones" texto="Para capacitaciones y reuniones de obra" />
-          <TarjetaEnlace href="/estacion-de-servicio" foto={foto("predio", "aerea-dia.jpg", "Vista aérea con la estación de servicio")} titulo="Estación de servicio" texto="YPF en el mismo predio" />
+          <TarjetaEnlace href="/estacion-de-servicio" foto={foto("cafeteria", "02-cafeteria-mesas.jpg", "Cafetería")} titulo="Estación de servicio" texto="YPF en el mismo predio" />
         </div>
       </section>
 

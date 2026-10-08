@@ -65,12 +65,14 @@ export default async function PaginaRubro({ params }: PageProps<"/empresas/[rubr
           <h2 className="t-h2 mt-4 max-w-[16ch]" data-split>
             Lo que necesita tu equipo
           </h2>
-          <ul className="mt-12 grid gap-3 md:grid-cols-2">
+          <ul className="mt-12 grid gap-x-16 border-t border-[color:var(--linea)] md:grid-cols-2">
             {r.necesidades.map((n, i) => (
-              <li key={n.titulo} className="rounded-[var(--radio)] bg-white p-7 shadow-[inset_0_0_0_1px_var(--linea)] md:p-9" data-reveal data-delay={String((i % 2) * 0.08)}>
+              <li key={n.titulo} className="grid grid-cols-[auto_1fr] gap-x-5 border-b border-[color:var(--linea)] py-8" data-reveal data-delay={String((i % 2) * 0.08)}>
                 <p className="num font-display text-[15px] font-bold text-rojo">0{i + 1}</p>
-                <p className="mt-3 font-display text-[30px] leading-none font-bold uppercase">{n.titulo}</p>
-                <p className="mt-3 text-asfalto">{n.texto}</p>
+                <div>
+                  <p className="font-display text-[26px] leading-none font-bold uppercase">{n.titulo}</p>
+                  <p className="mt-3 text-asfalto">{n.texto}</p>
+                </div>
               </li>
             ))}
           </ul>

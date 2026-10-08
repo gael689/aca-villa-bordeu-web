@@ -35,7 +35,7 @@ export function DeptosApilados() {
           {TIPOS.map((t, i) => (
             <article key={t.slug} data-apilada className="sticky" style={{ top: `calc(var(--header-h) + ${16 + i * 18}px)` }}>
               <div data-apilada-cuerpo className="tarjeta grid origin-top bg-white shadow-[0_30px_70px_-40px_rgb(0_0_0/0.45)] md:grid-cols-[1.35fr_1fr]">
-                <div className="relative aspect-[16/10] md:aspect-auto md:min-h-[480px]">
+                <div className="relative aspect-[16/10] md:aspect-auto md:min-h-[420px]">
                   <Image
                     src={t.fotos[0].src}
                     alt={t.fotos[0].alt}
@@ -50,7 +50,7 @@ export function DeptosApilados() {
                 <div className="flex flex-col justify-between gap-8 p-6 md:p-10">
                   <div>
                     <p className="num font-display text-[15px] font-bold text-rojo">0{i + 1} / 03</p>
-                    <h3 className="mt-3 font-display text-[clamp(44px,5vw,80px)] leading-[0.9] font-bold uppercase">{t.nombre}</h3>
+                    <h3 className="mt-3 font-display text-[clamp(36px,3.6vw,60px)] leading-[0.92] font-bold uppercase">{t.nombre}</h3>
                     <p className="mt-2 font-semibold">{t.camas}</p>
                     <p className="mt-3 max-w-[34ch] text-asfalto">{t.frase}</p>
                   </div>

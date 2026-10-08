@@ -3,7 +3,7 @@ import { foto } from "@/lib/fotos";
 
 const ESCENAS = [
   { momento: "Al amanecer", titulo: "Desayuno antes de salir", texto: "Café, algo rico y a la camioneta, que está en la puerta.", f: foto("restaurante", "05-cafe-logo.jpg", "Café con el logo ACA dibujado en la espuma") },
-  { momento: "En la ruta", titulo: "Minutos hasta la obra", texto: "Salen directo al acceso, sin cruzar el centro.", f: foto("predio", "cocheras-noche.jpg", "Galería de cocheras cubiertas") },
+  { momento: "Al salir", titulo: "Recepción abierta siempre", texto: "El que sale de madrugada o vuelve tarde siempre encuentra a alguien.", f: foto("cafeteria", "01-recepcion-cafeteria.jpg", "Recepción abierta las 24 horas") },
   { momento: "A la tarde", titulo: "Reunión de equipo", texto: "La sala con pantalla para ordenar el día siguiente.", f: foto("sala-reuniones", "01-mesa.jpg", "Sala de reuniones con mesa larga") },
   { momento: "Al volver", titulo: "Un rato de gimnasio", texto: "Para soltar el cuerpo después de la jornada.", f: foto("gimnasio", "01-gym-pared-verde.jpg", "Gimnasio con pared verde y neón") },
   { momento: "De noche", titulo: "Cena en el Resto", texto: "Mesa larga para todos, sin tener que manejar.", f: foto("restaurante", "01-salon-noche.jpg", "Salón del restaurante de noche") },
@@ -36,7 +36,7 @@ export function DiaEquipo() {
                 key={e.titulo}
                 data-dia-escena
                 data-hora={e.momento}
-                className="group tarjeta relative h-[62svh] max-h-[620px] w-[78vw] shrink-0 snap-center bg-grafito-2 sm:w-[46vw] lg:w-[min(30vw,460px)]"
+                className="group tarjeta relative h-[56svh] max-h-[540px] w-[78vw] shrink-0 snap-center bg-grafito-2 sm:w-[46vw] lg:w-[min(30vw,460px)]"
               >
                 <Image src={e.f.src} alt={e.f.alt} fill sizes="(min-width: 1024px) 30vw, 78vw" placeholder="blur" blurDataURL={e.f.blurDataURL} className="object-cover transition-transform duration-[1.6s] ease-[var(--ease-pt)] group-data-[activa=true]:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />

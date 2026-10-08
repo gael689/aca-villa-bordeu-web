@@ -6,7 +6,6 @@ import { Icono } from "@/components/marca/Icono";
 import { BotonConsultar } from "@/components/consulta/ConsultaContext";
 import { PortadaPagina } from "@/components/secciones/Comunes";
 import { MapaAlTocar } from "@/components/secciones/MapaAlTocar";
-import { CartelVivo } from "@/components/secciones/CartelVivo";
 import { foto } from "@/lib/fotos";
 
 export const metadata = meta({
@@ -30,9 +29,7 @@ export default function Contacto() {
         bajada="Escribinos, llamanos o vení directo: la recepción siempre está abierta."
         alto="media"
         migas={[{ nombre: "Contacto", ruta: "/contacto" }]}
-      >
-        <CartelVivo />
-      </PortadaPagina>
+      />
 
       <section className="seccion-chica">
         <div className="contenedor grid gap-3 lg:grid-cols-[1fr_1.3fr]">

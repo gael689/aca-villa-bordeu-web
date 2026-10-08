@@ -1,77 +1,142 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { foto } from "@/lib/fotos";
-import { Icono, type IconoNombre } from "@/components/marca/Icono";
+import { Icono } from "@/components/marca/Icono";
 import { BotonConsultar } from "@/components/consulta/ConsultaContext";
 
-const RAZONES: { icono: IconoNombre; titulo: string; texto: string }[] = [
-  { icono: "pin", titulo: "Sin entrar al centro", texto: "Salen directo a la ruta y llegan rápido al Polo, al puerto o a Cerri." },
-  { icono: "auto", titulo: "La camioneta en la puerta", texto: "Cochera cubierta frente a cada departamento." },
-  { icono: "cubiertos", titulo: "Comen acá", texto: "Desayuno, restaurante y cafetería, sin moverse del predio." },
-  { icono: "telefono", titulo: "Un solo contacto", texto: "Lo coordinás todo por WhatsApp o mail, a cualquier hora." },
+const RAZONES = [
+  {
+    titulo: "Todo el equipo en un mismo predio",
+    texto: "Veintiséis departamentos single, doble y triple, uno al lado del otro. Nadie queda repartido por la ciudad.",
+    f: foto("habitaciones", "02-doble-escritorio.jpg", "Departamento con escritorio, TV y dos camas"),
+  },
+  {
+    titulo: "La camioneta, en la puerta",
+    texto: "Cada departamento tiene su cochera cubierta enfrente. Las herramientas quedan bajo techo y a la vista.",
+    f: foto("habitaciones", "06-pasillo.jpg", "Pasillo de los departamentos con puertas de madera"),
+  },
+  {
+    titulo: "Comen sin salir",
+    texto: "Desayuno, restaurante y cafetería en el mismo edificio. Después de la jornada, la cena está a pasos.",
+    f: foto("restaurante", "01-salon-noche.jpg", "Salón del Resto de noche"),
+  },
+  {
+    titulo: "Recepción las 24 horas y lavandería",
+    texto: "El que sale de madrugada o vuelve tarde del turno siempre encuentra a alguien. La ropa de trabajo se lava acá.",
+    f: foto("cafeteria", "01-recepcion-cafeteria.jpg", "Recepción con mostrador iluminado"),
+  },
+  {
+    titulo: "Sala de reuniones y gimnasio",
+    texto: "Para la inducción del primer día, la reunión de obra o para soltar el cuerpo al volver.",
+    f: foto("sala-reuniones", "01-mesa.jpg", "Sala de reuniones con mesa larga y pantalla"),
+  },
 ];
 
-/** Bloque oscuro del inicio que lleva a /empresas. */
+/**
+ * Bloque «Para empresas» del inicio. Editorial, sin tarjetas: a la izquierda una
+ * foto fija que cambia según la razón que se está leyendo a la derecha.
+ * En celular, cada razón lleva su foto arriba.
+ */
 export function ParaEmpresas() {
-  const f1 = foto("predio", "cocheras-noche.jpg", "Galería de cocheras cubiertas de noche, con autos frente a cada departamento");
-  const f2 = foto("sala-reuniones", "01-mesa.jpg", "Sala de reuniones con mesa larga, sillas blancas y pantalla");
-  const f3 = foto("gimnasio", "02-gym-ventanales.jpg", "Gimnasio con máquinas frente a los ventanales");
-  return (
-    <section className="oscuro grano relative overflow-hidden seccion">
-      <div className="contenedor relative">
-        <p className="etiqueta" data-reveal>
-          Para empresas
-        </p>
-        <p className="mt-6 max-w-[22ch] font-display text-[clamp(38px,5.4vw,96px)] leading-[0.95] font-bold uppercase" data-palabras>
-          Tu equipo duerme, come, entrena y sale a trabajar desde un mismo lugar.
-        </p>
+  const [activa, setActiva] = useState(0);
+  const filas = useRef<(HTMLLIElement | null)[]>([]);
 
-        {/* Bento */}
-        <div className="mt-14 grid gap-3 md:mt-20 md:grid-cols-6 md:grid-rows-[repeat(2,minmax(240px,auto))]">
-          <div className="tarjeta relative min-h-[300px] md:col-span-4 md:row-span-2" data-clip>
-            <Image src={f1.src} alt={f1.alt} fill sizes="(min-width: 768px) 66vw, 100vw" placeholder="blur" blurDataURL={f1.blurDataURL} className="object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 p-6 md:p-9">
-              <p className="t-h2 max-w-[12ch]">Cochera frente a cada departamento</p>
-              <p className="mt-3 max-w-[40ch] text-white/75">Las camionetas de la empresa quedan techadas y a la vista, a pasos de donde duerme cada uno.</p>
-            </div>
-          </div>
-          <div className="tarjeta relative min-h-[240px] md:col-span-2" data-clip data-delay="0.1">
-            <Image src={f2.src} alt={f2.alt} fill sizes="(min-width: 768px) 33vw, 100vw" placeholder="blur" blurDataURL={f2.blurDataURL} className="object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-            <Link href="/sala-de-reuniones" className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5">
-              <span className="font-display text-[28px] leading-none font-bold uppercase">Sala de reuniones</span>
-              <Icono nombre="flecha" className="size-6" grosor={2} />
-            </Link>
-          </div>
-          <div className="tarjeta relative min-h-[240px] md:col-span-2" data-clip data-delay="0.2">
-            <Image src={f3.src} alt={f3.alt} fill sizes="(min-width: 768px) 33vw, 100vw" placeholder="blur" blurDataURL={f3.blurDataURL} className="object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-            <p className="absolute inset-x-0 bottom-0 p-5 font-display text-[28px] leading-none font-bold uppercase">
-              Gimnasio <span className="neon" data-neon>abierto</span>
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      (entradas) => {
+        entradas.forEach((e) => {
+          if (e.isIntersecting) setActiva(Number((e.target as HTMLElement).dataset.i));
+        });
+      },
+      { rootMargin: "-45% 0px -45% 0px" },
+    );
+    filas.current.forEach((f) => f && io.observe(f));
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <section className="seccion border-t border-[color:var(--linea)]">
+      <div className="contenedor">
+        <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
+          <div>
+            <p className="etiqueta" data-reveal>
+              Para empresas
             </p>
+            <h2 className="t-h2 mt-4 max-w-[16ch]" data-split>
+              Tu equipo duerme, come y sale a trabajar <span className="rojo-txt">desde acá</span>
+            </h2>
           </div>
+          <p className="lead text-asfalto lg:justify-self-end" data-reveal>
+            A minutos del Polo Petroquímico, el puerto y General Cerri, sin entrar al centro. Lo coordinás todo por WhatsApp o mail.
+          </p>
         </div>
 
-        <ul className="mt-3 grid grid-cols-2 gap-3 lg:grid-cols-4">
-          {RAZONES.map((r, i) => (
-            <li key={r.titulo} className="rounded-[var(--radio)] bg-white/[0.05] p-4 sm:p-6 [box-shadow:inset_0_0_0_1px_rgb(255_255_255/0.08)]" data-reveal data-delay={String(i * 0.08)}>
-              <Icono nombre={r.icono} className="size-7 text-ambar" grosor={1.6} />
-              <p className="mt-4 font-display text-[20px] leading-none font-bold uppercase sm:mt-5 sm:text-[24px]">{r.titulo}</p>
-              <p className="mt-2 text-[14px] text-white/65 sm:text-base">{r.texto}</p>
-            </li>
-          ))}
-        </ul>
+        <div className="mt-14 grid gap-10 lg:mt-20 lg:grid-cols-[1.05fr_1fr] lg:gap-20">
+          {/* Foto fija (escritorio) */}
+          <div className="relative hidden lg:block">
+            <div className="sticky top-[calc(var(--header-h)+40px)] aspect-[4/5] max-h-[calc(100svh-var(--header-h)-80px)] w-full overflow-hidden rounded-[var(--radio)] bg-grafito">
+              {RAZONES.map((r, i) => (
+                <Image
+                  key={r.f.src}
+                  src={r.f.src}
+                  alt={i === activa ? r.f.alt : ""}
+                  fill
+                  sizes="45vw"
+                  placeholder="blur"
+                  blurDataURL={r.f.blurDataURL}
+                  className={`object-cover transition-[opacity,scale] duration-[1.1s] ease-[var(--ease-pt)] ${i === activa ? "scale-100 opacity-100" : "scale-[1.06] opacity-0"}`}
+                />
+              ))}
+              <div className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-gradient-to-t from-black/70 to-transparent p-6 text-white">
+                <span className="num font-display text-[15px] font-bold">
+                  {String(activa + 1).padStart(2, "0")} / {String(RAZONES.length).padStart(2, "0")}
+                </span>
+                <span className="flex gap-1.5">
+                  {RAZONES.map((r, i) => (
+                    <span key={r.titulo} className={`h-1 rounded-full transition-all duration-500 ${i === activa ? "w-8 bg-rojo" : "w-3 bg-white/40"}`} />
+                  ))}
+                </span>
+              </div>
+            </div>
+          </div>
 
-        <div className="mt-12 flex flex-wrap items-center gap-3" data-reveal>
+          {/* Razones */}
+          <ol>
+            {RAZONES.map((r, i) => (
+              <li
+                key={r.titulo}
+                ref={(el) => {
+                  filas.current[i] = el;
+                }}
+                data-i={i}
+                className="border-t border-[color:var(--linea)] py-8 last:border-b lg:flex lg:min-h-[44svh] lg:flex-col lg:justify-center lg:py-10"
+              >
+                <div className="relative mb-6 aspect-[16/10] overflow-hidden rounded-[var(--radio)] lg:hidden">
+                  <Image src={r.f.src} alt={r.f.alt} fill sizes="100vw" placeholder="blur" blurDataURL={r.f.blurDataURL} className="object-cover" />
+                </div>
+                <p className={`num font-display text-[15px] font-bold transition-colors duration-500 ${i === activa ? "text-rojo" : "text-asfalto"}`}>
+                  {String(i + 1).padStart(2, "0")}
+                </p>
+                <h3
+                  className={`mt-2 font-display text-[clamp(26px,2.4vw,38px)] leading-[1.02] font-bold uppercase transition-colors duration-500 ${i === activa ? "text-tinta" : "lg:text-tinta/35"}`}
+                >
+                  {r.titulo}
+                </h3>
+                <p className={`mt-3 max-w-[42ch] text-[17px] transition-colors duration-500 ${i === activa ? "text-asfalto" : "lg:text-asfalto/50"}`}>{r.texto}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4" data-reveal>
           <BotonConsultar modo="empresa" origen="inicio-empresas">
             Consultar para mi equipo
           </BotonConsultar>
-          <Link href="/empresas" className="btn btn-fantasma">
-            <span>Ver todo para empresas</span>
-            <span className="burbuja" aria-hidden="true">
-              <Icono nombre="der" className="size-4" grosor={2} />
-            </span>
+          <Link href="/empresas" className="enlace inline-flex items-center gap-2 text-[15px]">
+            Todo para empresas <Icono nombre="flecha" className="size-4" grosor={2} />
           </Link>
         </div>
       </div>

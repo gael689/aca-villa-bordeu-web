@@ -2,20 +2,24 @@ import Image from "next/image";
 import Link from "next/link";
 import { foto } from "@/lib/fotos";
 import { Icono } from "@/components/marca/Icono";
-import { BarraHero } from "./BarraHero";
-import { CartelVivo } from "./CartelVivo";
+import { BotonConsultar } from "@/components/consulta/ConsultaContext";
 
 const CAPAS = [
   foto("restaurante", "01-salon-noche.jpg", "Salón del Resto de noche, con luces cálidas en el techo"),
   foto("habitaciones", "01-triple-dos-camas.jpg", "Departamento con paredes grafito y cabecera de madera"),
-  foto("restaurante", "02-barra-led.jpg", "Barra del bar iluminada en azul"),
+  foto("cafeteria", "01-recepcion-cafeteria.jpg", "Recepción con mostrador de madera iluminado"),
   foto("gimnasio", "01-gym-pared-verde.jpg", "Gimnasio con pared verde y cartel de neón"),
 ];
 
-/** Portada del inicio: a sangre, con las dos puertas y la barra de consulta. */
+const vars = (i: number) => ({ ["--i" as string]: i });
+
+/**
+ * Portada del inicio, con el formato de Palazzo: fotos que se funden, un H1
+ * que se entiende solo, una bajada y dos caminos. El logo vive en el encabezado.
+ */
 export function Hero() {
   return (
-    <section data-hero className="relative h-[100svh] min-h-[640px] bg-grafito text-white md:min-h-[720px]">
+    <section data-hero className="relative flex min-h-[100svh] items-end overflow-hidden bg-grafito text-white">
       <div data-hero-ventana className="absolute inset-0 overflow-hidden">
         {CAPAS.map((f, i) => (
           <div key={f.src} className="hero-capa" aria-hidden={i > 0}>
@@ -34,60 +38,37 @@ export function Hero() {
             />
           </div>
         ))}
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgb(10_10_11/0.55)_0%,rgb(10_10_11/0.15)_35%,rgb(10_10_11/0.35)_62%,rgb(10_10_11/0.9)_100%)]" />
+        {/* Velo liviano arriba (se ve la foto) y firme abajo, donde va el texto. */}
+        <div className="absolute inset-0 bg-gradient-to-t from-grafito via-grafito/45 to-grafito/30" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgb(10_10_11/0.4),transparent_70%)]" />
       </div>
 
-      <div data-hero-contenido className="contenedor relative flex h-full flex-col justify-end pt-[calc(var(--header-h)+16px)] pb-5 md:pb-8">
-        <div className="hero-in mb-5 flex flex-wrap items-center gap-2" style={{ ["--i" as string]: 0 }}>
-          <span className="chip !bg-white/12 !text-white backdrop-blur-md [box-shadow:inset_0_0_0_1px_rgb(255_255_255/0.18)]">
-            <Icono nombre="escudo" className="size-4 text-rojo" grosor={2} /> Motel del Automóvil Club Argentino
-          </span>
-          <CartelVivo />
-        </div>
-
-        <h1 className="t-display max-w-[11ch]">
-          <span className="hero-in block" style={{ ["--i" as string]: 1 }}>
-            Tu base en
-          </span>
-          <span className="hero-in block text-rojo" style={{ ["--i" as string]: 2 }}>
-            Bahía Blanca
+      <div data-hero-contenido className="contenedor relative z-10 flex w-full flex-col items-center pt-[calc(var(--header-h)+28px)] pb-[clamp(40px,9svh,104px)] text-center">
+        <h1 className="hero-in w-full max-w-5xl [text-shadow:0_2px_28px_rgb(0_0_0/0.45)]" style={vars(0)}>
+          <span className="t-display block">Motel ACA en Bahía Blanca</span>
+          <span className="mt-2 block font-display text-[clamp(22px,2.8vw,44px)] leading-tight font-semibold text-white/90 uppercase">
+            Sobre el cruce de las rutas <span className="text-rojo">3, 33 y 35</span>
           </span>
         </h1>
 
-        <div className="mt-5 grid gap-6 sm:mt-6 lg:grid-cols-[1fr_auto] lg:items-end">
-          <p className="hero-in lead hidden max-w-[34em] text-white/85 sm:block" style={{ ["--i" as string]: 3 }}>
-            Sobre el cruce de las rutas 3, 33 y 35. Departamentos con cochera en la puerta, restaurante, gimnasio y estación de servicio en un mismo
-            predio.
-          </p>
+        <p className="hero-in mt-5 max-w-[46ch] text-[clamp(16px,1.25vw,19px)] leading-snug text-white/85" style={vars(1)}>
+          Departamentos con cochera en la puerta, restaurante, gimnasio y estación de servicio en un mismo predio. Para equipos de trabajo y para los que
+          van de viaje.
+        </p>
 
-          {/* Las dos puertas */}
-          <div className="hero-in grid grid-cols-2 gap-2 sm:gap-3" style={{ ["--i" as string]: 4 }}>
-            <Link
-              href="/empresas"
-              className="group relative flex min-h-[86px] flex-col justify-between overflow-hidden rounded-[20px] bg-rojo p-4 transition-transform duration-500 ease-[var(--ease-pt)] hover:-translate-y-1 sm:min-w-[230px] sm:p-5"
-            >
-              <span className="flex items-center justify-between">
-                <Icono nombre="casco" className="size-6" grosor={1.7} />
-                <Icono nombre="flecha" className="size-5 transition-transform duration-500 ease-[var(--ease-pt)] group-hover:translate-x-1 group-hover:-translate-y-1" grosor={2} />
-              </span>
-              <span className="mt-3 block font-display text-[22px] leading-none font-bold uppercase sm:text-[26px]">Vengo por trabajo</span>
-            </Link>
-            <Link
-              href="/departamentos"
-              className="group relative flex min-h-[86px] flex-col justify-between overflow-hidden rounded-[20px] bg-white/12 p-4 backdrop-blur-md transition-[transform,background] duration-500 ease-[var(--ease-pt)] [box-shadow:inset_0_0_0_1px_rgb(255_255_255/0.2)] hover:-translate-y-1 hover:bg-white/20 sm:min-w-[230px] sm:p-5"
-            >
-              <span className="flex items-center justify-between">
-                <Icono nombre="ruta" className="size-6" grosor={1.7} />
-                <Icono nombre="flecha" className="size-5 transition-transform duration-500 ease-[var(--ease-pt)] group-hover:translate-x-1 group-hover:-translate-y-1" grosor={2} />
-              </span>
-              <span className="mt-3 block font-display text-[22px] leading-none font-bold uppercase sm:text-[26px]">Estoy de viaje</span>
-            </Link>
-          </div>
+        <div className="hero-in mt-8 flex flex-col items-center gap-4 sm:flex-row sm:gap-6" style={vars(2)}>
+          <BotonConsultar origen="portada">Consultar disponibilidad</BotonConsultar>
+          <Link href="/empresas" className="enlace inline-flex items-center gap-2 py-2 text-[15px]">
+            Alojamiento para empresas <Icono nombre="flecha" className="size-4" grosor={2} />
+          </Link>
         </div>
 
-        <div className="hero-in mt-5 md:mt-7" style={{ ["--i" as string]: 5 }}>
-          <BarraHero />
-        </div>
+        <a href="#predio" aria-label="Bajar" className="hero-in mt-10 hidden flex-col items-center gap-2 text-[11px] font-semibold tracking-[0.24em] text-white/60 uppercase md:flex" style={vars(3)}>
+          Conocé el lugar
+          <span className="relative block h-10 w-px overflow-hidden bg-white/20">
+            <span className="baja-linea absolute inset-0 bg-white" />
+          </span>
+        </a>
       </div>
     </section>
   );
