@@ -44,7 +44,7 @@ export function Footer() {
           <div>
             <LogoACA className="h-10 w-auto text-rojo" titulo="Automóvil Club Argentino" />
             <p className="mt-5 max-w-[30ch] text-white/70">
-              Motel del Automóvil Club Argentino sobre el cruce de las rutas 3, 33 y 35, en Bahía Blanca.
+              Alojamiento del Automóvil Club Argentino sobre el cruce de las rutas 3, 33 y 35, en Bahía Blanca.
             </p>
             <address className="mt-6 space-y-2.5 not-italic">
               <a href={MAPAS.google} target="_blank" rel="noopener noreferrer" className="flex gap-3 text-white/85 hover:text-white">

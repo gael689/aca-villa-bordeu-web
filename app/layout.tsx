@@ -19,11 +19,11 @@ const barlowCondensed = Barlow_Condensed({ subsets: ["latin"], weight: ["600", "
 export const metadata: Metadata = {
   metadataBase: new URL(SITIO.url),
   title: {
-    default: "ACA Villa Bordeu · Motel y departamentos en Bahía Blanca",
+    default: "ACA Villa Bordeu · Alojamiento y departamentos en Bahía Blanca",
     template: "%s",
   },
   description:
-    "Motel del ACA sobre las rutas 3, 33 y 35 en Bahía Blanca: 26 departamentos con cochera, restaurante, gimnasio y estación YPF. Ideal para equipos de trabajo.",
+    "Alojamiento del ACA sobre las rutas 3, 33 y 35 en Bahía Blanca: 26 departamentos con cochera, restaurante, gimnasio y estación YPF. Ideal para equipos de trabajo.",
   applicationName: SITIO.nombre,
   category: "travel",
   verification: {

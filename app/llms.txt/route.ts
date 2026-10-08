@@ -13,7 +13,7 @@ export function GET() {
   const l: string[] = [];
   l.push(`# ${SITIO.nombre}`, "");
   l.push(
-    `> Motel del Automóvil Club Argentino en Bahía Blanca, sobre el cruce de las rutas nacionales 3, 33 y 35. ${SITIO.departamentos} departamentos con cochera cubierta, restaurante desde ${SITIO.restoDesde}, gimnasio, sala de reuniones, lavandería, recepción 24 horas, pet friendly y estación de servicio YPF en el mismo predio. Aloja equipos de trabajo de empresas y viajeros de ruta.`,
+    `> Alojamiento del Automóvil Club Argentino en Bahía Blanca (categoría Motel 3★ en la Red Hotelera ACA), sobre el cruce de las rutas nacionales 3, 33 y 35. ${SITIO.departamentos} departamentos con cochera cubierta, restaurante desde ${SITIO.restoDesde}, gimnasio, sala de reuniones, lavandería, recepción 24 horas, pet friendly y estación de servicio YPF en el mismo predio. Aloja equipos de trabajo de empresas y viajeros de ruta.`,
     "",
   );
   l.push("## Datos", "");

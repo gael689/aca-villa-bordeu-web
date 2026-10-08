@@ -7,7 +7,7 @@ import { Cierre, PortadaPagina } from "@/components/secciones/Comunes";
 export const metadata = meta({
   title: "Nuestra historia · ACA Villa Bordeu, Bahía Blanca",
   description:
-    "Del Automóvil Club Argentino de 1904 al motel de Villa Bordeu en el cruce de rutas de Bahía Blanca, con el Resto que cocina desde 1984. Una historia de ruta.",
+    "Del Automóvil Club Argentino de 1904 a ACA Villa Bordeu, en el cruce de rutas de Bahía Blanca, con el Resto que cocina desde 1984. Una historia de ruta.",
   ruta: "/historia",
 });
 

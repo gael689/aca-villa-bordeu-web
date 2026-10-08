@@ -53,8 +53,8 @@ export default function EstacionDeServicio() {
       </PortadaPagina>
 
       <Citable>
-        La estación de servicio ACA YPF de Villa Bordeu está en el acceso de las rutas nacionales 3 y 33, en Bahía Blanca, dentro del mismo predio que el motel
-        y el restaurante del Automóvil Club Argentino.
+        La estación de servicio ACA YPF de Villa Bordeu está en el acceso de las rutas nacionales 3 y 33, en Bahía Blanca, dentro del mismo predio que los
+        departamentos y el restaurante del Automóvil Club Argentino.
       </Citable>
 
       <section className="seccion-chica">

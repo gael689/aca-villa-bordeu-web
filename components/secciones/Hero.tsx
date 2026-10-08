@@ -45,8 +45,11 @@ export function Hero() {
       </div>
 
       <div data-hero-contenido className="contenedor relative z-10 flex w-full flex-col items-center pt-[calc(var(--header-h)+28px)] pb-[clamp(40px,9svh,104px)] text-center">
-        <h1 className="hero-in w-full max-w-5xl [text-shadow:0_2px_28px_rgb(0_0_0/0.45)]" style={vars(0)}>
-          <span className="t-display block">Motel ACA en Bahía Blanca</span>
+        <p className="hero-in text-[13px] font-semibold tracking-[0.28em] text-white/80 uppercase" style={vars(0)}>
+          ACA Villa Bordeu
+        </p>
+        <h1 className="hero-in mt-3 w-full max-w-5xl [text-shadow:0_2px_28px_rgb(0_0_0/0.45)]" style={vars(0)}>
+          <span className="t-display block">Tu base en Bahía Blanca</span>
           <span className="mt-2 block font-display text-[clamp(22px,2.8vw,44px)] leading-tight font-semibold text-white/90 uppercase">
             Sobre el cruce de las rutas <span className="text-rojo">3, 33 y 35</span>
           </span>
@@ -64,12 +67,6 @@ export function Hero() {
           </Link>
         </div>
 
-        <a href="#predio" aria-label="Bajar" className="hero-in mt-10 hidden flex-col items-center gap-2 text-[11px] font-semibold tracking-[0.24em] text-white/60 uppercase md:flex" style={vars(3)}>
-          Conocé el lugar
-          <span className="relative block h-10 w-px overflow-hidden bg-white/20">
-            <span className="baja-linea absolute inset-0 bg-white" />
-          </span>
-        </a>
       </div>
     </section>
   );
