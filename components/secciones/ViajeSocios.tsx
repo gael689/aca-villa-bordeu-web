@@ -34,7 +34,7 @@ export function ViajeSocios() {
           <div className="relative">
             <p className="etiqueta !text-white">Socios ACA</p>
             <p className="t-h2 mt-4 max-w-[12ch]">Tu carnet también vale acá</p>
-            <p className="mt-4 max-w-[38ch] text-white/85">Villa Bordeu es parte de la Red Hotelera del Automóvil Club Argentino. Contanos que sos socio al consultar.</p>
+            <p className="mt-4 max-w-[38ch] text-white">Villa Bordeu es parte de la Red Hotelera del Automóvil Club Argentino. Contanos que sos socio al consultar.</p>
             <span className="mt-6 inline-flex items-center gap-2 text-[15px] font-semibold">
               Beneficios y la red hacia el sur
               <Icono nombre="flecha" className="size-5 transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1" grosor={2} />

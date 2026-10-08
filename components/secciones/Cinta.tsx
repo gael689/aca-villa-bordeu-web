@@ -21,7 +21,8 @@ export function Cinta({ tono = "rojo" }: { tono?: "rojo" | "oscuro" }) {
     </div>
   );
   return (
-    <div className={`overflow-hidden py-5 md:py-7 ${tono === "rojo" ? "bg-rojo text-white" : "bg-grafito text-white"}`} aria-label="ACA desde 1904, Resto desde 1984, estación YPF en el predio, 26 departamentos, recepción 24 horas, pet friendly">
+    <div className={`overflow-hidden py-5 md:py-7 ${tono === "rojo" ? "bg-rojo text-white" : "bg-grafito text-white"}`}>
+      <p className="sr-only">ACA desde 1904, Resto desde 1984, estación YPF en el predio, 26 departamentos, recepción 24 horas, pet friendly.</p>
       <div data-sesgo aria-hidden="true">
         <div className="marquesina">
           {fila}

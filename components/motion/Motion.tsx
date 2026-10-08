@@ -29,14 +29,24 @@ export function Motion() {
         void m.escanear();
         html.classList.add("anim-ready");
       });
-    // Después del primer pintado: no compite con el LCP.
-    const usaIdle = "requestIdleCallback" in window;
-    const id: number = usaIdle ? window.requestIdleCallback(cargar, { timeout: 700 }) : window.setTimeout(cargar, 150);
+    // Arranca con la primera interacción (scroll, toque, mouse, teclado) o a los 4 s:
+    // la portada se anima con CSS, así que el motor no compite con la carga inicial.
+    let hecho = false;
+    const eventos = ["scroll", "pointermove", "touchstart", "keydown", "wheel"] as const;
+    const una = () => {
+      if (hecho) return;
+      hecho = true;
+      eventos.forEach((e) => window.removeEventListener(e, una));
+      window.clearTimeout(t);
+      void cargar();
+    };
+    eventos.forEach((e) => window.addEventListener(e, una, { passive: true, once: true }));
+    const t = window.setTimeout(una, 4000);
 
     return () => {
       vivo = false;
-      if (usaIdle) window.cancelIdleCallback(id);
-      else window.clearTimeout(id);
+      eventos.forEach((e) => window.removeEventListener(e, una));
+      window.clearTimeout(t);
       motor.current?.parar();
       motor.current = null;
     };

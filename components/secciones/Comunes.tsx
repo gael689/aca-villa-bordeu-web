@@ -226,7 +226,7 @@ export function Servicios({ titulo = "Lo que hay en el predio", oscuro = false }
 export function TarjetaEnlace({ href, foto: f, titulo, texto }: { href: string; foto: Foto; titulo: string; texto?: string }) {
   return (
     <Link href={href} className="group tarjeta relative flex min-h-[320px] flex-col justify-end bg-grafito text-white" data-clip>
-      <Image src={f.src} alt={f.alt} fill sizes="(min-width: 1024px) 33vw, 100vw" placeholder="blur" blurDataURL={f.blurDataURL} className="object-cover transition-transform duration-[1.4s] ease-[var(--ease-pt)] group-hover:scale-105" />
+      <Image src={f.src} alt="" fill sizes="(min-width: 1024px) 33vw, 100vw" placeholder="blur" blurDataURL={f.blurDataURL} className="object-cover transition-transform duration-[1.4s] ease-[var(--ease-pt)] group-hover:scale-105" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
       <div className="relative flex items-end justify-between gap-4 p-6">
         <div>

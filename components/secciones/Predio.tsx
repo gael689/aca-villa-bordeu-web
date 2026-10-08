@@ -48,7 +48,7 @@ export function Predio({ titulo = true }: { titulo?: boolean }) {
               type="button"
               data-pin-punto
               aria-pressed={pt.id === activo}
-              aria-label={pt.titulo}
+              aria-label={`${i + 1}. ${pt.titulo}`}
               onClick={() => setActivo(pt.id)}
               onMouseEnter={() => setActivo(pt.id)}
               className="plano-punto group absolute -translate-x-1/2 -translate-y-1/2"
