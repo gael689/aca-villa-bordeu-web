@@ -4,7 +4,7 @@ import { TIPOS, INCLUYE } from "@/lib/departamentos";
 import { Icono } from "@/components/marca/Icono";
 import { BotonConsultar } from "@/components/consulta/ConsultaContext";
 
-/** Los tres tipos de departamento, en tarjetas que se apilan al bajar (motor: data-apilada). */
+/** Los tres tipos de departamento, en tarjetas que se apilan al bajar (CSS sticky, sin JS). */
 export function DeptosApilados() {
   return (
     <section className="seccion">
@@ -37,7 +37,7 @@ export function DeptosApilados() {
         <div className="space-y-4 md:space-y-6">
           {TIPOS.map((t, i) => (
             <article key={t.slug} data-apilada className="sticky" style={{ top: `calc(var(--header-h) + ${16 + i * 18}px)` }}>
-              <div data-apilada-cuerpo className="tarjeta grid origin-top bg-white shadow-[0_30px_70px_-40px_rgb(0_0_0/0.45)] md:grid-cols-[1.35fr_1fr]">
+              <div data-apilada-cuerpo className="tarjeta grid bg-white shadow-[0_30px_70px_-40px_rgb(0_0_0/0.45)] md:grid-cols-[1.35fr_1fr]">
                 <div className="relative aspect-[16/10] md:aspect-auto md:min-h-[420px]">
                   <Image
                     src={t.fotos[0].src}

@@ -5,7 +5,7 @@ import { Escudo } from "@/components/marca/Escudo";
 
 const ITEMS = [
   { Icono: BedDouble, verbo: "Dormí", texto: "Departamentos cómodos, con baño privado.", f: foto("habitaciones", "01-triple-dos-camas.jpg", "Departamento con cabecera de madera y luz cálida") },
-  { Icono: SquareParking, verbo: "Estacioná", texto: "Cochera cubierta frente al departamento.", f: foto("habitaciones", "06-pasillo.jpg", "Pasillo con la puerta de cada departamento") },
+  { Icono: SquareParking, verbo: "Estacioná", texto: "Cochera cubierta frente al departamento.", f: foto("predio", "cocheras-noche.jpg", "Galería de cocheras cubiertas frente a los departamentos, de noche") },
   { Icono: UtensilsCrossed, verbo: "Comé", texto: "Restaurante en el complejo, desde 1984.", f: foto("restaurante", "01-salon-noche.jpg", "Salón del Resto de noche") },
   { Icono: Route, verbo: "Seguí", texto: "Acceso directo a las rutas 3, 33 y 35.", f: null },
 ];
