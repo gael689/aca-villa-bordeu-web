@@ -1,10 +1,10 @@
 import { Hero } from "@/components/secciones/Hero";
 import { Cinta } from "@/components/secciones/Cinta";
-import { Predio } from "@/components/secciones/Predio";
 import { DeptosApilados } from "@/components/secciones/DeptosApilados";
 import { RestoBloque } from "@/components/secciones/RestoBloque";
 import { FaqLista } from "@/components/secciones/Comunes";
 import { PorQue } from "@/components/v2/PorQue";
+import { Complejo } from "@/components/v2/Complejo";
 import { Ubicacion } from "@/components/v2/Ubicacion";
 import { Trabajo } from "@/components/v2/Trabajo";
 import { ServiciosLinea } from "@/components/v2/ServiciosLinea";
@@ -29,11 +29,7 @@ export default function Inicio() {
       <Hero />
       <Cinta />
       <PorQue />
-      <section id="predio" className="seccion gris scroll-mt-[var(--header-h)]">
-        <div className="contenedor">
-          <Predio />
-        </div>
-      </section>
+      <Complejo />
       <Ubicacion />
       <DeptosApilados />
       <Trabajo />

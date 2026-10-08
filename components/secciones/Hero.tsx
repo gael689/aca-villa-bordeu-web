@@ -4,11 +4,13 @@ import { foto } from "@/lib/fotos";
 import { Icono } from "@/components/marca/Icono";
 import { BotonConsultar } from "@/components/consulta/ConsultaContext";
 
+// Solo fotos nítidas, recortadas desde los originales (fotos-seleccion/portada).
+// El salón de noche y la barra quedaron afuera: son de celular con poca luz y en grande se ven blandas.
 const CAPAS = [
-  foto("restaurante", "01-salon-noche.jpg", "Salón del Resto de noche, con luces cálidas en el techo"),
-  foto("habitaciones", "01-triple-dos-camas.jpg", "Departamento con paredes grafito y cabecera de madera"),
-  foto("cafeteria", "01-recepcion-cafeteria.jpg", "Recepción con mostrador de madera iluminado"),
-  foto("gimnasio", "01-gym-pared-verde.jpg", "Gimnasio con pared verde y cartel de neón"),
+  foto("portada", "02-departamento.jpg", "Departamento con cama matrimonial y cama individual, paredes grafito y cabecera de madera"),
+  foto("portada", "03-recepcion.jpg", "Recepción con mostrador de madera iluminado y el logo ACA Villa Bordeu"),
+  foto("portada", "01-gimnasio.jpg", "Gimnasio con pared verde y cartel de neón ACA"),
+  foto("portada", "04-sala.jpg", "Sala de reuniones con mesa larga y pantalla"),
 ];
 
 const vars = (i: number) => ({ ["--i" as string]: i });
@@ -31,7 +33,7 @@ export function Hero() {
               fetchPriority={i === 0 ? "high" : "low"}
               loading={i === 0 ? undefined : "lazy"}
               sizes="100vw"
-              quality={75}
+              quality={82}
               placeholder="blur"
               blurDataURL={f.blurDataURL}
               className="object-cover"
