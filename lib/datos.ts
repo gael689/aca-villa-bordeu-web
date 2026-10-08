@@ -57,7 +57,7 @@ export type PuntoPredio = {
 
 export const PREDIO: PuntoPredio[] = [
   { id: "deptos", titulo: "Departamentos", texto: "Los 26, en planta baja, cada uno con su cochera cubierta enfrente.", icono: "cama", x: 62, y: 39, foto: ["habitaciones", "01-triple-dos-camas.jpg"], href: "/departamentos" },
-  { id: "cocheras", titulo: "Cocheras cubiertas", texto: "La camioneta queda en la puerta, a la vista.", icono: "auto", x: 73, y: 46, foto: ["habitaciones", "06-pasillo.jpg"] },
+  { id: "cocheras", titulo: "Cocheras cubiertas", texto: "La camioneta queda en la puerta, a la vista.", icono: "auto", x: 73, y: 46, foto: ["predio", "cocheras-noche.jpg"] },
   { id: "resto", titulo: "Restaurante y bar", texto: "El Resto, la cava y la barra, abiertos también para quien pasa.", icono: "cubiertos", x: 42, y: 53, foto: ["restaurante", "01-salon-noche.jpg"], href: "/restaurante" },
   { id: "cafeteria", titulo: "Recepción y cafetería", texto: "Atención las 24 horas y el café con el logo en la espuma.", icono: "campana", x: 27, y: 40, foto: ["cafeteria", "01-recepcion-cafeteria.jpg"] },
   { id: "gym", titulo: "Gimnasio", texto: "Máquinas, bicis y pesas, con ventanales al parque.", icono: "pesa", x: 57, y: 56, foto: ["gimnasio", "01-gym-pared-verde.jpg"] },

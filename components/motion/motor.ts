@@ -186,16 +186,8 @@ export async function escanear() {
       if (contenido) gsap.to(contenido, { yPercent: -16, opacity: 0, ease: "none", scrollTrigger: { ...st, end: "65% top" } });
     });
 
-    // Tarjetas apiladas: la de atrás se achica y se oscurece cuando llega la siguiente.
-    const apiladas = todos("[data-apilada]");
-    apiladas.forEach((art, i) => {
-      const siguiente = apiladas[i + 1];
-      if (!siguiente) return;
-      const cuerpo = art.querySelector<HTMLElement>("[data-apilada-cuerpo]");
-      const st = { trigger: siguiente, start: "top bottom", end: "top top", scrub: true };
-      // Solo transform sobre una capa propia (se compone en la GPU): sin animar opacidad de un velo encima de la foto.
-      if (cuerpo) gsap.to(cuerpo, { scale: 0.94, ease: "none", force3D: true, scrollTrigger: st });
-    });
+    // Tarjetas apiladas: el apilado es CSS puro (position: sticky), sin animar
+    // escala en cada cuadro del scroll: así queda fluido incluso con fotos grandes.
   });
 
   // Puntos del plano: se encienden uno por uno, como las luces de la galería.
