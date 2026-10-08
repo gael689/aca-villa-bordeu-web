@@ -73,6 +73,6 @@ export const PREDIO: PuntoPredio[] = [
   { id: "recepcion", titulo: "Recepción 24 h", texto: "Atención las 24 horas, para el que llega de noche por la ruta.", icono: "campana", x: 27, y: 40, foto: ["cafeteria", "01-recepcion-cafeteria.jpg"] },
   { id: "gym", titulo: "Gimnasio", texto: "Máquinas, bicis y pesas, con ventanales al parque.", icono: "pesa", x: 57, y: 56, foto: ["gimnasio", "01-gym-pared-verde.jpg"] },
   { id: "sala", titulo: "Sala de reuniones", texto: "Mesa para el equipo y pantalla para presentar.", icono: "reunion", x: 50, y: 46, foto: ["sala-reuniones", "01-mesa.jpg"], href: "/sala-de-reuniones" },
-  { id: "ypf", titulo: "Estación YPF", texto: "Combustible para seguir viaje o para la flota del equipo.", icono: "surtidor", x: 15, y: 41, foto: ["cafeteria", "02-cafeteria-mesas.jpg"], href: "/estacion-de-servicio" },
+  { id: "ypf", titulo: "Estación YPF", texto: "Combustible para seguir viaje o para la flota del equipo.", icono: "surtidor", x: 15, y: 41, foto: null, href: "/estacion-de-servicio" },
   { id: "lavanderia", titulo: "Lavandería", texto: "Para la ropa de todos los días y la de trabajo.", icono: "lavarropas", x: 68, y: 57, foto: null },
 ];

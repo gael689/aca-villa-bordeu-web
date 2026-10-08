@@ -39,7 +39,8 @@ export function PortadaPagina({
             <div className="absolute inset-x-0 -inset-y-[8%]" data-parallax="6">
               <Image src={f.src} alt={f.alt} fill priority sizes="100vw" quality={75} placeholder="blur" blurDataURL={f.blurDataURL} className="object-cover" />
             </div>
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgb(10_10_11/0.6)_0%,rgb(10_10_11/0.2)_40%,rgb(10_10_11/0.88)_100%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgb(10_10_11/0.55)_0%,rgb(10_10_11/0.35)_40%,rgb(10_10_11/0.92)_100%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgb(10_10_11/0.7)_0%,rgb(10_10_11/0.35)_50%,transparent_85%)]" />
           </>
         ) : (
           <>
@@ -51,11 +52,11 @@ export function PortadaPagina({
       <div data-hero-contenido className="contenedor relative flex w-full flex-col justify-end pt-[calc(var(--header-h)+40px)] pb-10 md:pb-16">
         <Migas items={migas} />
         {/* `etiqueta` queda como dato (no se muestra): la portada va sin pre-título. */}
-        <h1 className="t-h1 hero-in mt-5 max-w-[18ch]" data-etiqueta={etiqueta} style={{ ["--i" as string]: 1 }}>
+        <h1 className="t-h1 hero-in mt-5 max-w-[18ch] [text-shadow:0_2px_24px_rgb(0_0_0/0.5)]" data-etiqueta={etiqueta} style={{ ["--i" as string]: 1 }}>
           {titulo}
         </h1>
         {bajada && (
-          <p className="lead hero-in mt-5 text-white/80" style={{ ["--i" as string]: 2 }}>
+          <p className="lead hero-in mt-5 text-white/90 [text-shadow:0_1px_14px_rgb(0_0_0/0.6)]" style={{ ["--i" as string]: 2 }}>
             {bajada}
           </p>
         )}

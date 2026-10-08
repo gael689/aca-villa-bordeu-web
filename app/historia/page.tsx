@@ -34,7 +34,7 @@ const HITOS = [
   {
     anio: "Hoy",
     titulo: "Todo en un mismo predio",
-    texto: "Veintiséis departamentos, gimnasio, sala de reuniones, tienda propia y la estación YPF. La base de los equipos que trabajan en la zona y de los viajeros que van al sur.",
+    texto: "26 departamentos, gimnasio, sala de reuniones, tienda propia y la estación YPF. La base de los equipos que trabajan en la zona y de los viajeros que van al sur.",
     foto: foto("habitaciones", "01-triple-dos-camas.jpg", "Departamento con paredes grafito y cabecera de madera"),
   },
 ];

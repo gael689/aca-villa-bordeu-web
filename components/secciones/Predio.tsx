@@ -1,116 +1,76 @@
-"use client";
-
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { PREDIO } from "@/lib/datos";
 import { foto } from "@/lib/fotos";
 import { Icono } from "@/components/marca/Icono";
 
-const AEREA = foto("predio", "aerea-dia.jpg", "Vista aérea del complejo ACA Villa Bordeu, con la torre, los techos rojos y el parque");
-
 /**
- * Plano del predio sobre la foto aérea. Los puntos se encienden uno por uno
- * (motor: data-pin-grupo); al tocar uno, la ficha cambia con su foto.
- * Sin JS: la foto con la lista debajo.
+ * Los lugares del complejo como un índice: número, nombre grande, una línea y
+ * la foto siempre a la vista. Nada que tocar para entenderlo.
  */
 export function Predio({ titulo = true }: { titulo?: boolean }) {
-  const [activo, setActivo] = useState(PREDIO[0].id);
-  const p = PREDIO.find((x) => x.id === activo) ?? PREDIO[0];
-  const fp = p.foto ? foto(p.foto[0], p.foto[1], p.titulo) : null;
-
   return (
     <div>
       {titulo && (
         <div className="mb-10 grid gap-6 md:mb-14 lg:grid-cols-[1fr_1fr] lg:items-end">
           <div>
             <p className="etiqueta" data-reveal>
-              El complejo
+              El predio
             </p>
             <h2 className="t-h2 mt-4" data-split>
-              Más que un lugar <span className="rojo-txt">para dormir</span>
+              Todo en un <span className="rojo-txt">mismo lugar</span>
             </h2>
           </div>
           <p className="lead text-asfalto lg:justify-self-end" data-reveal>
-            Tocá cada punto del plano.
+            Dormís, comés, entrenás, te reunís y cargás combustible sin salir del complejo.
           </p>
         </div>
       )}
 
-      <div className="grid gap-4 lg:grid-cols-[1.55fr_1fr]">
-        {/* Plano */}
-        <div className="tarjeta relative aspect-[9/5] bg-grafito md:aspect-[9/4.6]" data-pin-grupo>
-          <Image src={AEREA.src} alt={AEREA.alt} fill sizes="(min-width: 1024px) 60vw, 100vw" placeholder="blur" blurDataURL={AEREA.blurDataURL} className="object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/45 to-transparent" />
-          {PREDIO.map((pt, i) => (
-            <button
-              key={pt.id}
-              type="button"
-              data-pin-punto
-              aria-pressed={pt.id === activo}
-              aria-label={`${i + 1}. ${pt.titulo}`}
-              onClick={() => setActivo(pt.id)}
-              onMouseEnter={() => setActivo(pt.id)}
-              className="plano-punto group absolute -translate-x-1/2 -translate-y-1/2"
-              style={{ left: `${pt.x}%`, top: `${pt.y}%` }}
-            >
-              <span className="anillo absolute inset-0 rounded-full bg-rojo/60" aria-hidden="true" />
-              <span
-                className={[
-                  "relative grid size-8 place-items-center rounded-full font-display text-[15px] font-bold shadow-[0_6px_18px_-4px_rgb(0_0_0/0.6)] transition-all duration-300 md:size-10 md:text-[17px]",
-                  pt.id === activo ? "scale-110 bg-rojo text-white" : "bg-white text-tinta group-hover:bg-rojo group-hover:text-white",
-                ].join(" ")}
-              >
-                {i + 1}
+      <ol className="border-t border-[color:var(--linea)]">
+        {PREDIO.map((p, i) => {
+          const f = p.foto ? foto(p.foto[0], p.foto[1], p.titulo) : null;
+          const fila = (
+            <>
+              <span className="num font-display text-[15px] font-bold text-rojo md:text-[17px]">{String(i + 1).padStart(2, "0")}</span>
+              <span className="min-w-0">
+                <span className="block font-display text-[clamp(26px,3.2vw,52px)] leading-[0.95] font-bold uppercase transition-colors duration-500 group-hover:text-rojo">
+                  {p.titulo}
+                </span>
+                <span className="mt-2 block max-w-[46ch] text-[15px] text-asfalto md:text-base">{p.texto}</span>
               </span>
-            </button>
-          ))}
-          <p className="absolute bottom-3 left-4 text-[12px] font-semibold text-white/80 md:bottom-4 md:left-5">Vista aérea del complejo</p>
-        </div>
-
-        {/* Ficha del punto activo */}
-        <div className="tarjeta relative flex min-h-[300px] flex-col justify-end bg-grafito text-white">
-          {fp ? (
-            <Image key={fp.src} src={fp.src} alt={fp.alt} fill sizes="(min-width: 1024px) 38vw, 100vw" placeholder="blur" blurDataURL={fp.blurDataURL} className="visor-entra object-cover" />
-          ) : (
-            <div key={p.id} className="visor-entra grano absolute inset-0 grid place-items-center bg-[radial-gradient(circle_at_50%_35%,#3a1418,#141516_70%)]">
-              <Icono nombre={p.icono} className="size-28 text-white/15" grosor={0.8} />
-            </div>
-          )}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
-          <div key={p.id} className="paso-entra relative p-5 md:p-7">
-            <span className="grid size-11 place-items-center rounded-full bg-rojo">
-              <Icono nombre={p.icono} className="size-5" grosor={1.8} />
-            </span>
-            <h3 className="mt-4 font-display text-[34px] leading-none font-bold uppercase">{p.titulo}</h3>
-            <p className="mt-2 max-w-[32ch] text-white/80">{p.texto}</p>
-            {p.href && (
-              <Link href={p.href} className="enlace mt-4 text-[15px]">
-                Ver más
-              </Link>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Lista: en celular es la forma principal de recorrer el plano */}
-      <ol className="sin-barra -mx-[var(--gutter)] mt-4 flex gap-2 overflow-x-auto px-[var(--gutter)] lg:mx-0 lg:grid lg:grid-cols-8 lg:px-0">
-        {PREDIO.map((pt, i) => (
-          <li key={pt.id} className="shrink-0">
-            <button
-              type="button"
-              onClick={() => setActivo(pt.id)}
-              aria-pressed={pt.id === activo}
-              className={[
-                "flex h-full w-full items-center gap-2 rounded-2xl px-3.5 py-3 text-left text-[14px] leading-tight font-semibold transition-colors",
-                pt.id === activo ? "bg-tinta text-white" : "bg-white shadow-[inset_0_0_0_1px_var(--linea)] hover:bg-hormigon",
-              ].join(" ")}
-            >
-              <span className={`num font-display text-[18px] ${pt.id === activo ? "text-rojo" : "text-asfalto"}`}>{i + 1}</span>
-              {pt.titulo}
-            </button>
-          </li>
-        ))}
+              <span className="relative aspect-[4/3] w-[96px] shrink-0 overflow-hidden rounded-2xl bg-grafito sm:w-[150px] lg:w-[220px]">
+                {f ? (
+                  <Image
+                    src={f.src}
+                    alt={f.alt}
+                    fill
+                    sizes="(min-width: 1024px) 220px, 150px"
+                    placeholder="blur"
+                    blurDataURL={f.blurDataURL}
+                    className="object-cover transition-transform duration-[1.2s] ease-[var(--ease-pt)] group-hover:scale-110"
+                  />
+                ) : (
+                  <span className="grid size-full place-items-center text-white/70">
+                    <Icono nombre={p.icono} className="size-9" grosor={1.3} />
+                  </span>
+                )}
+              </span>
+            </>
+          );
+          const clase = "group grid grid-cols-[auto_1fr_auto] items-center gap-4 border-b border-[color:var(--linea)] py-5 sm:gap-8 md:py-7";
+          return (
+            <li key={p.id} data-reveal data-delay={String(i * 0.05)}>
+              {p.href ? (
+                <Link href={p.href} className={clase}>
+                  {fila}
+                </Link>
+              ) : (
+                <div className={clase}>{fila}</div>
+              )}
+            </li>
+          );
+        })}
       </ol>
     </div>
   );

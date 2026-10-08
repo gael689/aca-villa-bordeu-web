@@ -25,7 +25,7 @@ export default function Departamentos() {
             Departamentos en Bahía Blanca, <span className="text-rojo">sobre la ruta</span>
           </>
         }
-        bajada="Veintiséis departamentos con baño privado y la cochera cubierta en la puerta. Para quedarse una noche o varias semanas."
+        bajada="26 departamentos con baño privado y la cochera cubierta en la puerta. Para quedarse una noche o varias semanas."
         migas={[{ nombre: "Departamentos", ruta: "/departamentos" }]}
       >
         <BotonConsultar modo="viaje" origen="deptos-portada">

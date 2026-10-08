@@ -10,7 +10,7 @@ import { BotonConsultar } from "@/components/consulta/ConsultaContext";
 const RAZONES = [
   {
     titulo: "Todo el equipo en un mismo predio",
-    texto: "Veintiséis departamentos single, doble y triple, uno al lado del otro. Nadie queda repartido por la ciudad.",
+    texto: "26 departamentos single, doble y triple, uno al lado del otro. Nadie queda repartido por la ciudad.",
     f: foto("habitaciones", "02-doble-escritorio.jpg", "Departamento con escritorio, TV y dos camas"),
   },
   {
