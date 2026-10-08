@@ -30,7 +30,7 @@ export function Footer() {
         <div className="grid gap-10 border-b border-white/10 pb-14 lg:grid-cols-[1.3fr_1fr] lg:items-end">
           <div>
             <p className="etiqueta">Recepción abierta las 24 horas</p>
-            <p className="t-h2 mt-4 max-w-[14ch]">¿Cuántos son y desde cuándo?</p>
+            <p className="t-h2 mt-4 max-w-[16ch]">Te esperamos en el cruce de rutas</p>
           </div>
           <div className="flex flex-wrap gap-3 lg:justify-end">
             <BotonConsultar origen="pie">Consultar disponibilidad</BotonConsultar>
