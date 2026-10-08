@@ -216,6 +216,7 @@ export function Consulta() {
   const [contacto, setContacto] = useState("");
   const [envio, setEnvio] = useState<EstadoEnvio>("nada");
   const trampa = useRef<HTMLInputElement>(null);
+  const formMail = useRef<HTMLFormElement>(null);
 
   // Abrir / cerrar el <dialog> nativo según el contexto.
   useEffect(() => {
@@ -356,6 +357,11 @@ export function Consulta() {
     }
   }
 
+  // Al elegir «Por mail», el formulario aparece debajo de la vista previa: lo traemos a la vista.
+  useEffect(() => {
+    if (envio === "form") formMail.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, [envio]);
+
   const claseEntra = atras ? "paso-entra-atras" : "paso-entra";
   const nNoches = noches(entrada, salida);
 
@@ -377,12 +383,12 @@ export function Consulta() {
           <span className="mx-auto mb-3 block h-1 w-10 rounded-full bg-tinta/15 md:hidden" aria-hidden="true" />
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="etiqueta">Respondemos por WhatsApp o mail</p>
+              <p className="etiqueta">Sin compromiso</p>
               <h2
                 id="consulta-titulo"
                 ref={titulo}
                 tabIndex={-1}
-                className="mt-1.5 font-display text-[34px] leading-none font-bold uppercase outline-none"
+                className="mt-1.5 font-display text-[30px] leading-none font-bold uppercase outline-none md:text-[36px]"
               >
                 {modo === "empresa" ? "Tu equipo, en un lugar" : "Contanos tu viaje"}
               </h2>
@@ -568,6 +574,7 @@ export function Consulta() {
             {/* Envío por mail: aparece debajo de la vista previa */}
             {ultimo && (envio === "form" || envio === "enviando" || envio === "error") && (
               <form
+                ref={formMail}
                 className="paso-entra mt-5 space-y-3 rounded-2xl bg-white p-4 shadow-[inset_0_0_0_1px_var(--linea)]"
                 onSubmit={(e) => {
                   e.preventDefault();

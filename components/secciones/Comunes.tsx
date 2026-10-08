@@ -13,6 +13,7 @@ import { BotonConsultar } from "@/components/consulta/ConsultaContext";
 /** Portada de las páginas internas: foto a sangre, migas, H1 con la búsqueda y bajada. */
 export function PortadaPagina({
   foto: f,
+  fondo,
   etiqueta,
   titulo,
   bajada,
@@ -20,7 +21,9 @@ export function PortadaPagina({
   children,
   alto = "alta",
 }: {
-  foto: Foto;
+  foto?: Foto;
+  /** fondo gráfico cuando no hay foto (p. ej. el escudo de ruta gigante) */
+  fondo?: ReactNode;
   etiqueta: string;
   titulo: ReactNode;
   bajada?: ReactNode;
@@ -30,11 +33,20 @@ export function PortadaPagina({
 }) {
   return (
     <section data-hero className={`relative bg-grafito text-white ${alto === "alta" ? "min-h-[86svh]" : "min-h-[68svh]"} flex`}>
-      <div data-hero-ventana className="absolute inset-0 overflow-hidden">
-        <div className="absolute inset-x-0 -inset-y-[8%]" data-parallax="6">
-          <Image src={f.src} alt={f.alt} fill priority sizes="100vw" quality={75} placeholder="blur" blurDataURL={f.blurDataURL} className="object-cover" />
-        </div>
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgb(10_10_11/0.6)_0%,rgb(10_10_11/0.2)_40%,rgb(10_10_11/0.88)_100%)]" />
+      <div data-hero-ventana className="grano absolute inset-0 overflow-hidden">
+        {f ? (
+          <>
+            <div className="absolute inset-x-0 -inset-y-[8%]" data-parallax="6">
+              <Image src={f.src} alt={f.alt} fill priority sizes="100vw" quality={75} placeholder="blur" blurDataURL={f.blurDataURL} className="object-cover" />
+            </div>
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgb(10_10_11/0.6)_0%,rgb(10_10_11/0.2)_40%,rgb(10_10_11/0.88)_100%)]" />
+          </>
+        ) : (
+          <>
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_30%,#2a1517_0%,#141516_60%)]" />
+            {fondo}
+          </>
+        )}
       </div>
       <div data-hero-contenido className="contenedor relative flex w-full flex-col justify-end pt-[calc(var(--header-h)+40px)] pb-10 md:pb-16">
         <Migas items={migas} />
@@ -92,10 +104,15 @@ export function Migas({ items }: { items: { nombre: string; ruta: string }[] }) 
 
 /** Párrafo que se entiende solo: lo que leen y citan los buscadores con IA. */
 export function Citable({ children }: { children: ReactNode }) {
+  // Los textos largos (rutas, rubros) van más chicos para que no se vuelvan un muro.
+  const largo = (Array.isArray(children) ? children.join("") : String(children)).length > 230;
   return (
     <section className="seccion-chica">
       <div className="contenedor">
-        <p className="max-w-[46ch] font-display text-[clamp(28px,3.2vw,52px)] leading-[1.02] font-semibold uppercase" data-palabras>
+        <p
+          className={`font-display leading-[1.04] font-semibold uppercase ${largo ? "max-w-[58ch] text-[clamp(22px,2.2vw,36px)]" : "max-w-[46ch] text-[clamp(28px,3.2vw,52px)]"}`}
+          data-palabras
+        >
           {children}
         </p>
       </div>

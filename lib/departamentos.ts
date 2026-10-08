@@ -28,6 +28,8 @@ export const TIPOS: TipoDepto[] = [
       f("02-doble-escritorio.jpg", "Departamento con escritorio, TV y cama, con cabecera de madera"),
       f("05-bano.jpg", "Baño privado con mampara de vidrio"),
       f("06-pasillo.jpg", "Pasillo de los departamentos con puertas de madera"),
+      f("04-habitacion-y-bano.jpg", "Departamento con el baño privado a la vista"),
+      f("03-doble-vista-larga.jpg", "Departamento con escritorio y TV"),
     ],
   },
   {
@@ -40,6 +42,8 @@ export const TIPOS: TipoDepto[] = [
       f("03-doble-vista-larga.jpg", "Departamento doble con dos camas, escritorio y TV"),
       f("04-habitacion-y-bano.jpg", "Departamento con el baño privado a la vista"),
       f("05-bano.jpg", "Baño privado con mampara de vidrio"),
+      f("02-doble-escritorio.jpg", "Escritorio con TV dentro del departamento"),
+      f("06-pasillo.jpg", "Pasillo de los departamentos con puertas de madera"),
     ],
   },
   {
@@ -52,6 +56,8 @@ export const TIPOS: TipoDepto[] = [
       f("01-triple-dos-camas.jpg", "Departamento triple con cama matrimonial y cama individual, paredes grafito y madera"),
       f("02-doble-escritorio.jpg", "Escritorio con TV dentro del departamento"),
       f("05-bano.jpg", "Baño privado con mampara de vidrio"),
+      f("04-habitacion-y-bano.jpg", "Departamento con el baño privado a la vista"),
+      f("06-pasillo.jpg", "Pasillo de los departamentos con puertas de madera"),
     ],
   },
 ];
