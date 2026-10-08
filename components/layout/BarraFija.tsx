@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { BotonConsultar } from "@/components/consulta/ConsultaContext";
 import { Icono } from "@/components/marca/Icono";
 import { linkGenerico } from "@/lib/mensaje";
+import { MAPAS } from "@/lib/sitio";
 
 /**
  * Celular: barra flotante abajo con WhatsApp y Consultar, pasada la portada.
@@ -53,8 +54,11 @@ export function BarraFija() {
           >
             <Icono nombre="whatsapp" className="size-6" />
           </a>
-          <BotonConsultar modo={empresa ? "empresa" : undefined} origen="barra" className="btn flex-1 !min-h-12">
-            {empresa ? "Consultar para mi equipo" : "Consultar disponibilidad"}
+          <a href={MAPAS.google} target="_blank" rel="noopener noreferrer" aria-label="Cómo llegar" className="grid h-12 w-14 shrink-0 place-items-center rounded-full bg-white/12 text-white">
+            <Icono nombre="pin" className="size-6" grosor={1.8} />
+          </a>
+          <BotonConsultar modo={empresa ? "empresa" : undefined} origen="barra" className="btn flex-1 !min-h-12 !px-4" icono={false}>
+            {empresa ? "Consultar estadía" : "Consultar"}
           </BotonConsultar>
         </div>
       </div>

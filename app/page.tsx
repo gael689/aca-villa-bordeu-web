@@ -1,39 +1,47 @@
 import { Hero } from "@/components/secciones/Hero";
 import { Cinta } from "@/components/secciones/Cinta";
 import { Predio } from "@/components/secciones/Predio";
-import { ParaEmpresas } from "@/components/secciones/ParaEmpresas";
-import { Distancias } from "@/components/secciones/Distancias";
 import { DeptosApilados } from "@/components/secciones/DeptosApilados";
 import { RestoBloque } from "@/components/secciones/RestoBloque";
-import { DiaEquipo } from "@/components/secciones/DiaEquipo";
-import { ViajeSocios } from "@/components/secciones/ViajeSocios";
-import { Cierre, FaqLista, Servicios } from "@/components/secciones/Comunes";
+import { FaqLista } from "@/components/secciones/Comunes";
+import { PorQue } from "@/components/v2/PorQue";
+import { Ubicacion } from "@/components/v2/Ubicacion";
+import { Trabajo } from "@/components/v2/Trabajo";
+import { ServiciosLinea } from "@/components/v2/ServiciosLinea";
+import { Respaldo } from "@/components/v2/Respaldo";
+import { CierreParada } from "@/components/v2/CierreParada";
 import { FAQ_GENERAL } from "@/lib/faq";
+import { meta } from "@/lib/meta";
 import { JsonLd, motelJsonLd } from "@/lib/schema";
+
+// Versión 2 («Una parada estratégica»): todos los públicos; el trabajo es una sección, no la identidad.
+// Reseñas: no se incluyen hasta tener permiso para citar reseñas reales.
+export const metadata = meta({
+  title: "ACA Villa Bordeu · Alojamiento en Bahía Blanca sobre la Ruta 3",
+  description:
+    "Una parada estratégica en Bahía Blanca: departamentos con cochera, restaurante, Wi-Fi y recepción 24 h sobre el cruce de las rutas 3, 33 y 35. Motel del ACA.",
+  ruta: "/",
+});
 
 export default function Inicio() {
   return (
     <>
       <Hero />
       <Cinta />
-      <section id="predio" className="seccion scroll-mt-[var(--header-h)]">
+      <PorQue />
+      <section id="predio" className="seccion gris scroll-mt-[var(--header-h)]">
         <div className="contenedor">
           <Predio />
         </div>
       </section>
-      <ParaEmpresas />
-      <section className="seccion">
-        <div className="contenedor">
-          <Distancias />
-        </div>
-      </section>
+      <Ubicacion />
       <DeptosApilados />
-      <DiaEquipo />
+      <Trabajo />
       <RestoBloque />
-      <Servicios />
-      <ViajeSocios />
-      <FaqLista preguntas={FAQ_GENERAL.slice(0, 7)} />
-      <Cierre />
+      <ServiciosLinea />
+      <Respaldo />
+      <FaqLista preguntas={FAQ_GENERAL.slice(0, 6)} />
+      <CierreParada />
       <JsonLd data={motelJsonLd()} />
     </>
   );

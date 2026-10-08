@@ -17,7 +17,7 @@ const AEREA = foto("predio", "aerea-dia.jpg", "Vista aérea del complejo ACA Vil
 export function Predio({ titulo = true }: { titulo?: boolean }) {
   const [activo, setActivo] = useState(PREDIO[0].id);
   const p = PREDIO.find((x) => x.id === activo) ?? PREDIO[0];
-  const fp = foto(p.foto[0], p.foto[1], p.titulo);
+  const fp = p.foto ? foto(p.foto[0], p.foto[1], p.titulo) : null;
 
   return (
     <div>
@@ -25,14 +25,14 @@ export function Predio({ titulo = true }: { titulo?: boolean }) {
         <div className="mb-10 grid gap-6 md:mb-14 lg:grid-cols-[1fr_1fr] lg:items-end">
           <div>
             <p className="etiqueta" data-reveal>
-              El predio
+              El complejo
             </p>
             <h2 className="t-h2 mt-4" data-split>
-              Todo en un <span className="rojo-txt">mismo lugar</span>
+              Más que un lugar <span className="rojo-txt">para dormir</span>
             </h2>
           </div>
           <p className="lead text-asfalto lg:justify-self-end" data-reveal>
-            Dormís, comés, entrenás, te reunís y cargás combustible sin salir del complejo. Tocá cada punto del plano.
+            Tocá cada punto del plano.
           </p>
         </div>
       )}
@@ -70,7 +70,13 @@ export function Predio({ titulo = true }: { titulo?: boolean }) {
 
         {/* Ficha del punto activo */}
         <div className="tarjeta relative flex min-h-[300px] flex-col justify-end bg-grafito text-white">
-          <Image key={fp.src} src={fp.src} alt={fp.alt} fill sizes="(min-width: 1024px) 38vw, 100vw" placeholder="blur" blurDataURL={fp.blurDataURL} className="visor-entra object-cover" />
+          {fp ? (
+            <Image key={fp.src} src={fp.src} alt={fp.alt} fill sizes="(min-width: 1024px) 38vw, 100vw" placeholder="blur" blurDataURL={fp.blurDataURL} className="visor-entra object-cover" />
+          ) : (
+            <div key={p.id} className="visor-entra grano absolute inset-0 grid place-items-center bg-[radial-gradient(circle_at_50%_35%,#3a1418,#141516_70%)]">
+              <Icono nombre={p.icono} className="size-28 text-white/15" grosor={0.8} />
+            </div>
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
           <div key={p.id} className="paso-entra relative p-5 md:p-7">
             <span className="grid size-11 place-items-center rounded-full bg-rojo">

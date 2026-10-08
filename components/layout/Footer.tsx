@@ -7,7 +7,6 @@ import { linkGenerico } from "@/lib/mensaje";
 import { LogoACA } from "@/components/marca/Logo";
 import { Icono } from "@/components/marca/Icono";
 import { Escudo } from "@/components/marca/Escudo";
-import { BotonConsultar } from "@/components/consulta/ConsultaContext";
 
 const PRINCIPAL = [
   { href: "/empresas", texto: "Empresas" },
@@ -26,21 +25,7 @@ export function Footer() {
   return (
     <footer className="oscuro grano relative overflow-hidden pt-[clamp(72px,9vw,140px)] pb-[calc(96px+env(safe-area-inset-bottom))] md:pb-10">
       <div className="contenedor relative">
-        {/* Cierre comercial */}
-        <div className="grid gap-10 border-b border-white/10 pb-14 lg:grid-cols-[1.3fr_1fr] lg:items-end">
-          <div>
-            <p className="etiqueta">Recepción abierta las 24 horas</p>
-            <p className="t-h2 mt-4 max-w-[16ch]">Te esperamos en el cruce de rutas</p>
-          </div>
-          <div className="flex flex-wrap gap-3 lg:justify-end">
-            <BotonConsultar origen="pie">Consultar disponibilidad</BotonConsultar>
-            <a href={linkGenerico()} target="_blank" rel="noopener noreferrer" className="btn btn-wpp sin-burbuja">
-              <Icono nombre="whatsapp" className="size-5" /> WhatsApp
-            </a>
-          </div>
-        </div>
-
-        <div className="grid gap-12 py-14 sm:grid-cols-2 lg:grid-cols-[1.25fr_1fr_1fr_1fr]">
+        <div className="grid gap-12 pb-14 sm:grid-cols-2 lg:grid-cols-[1.25fr_1fr_1fr_1fr]">
           <div>
             <LogoACA className="h-10 w-auto text-rojo" titulo="Automóvil Club Argentino" />
             <p className="mt-5 max-w-[30ch] text-white/70">

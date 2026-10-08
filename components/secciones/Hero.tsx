@@ -14,8 +14,8 @@ const CAPAS = [
 const vars = (i: number) => ({ ["--i" as string]: i });
 
 /**
- * Portada del inicio, con el formato de Palazzo: fotos que se funden, un H1
- * que se entiende solo, una bajada y dos caminos. El logo vive en el encabezado.
+ * Portada del inicio (versión 2): «Una parada estratégica». Fotos que se funden,
+ * un H1 que se entiende solo, dos acciones y una línea de datos.
  */
 export function Hero() {
   return (
@@ -45,30 +45,34 @@ export function Hero() {
 
       <div data-hero-contenido className="contenedor relative z-10 flex w-full flex-col items-center pt-[calc(var(--header-h)+28px)] pb-[clamp(40px,9svh,104px)] text-center">
         <h1 className="hero-in w-full max-w-5xl [text-shadow:0_2px_28px_rgb(0_0_0/0.45)]" style={vars(0)}>
-          <span className="t-display block">Motel ACA en Bahía Blanca</span>
-          <span className="mt-2 block font-display text-[clamp(22px,2.8vw,44px)] leading-tight font-semibold text-white/90 uppercase">
-            Sobre el cruce de las rutas <span className="text-rojo">3, 33 y 35</span>
+          <span className="t-display block">
+            Una parada estratégica <span className="text-rojo">en Bahía Blanca</span>
           </span>
         </h1>
 
-        <p className="hero-in mt-5 max-w-[46ch] text-[clamp(16px,1.25vw,19px)] leading-snug text-white/85" style={vars(1)}>
-          Departamentos con cochera en la puerta, restaurante, gimnasio y estación de servicio en un mismo predio. Para equipos de trabajo y para los que
-          van de viaje.
+        <p className="hero-in mt-5 max-w-[44ch] text-[clamp(16px,1.25vw,19px)] leading-snug text-white/85" style={vars(1)}>
+          Alojamiento, restaurante y servicios sobre el cruce de las rutas 3, 33 y 35.
         </p>
 
-        <div className="hero-in mt-8 flex flex-col items-center gap-4 sm:flex-row sm:gap-6" style={vars(2)}>
+        <div className="hero-in mt-8 flex flex-col items-center gap-3 sm:flex-row sm:gap-4" style={vars(2)}>
           <BotonConsultar origen="portada">Consultar disponibilidad</BotonConsultar>
-          <Link href="/empresas" className="enlace inline-flex items-center gap-2 py-2 text-[15px]">
-            Alojamiento para empresas <Icono nombre="flecha" className="size-4" grosor={2} />
+          <Link href="/como-llegar" className="btn btn-fantasma">
+            <span>Cómo llegar</span>
+            <span className="burbuja" aria-hidden="true">
+              <Icono nombre="pin" className="size-4" grosor={2} />
+            </span>
           </Link>
         </div>
 
-        <a href="#predio" aria-label="Bajar" className="hero-in mt-10 hidden flex-col items-center gap-2 text-[11px] font-semibold tracking-[0.24em] text-white/60 uppercase md:flex" style={vars(3)}>
-          Conocé el lugar
-          <span className="relative block h-10 w-px overflow-hidden bg-white/20">
-            <span className="baja-linea absolute inset-0 bg-white" />
-          </span>
-        </a>
+        {/* Una sola línea de datos: lo que hace elegir este lugar */}
+        <ul className="hero-in mt-10 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[13px] font-semibold tracking-[0.08em] text-white/75 uppercase md:text-[14px]" style={vars(3)}>
+          {["26 departamentos", "Cochera", "Restaurante", "Wi-Fi", "Recepción 24 h"].map((d, i) => (
+            <li key={d} className="flex items-center gap-5">
+              {i > 0 && <span aria-hidden="true" className="size-1 rounded-full bg-rojo" />}
+              {d}
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

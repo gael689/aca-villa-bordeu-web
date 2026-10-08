@@ -15,11 +15,14 @@ export function DeptosApilados() {
               Departamentos
             </p>
             <h2 className="t-h2 mt-4" data-split>
-              Veintiséis puertas, <span className="rojo-txt">una cochera</span> en cada una
+              Descansá <span className="rojo-txt">como necesitás</span>
             </h2>
           </div>
           <div data-reveal>
-            <p className="lead text-asfalto">Todos traen lo mismo. Cambia cómo se duerme: solo, de a dos o de a tres.</p>
+            <p className="inline-flex items-center gap-2 rounded-full bg-rojo px-4 py-2 text-[15px] font-semibold text-white">
+              <Icono nombre="auto" className="size-5" grosor={1.8} /> Cochera frente al departamento
+            </p>
+            <p className="lead mt-4 text-asfalto">Single, doble o triple. Todos traen lo mismo.</p>
             <ul className="mt-5 flex flex-wrap gap-2">
               {INCLUYE.map((i) => (
                 <li key={i} className="chip">
@@ -56,7 +59,7 @@ export function DeptosApilados() {
                   </div>
                   <div className="flex flex-wrap gap-2.5">
                     <BotonConsultar modo="viaje" origen={`inicio-${t.slug}`} className="btn">
-                      Consultar
+                      Consultar disponibilidad
                     </BotonConsultar>
                     <Link href={`/departamentos#${t.slug}`} className="btn btn-fantasma sin-burbuja">
                       Ver fotos

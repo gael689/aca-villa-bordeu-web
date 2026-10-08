@@ -29,14 +29,12 @@ export function RestoBloque() {
             <div className="rounded-[var(--radio)] bg-white p-7 shadow-[inset_0_0_0_1px_var(--linea)] md:p-9" data-reveal>
               <p className="etiqueta">Restaurante</p>
               <h2 className="t-h2 mt-4">
-                Cocinamos <span className="rojo-txt">desde 1984</span>
+                Comé sin salir <span className="rojo-txt">del complejo</span>
               </h2>
-              <p className="mt-4 text-asfalto">
-                Parrilla, pastas y platos de siempre, con cava de vinos y barra. Para los que se alojan y para los que pasan por la ruta.
-              </p>
+              <p className="mt-4 text-asfalto">Parrilla, pastas y platos de siempre. Cocinamos desde 1984.</p>
               <div className="mt-7 flex flex-wrap gap-2.5">
                 <Link href="/restaurante" className="btn btn-oscuro">
-                  <span>Ver la carta</span>
+                  <span>Ver restaurante</span>
                   <span className="burbuja" aria-hidden="true">
                     <Icono nombre="der" className="size-4" grosor={2} />
                   </span>

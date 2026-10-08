@@ -14,6 +14,17 @@ export const DISTANCIAS_TRABAJO: Distancia[] = [
   { lugar: "Punta Alta", km: 38, min: 45 },
 ];
 
+/** Ubicación de la versión 2 (mismos datos medidos; Puerto Galván medido igual el 08/10/2026). */
+export const DISTANCIAS_V2: Distancia[] = [
+  { lugar: "General Cerri", km: 7, min: 10 },
+  { lugar: "Centro de Bahía Blanca", km: 8, min: 15 },
+  { lugar: "Terminal de ómnibus", km: 11, min: 20 },
+  { lugar: "Polo Petroquímico", km: 12, min: 20, nota: "Ingeniero White" },
+  { lugar: "Puerto Galván", km: 12, min: 20 },
+  { lugar: "Aeropuerto", km: 23, min: 35, nota: "Comandante Espora" },
+  { lugar: "Punta Alta", km: 38, min: 45 },
+];
+
 export const DISTANCIAS_ZONA: Distancia[] = [
   { lugar: "Médanos", km: 39, min: 35 },
   { lugar: "Tornquist", km: 74, min: 60 },
@@ -50,7 +61,8 @@ export type PuntoPredio = {
   icono: IconoNombre;
   x: number;
   y: number;
-  foto: [string, string];
+  /** null = sin foto todavía: la ficha muestra el ícono */
+  foto: [string, string] | null;
   href?: string;
 };
 
@@ -58,9 +70,9 @@ export const PREDIO: PuntoPredio[] = [
   { id: "deptos", titulo: "Departamentos", texto: "Los 26, en planta baja, cada uno con su cochera cubierta enfrente.", icono: "cama", x: 62, y: 39, foto: ["habitaciones", "01-triple-dos-camas.jpg"], href: "/departamentos" },
   { id: "cocheras", titulo: "Cocheras cubiertas", texto: "La camioneta queda en la puerta, a la vista.", icono: "auto", x: 73, y: 46, foto: ["habitaciones", "06-pasillo.jpg"] },
   { id: "resto", titulo: "Restaurante y bar", texto: "El Resto, la cava y la barra, abiertos también para quien pasa.", icono: "cubiertos", x: 42, y: 53, foto: ["restaurante", "01-salon-noche.jpg"], href: "/restaurante" },
-  { id: "cafeteria", titulo: "Recepción y cafetería", texto: "Atención las 24 horas y el café con el logo en la espuma.", icono: "campana", x: 27, y: 40, foto: ["cafeteria", "01-recepcion-cafeteria.jpg"] },
+  { id: "recepcion", titulo: "Recepción 24 h", texto: "Atención las 24 horas, para el que llega de noche por la ruta.", icono: "campana", x: 27, y: 40, foto: ["cafeteria", "01-recepcion-cafeteria.jpg"] },
   { id: "gym", titulo: "Gimnasio", texto: "Máquinas, bicis y pesas, con ventanales al parque.", icono: "pesa", x: 57, y: 56, foto: ["gimnasio", "01-gym-pared-verde.jpg"] },
   { id: "sala", titulo: "Sala de reuniones", texto: "Mesa para el equipo y pantalla para presentar.", icono: "reunion", x: 50, y: 46, foto: ["sala-reuniones", "01-mesa.jpg"], href: "/sala-de-reuniones" },
   { id: "ypf", titulo: "Estación YPF", texto: "Combustible para seguir viaje o para la flota del equipo.", icono: "surtidor", x: 15, y: 41, foto: ["cafeteria", "02-cafeteria-mesas.jpg"], href: "/estacion-de-servicio" },
-  { id: "parque", titulo: "Parque y juegos", texto: "Espacio verde para estirar las piernas y para los chicos.", icono: "arbol", x: 86, y: 68, foto: ["gimnasio", "02-gym-ventanales.jpg"] },
+  { id: "lavanderia", titulo: "Lavandería", texto: "Para la ropa de todos los días y la de trabajo.", icono: "lavarropas", x: 68, y: 57, foto: null },
 ];
