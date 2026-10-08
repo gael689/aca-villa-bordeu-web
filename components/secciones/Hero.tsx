@@ -49,7 +49,7 @@ export function Hero() {
           ACA Villa Bordeu
         </p>
         <h1 className="hero-in mt-3 w-full max-w-5xl [text-shadow:0_2px_28px_rgb(0_0_0/0.45)]" style={vars(0)}>
-          <span className="t-display block">Tu base en Bahía Blanca</span>
+          <span className="t-display block">Alojamiento en Bahía Blanca</span>
           <span className="mt-2 block font-display text-[clamp(22px,2.8vw,44px)] leading-tight font-semibold text-white/90 uppercase">
             Sobre el cruce de las rutas <span className="text-rojo">3, 33 y 35</span>
           </span>
