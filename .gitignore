@@ -47,3 +47,5 @@ dist/
 __pycache__/
 Thumbs.db
 desktop.ini
+
+.vercel

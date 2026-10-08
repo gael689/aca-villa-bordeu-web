@@ -5,7 +5,6 @@ import Script from "next/script";
 
 // Tag de Google Ads que ya usa el sitio viejo (hay campañas activas). Arranca con
 // Consent Mode en «denegado» y se habilita cuando la persona acepta el aviso.
-// Solo se carga en producción.
 const ADS_ID = "AW-17391925073";
 const CLAVE = "vb-cookies";
 
@@ -18,7 +17,9 @@ declare global {
 
 export function GoogleTagManager() {
   const [decision, setDecision] = useState<"si" | "no" | null | undefined>(undefined);
-  const activo = process.env.NEXT_PUBLIC_VERCEL_ENV === "production";
+  // Solo en producción y con el dominio real (NEXT_PUBLIC_INDEXABLE=1): en la URL de prueba
+  // de Vercel no se cargan ni el tag ni el aviso, así no ensucian las métricas de las campañas.
+  const activo = process.env.NEXT_PUBLIC_VERCEL_ENV === "production" && process.env.NEXT_PUBLIC_INDEXABLE === "1";
 
   useEffect(() => {
     let d: string | null = null;
