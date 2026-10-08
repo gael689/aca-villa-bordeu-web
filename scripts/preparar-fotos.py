@@ -33,7 +33,7 @@ for clave, origen in fuentes():
     im.thumbnail((MAX, MAX), Image.LANCZOS)
     destino = SALIDA / clave
     destino.parent.mkdir(parents=True, exist_ok=True)
-    im.save(destino, quality=84, optimize=True, progressive=True)
+    im.save(destino, quality=88 if clave.startswith("portada/") else 84, optimize=True, progressive=True)
     dims[clave] = list(im.size)
     chica = im.copy()
     chica.thumbnail((16, 16))
