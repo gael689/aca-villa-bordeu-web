@@ -12,7 +12,7 @@ const host =
 
 export const SITIO = {
   nombre: "ACA Villa Bordeu",
-  nombreLargo: "ACA Villa Bordeu · Motel del Automóvil Club Argentino en Bahía Blanca",
+  nombreLargo: "ACA Villa Bordeu · Alojamiento del Automóvil Club Argentino en Bahía Blanca",
   url: host.replace(/\/$/, ""),
   // Hasta publicar en el dominio, el sitio no se indexa (ver app/robots.ts).
   indexable: process.env.NEXT_PUBLIC_INDEXABLE === "1",

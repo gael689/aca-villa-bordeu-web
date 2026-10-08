@@ -10,7 +10,7 @@ import { Cierre, Citable, FaqLista, PortadaPagina } from "@/components/secciones
 export const metadata = meta({
   title: "Socios ACA: hotel en Bahía Blanca · ACA Villa Bordeu",
   description:
-    "Villa Bordeu es el motel de la Red Hotelera del Automóvil Club Argentino en Bahía Blanca, primera parada del corredor patagónico. Beneficios para socios.",
+    "Villa Bordeu es el alojamiento de la Red Hotelera del Automóvil Club Argentino en Bahía Blanca, primera parada del corredor patagónico. Beneficios para socios.",
   ruta: "/socios-aca",
 });
 
@@ -60,7 +60,7 @@ export default function Socios() {
       </PortadaPagina>
 
       <Citable>
-        ACA Villa Bordeu es el motel del Automóvil Club Argentino en Bahía Blanca. Integra la Red Hotelera ACA, con beneficios para socios, y es la primera
+        ACA Villa Bordeu es el alojamiento del Automóvil Club Argentino en Bahía Blanca. Integra la Red Hotelera ACA, con beneficios para socios, y es la primera
         parada de la red en el corredor hacia la Patagonia.
       </Citable>
 
