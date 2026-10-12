@@ -72,6 +72,10 @@ export const FAQ_EMPRESAS: Pregunta[] = [
     r: "Hay una sala de reuniones con TV y una mesa para unas diez personas. Pedila en la consulta.",
   },
   {
+    p: "¿Hay dónde trabajar con la computadora o hacer una llamada?",
+    r: "Sí. Hay una oficina de cortesía con escritorio privado, para trabajar tranquilo, hacer una llamada o recibir a alguien sin salir del predio.",
+  },
+  {
     p: "¿Cómo se arregla la parte administrativa con la empresa?",
     r: "Escribinos por WhatsApp o mail con el nombre de la empresa, cuántos son y las fechas, y te pasamos todo.",
   },

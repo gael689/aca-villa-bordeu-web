@@ -22,6 +22,8 @@ export const RUBROS: Rubro[] = [
       { lugar: "Puerto Rosales (Punta Alta)", km: 43, min: 55 },
       { lugar: "Centro de Bahía Blanca", km: 8, min: 15, nota: "Por si hay que hacer trámites o compras." },
     ],
+    oficina:
+      "El que coordina la parada tiene dónde repasar el cronograma, completar los permisos de trabajo o hacer la llamada con planta, sin ocupar el departamento ni la mesa del Resto.",
     necesidades: [
       {
         titulo: "Turnos que arrancan temprano",
@@ -92,6 +94,8 @@ export const RUBROS: Rubro[] = [
       { lugar: "Tornquist (RN 33)", km: 74, min: 60, nota: "Zona de parques eólicos." },
       { lugar: "Río Colorado (RN 22)", km: 163, min: 125 },
     ],
+    oficina:
+      "Para el jefe de obra que coordina relevos y avances: un escritorio privado para cerrar el parte del día, revisar la traza o atender la llamada con la oficina central.",
     necesidades: [
       {
         titulo: "Obras que avanzan sobre la traza",
@@ -158,6 +162,8 @@ export const RUBROS: Rubro[] = [
       { lugar: "Pedro Luro (RN 3 sur)", km: 113, min: 90 },
       { lugar: "Puerto de Ingeniero White", km: 12, min: 20 },
     ],
+    oficina:
+      "Para revisar planos, cargar el parte diario o armar la logística de la semana con tranquilidad, a pasos de la cochera donde quedan los vehículos.",
     necesidades: [
       {
         titulo: "Un frente de obra que se mueve",
@@ -223,6 +229,8 @@ export const RUBROS: Rubro[] = [
       { lugar: "Pedro Luro", km: 113, min: 90 },
       { lugar: "Pigüé", km: 133, min: 100 },
     ],
+    oficina:
+      "Para cerrar una operación, revisar papeles con un comprador o hacer las llamadas del día, en plena campaña o durante la exposición rural.",
     necesidades: [
       {
         titulo: "La campaña no tiene fecha fija",

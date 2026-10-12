@@ -114,7 +114,7 @@ export function Footer() {
         </div>
 
         {/* Firma gigante */}
-        <p aria-hidden="true" className="pointer-events-none font-display text-[22vw] leading-[0.78] font-bold tracking-[-0.02em] text-white/[0.045] uppercase select-none lg:text-[17.5vw]">
+        <p aria-hidden="true" className="pointer-events-none font-display text-[calc((min(100vw,1680px)-2*var(--gutter))/5)] leading-[0.78] font-bold tracking-[-0.02em] whitespace-nowrap text-white/[0.045] uppercase select-none">
           Villa Bordeu
         </p>
 

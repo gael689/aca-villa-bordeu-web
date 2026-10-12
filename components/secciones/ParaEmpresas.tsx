@@ -26,6 +26,11 @@ const RAZONES = [
     f: foto("cafeteria", "01-recepcion-cafeteria.jpg", "Recepción con mostrador iluminado"),
   },
   {
+    titulo: "Una oficina para el que coordina",
+    texto: "Una oficina de cortesía con escritorio privado: para cerrar el parte del día, hacer una llamada o recibir a un proveedor sin ocupar el departamento.",
+    f: foto("oficina-cortesia", "01-oficina.jpg", "Oficina de cortesía con escritorio de madera y paredes de listones"),
+  },
+  {
     titulo: "Sala de reuniones y gimnasio",
     texto: "Para la inducción del primer día, la reunión de obra o para soltar el cuerpo al volver.",
     f: foto("sala-reuniones", "01-mesa.jpg", "Sala de reuniones con mesa larga y pantalla"),
@@ -63,7 +68,7 @@ export function ParaEmpresas() {
               Por qué Villa Bordeu
             </p>
             <h2 className="t-h2 mt-4 max-w-[16ch]" data-split>
-              Cinco razones para alojar <span className="rojo-txt">al equipo acá</span>
+              Seis razones para alojar <span className="rojo-txt">al equipo acá</span>
             </h2>
           </div>
           <p className="lead text-asfalto lg:justify-self-end" data-reveal>
