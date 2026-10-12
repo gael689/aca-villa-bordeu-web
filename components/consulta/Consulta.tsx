@@ -485,7 +485,7 @@ export function Consulta() {
                     const activa = necesidades.includes(n);
                     return (
                       <Opcion key={n} activa={activa} onClick={() => setNecesidades((v) => (activa ? v.filter((x) => x !== n) : [...v, n]))}>
-                        <Icono nombre={ICONO_NECESIDAD[n]} className={`size-5 shrink-0 ${activa ? "text-ambar" : "text-rojo"}`} grosor={1.8} />
+                        <Icono nombre={ICONO_NECESIDAD[n]} className={`size-5 shrink-0 ${activa ? "text-white" : "text-rojo"}`} grosor={1.8} />
                         {n}
                         {activa && <Icono nombre="check" className="ml-auto size-4" grosor={2.4} />}
                       </Opcion>

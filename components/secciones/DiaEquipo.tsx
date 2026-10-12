@@ -25,7 +25,7 @@ export function DiaEquipo() {
               Todo resuelto, <span className="rojo-txt">de punta a punta</span>
             </p>
           </div>
-          <p className="hidden font-display text-[clamp(40px,5vw,84px)] leading-none font-bold text-ambar uppercase lg:block" data-dia-hora aria-hidden="true">
+          <p className="hidden font-display text-[clamp(40px,5vw,84px)] leading-none font-bold text-white uppercase lg:block" data-dia-hora aria-hidden="true">
             Al amanecer
           </p>
         </div>
@@ -41,7 +41,7 @@ export function DiaEquipo() {
                 <Image src={e.f.src} alt={e.f.alt} fill sizes="(min-width: 1024px) 30vw, 78vw" placeholder="blur" blurDataURL={e.f.blurDataURL} className="object-cover transition-transform duration-[1.6s] ease-[var(--ease-pt)] group-data-[activa=true]:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-5 md:p-7">
-                  <p className="num font-display text-[15px] font-bold text-ambar">
+                  <p className="num font-display text-[15px] font-bold text-rojo">
                     0{i + 1} · {e.momento}
                   </p>
                   <p className="mt-2 font-display text-[32px] leading-none font-bold uppercase md:text-[38px]">{e.titulo}</p>

@@ -11,7 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ["/empresas", 0.9],
     ["/departamentos", 0.9],
     ["/restaurante", 0.8],
-    ["/el-complejo", 0.7],
+    ["/instalaciones", 0.7],
     ["/sala-de-reuniones", 0.6],
     ["/estacion-de-servicio", 0.6],
     ["/socios-aca", 0.6],

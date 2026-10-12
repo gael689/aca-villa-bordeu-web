@@ -1,4 +1,4 @@
-import { Car, Wifi, ConciergeBell, UtensilsCrossed, Coffee, Dumbbell, WashingMachine, Presentation, PawPrint, Fuel } from "lucide-react";
+import { Car, Wifi, ConciergeBell, UtensilsCrossed, Coffee, Dumbbell, WashingMachine, Presentation, Briefcase, PawPrint, Fuel } from "lucide-react";
 import { BotonConsultar } from "@/components/consulta/ConsultaContext";
 
 // Mismos servicios confirmados que el resto del sitio, con una línea cada uno.
@@ -11,6 +11,7 @@ const SERVICIOS = [
   { Icono: Dumbbell, t: "Gimnasio", d: "Para arrancar o cerrar el día." },
   { Icono: WashingMachine, t: "Lavandería", d: "Para la ropa de todos los días y la de trabajo." },
   { Icono: Presentation, t: "Sala de reuniones", d: "Mesa grande y pantalla." },
+  { Icono: Briefcase, t: "Oficina de cortesía", d: "Un escritorio privado para trabajar tranquilo." },
   { Icono: PawPrint, t: "Pet friendly", d: "Tu mascota también viaja." },
   { Icono: Fuel, t: "Estación de servicio", d: "YPF en el mismo predio." },
 ];
@@ -31,7 +32,7 @@ export function ServiciosLinea() {
             Lo que tenés <span className="rojo-txt">en el predio</span>
           </h2>
           <p className="mt-5 max-w-[34ch] text-asfalto" data-reveal>
-            Todo lo que hace falta para una noche o para varias semanas, sin salir del complejo.
+            Todo lo que hace falta para una noche o para varias semanas, sin salir del predio.
           </p>
           <div className="mt-8" data-reveal>
             <BotonConsultar origen="v2-servicios">Consultar disponibilidad</BotonConsultar>

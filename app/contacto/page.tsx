@@ -36,8 +36,8 @@ export default function Contacto() {
           <div className="flex flex-col gap-3">
             <a href={linkGenerico()} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between gap-4 rounded-[var(--radio)] bg-wpp p-6 text-white md:p-8">
               <span>
-                <span className="block text-[13px] font-semibold text-white/80">WhatsApp y teléfono</span>
-                <span className="block font-display text-[30px] leading-none font-bold">{SITIO.telefono}</span>
+                <span className="block text-[13px] font-semibold text-white/80">WhatsApp</span>
+                <span className="block font-display text-[30px] leading-none font-bold">{SITIO.celular}</span>
               </span>
               <Icono nombre="whatsapp" className="size-9" />
             </a>

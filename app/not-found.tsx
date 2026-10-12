@@ -9,7 +9,7 @@ export default function NoEncontrada() {
         <Escudo numero="404" className="h-auto w-full" />
       </div>
       <div className="contenedor relative pt-[var(--header-h)]">
-        <p className="etiqueta !text-ambar">Error 404</p>
+        <p className="etiqueta !text-white/70">Error 404</p>
         <h1 className="t-display mt-5 max-w-[11ch]">
           Esta salida <span className="text-rojo">no lleva</span> a ningún lado
         </h1>

@@ -22,7 +22,7 @@ const USOS: { icono: IconoNombre; titulo: string; texto: string }[] = [
 
 const PREGUNTAS: Pregunta[] = [
   { p: "¿La sala tiene pantalla?", r: "Sí, tiene una pantalla en la pared para presentar, y una mesa larga con sillas." },
-  { p: "¿La puede usar una empresa que no se aloja en el complejo?", r: "Escribinos por WhatsApp o mail con la fecha y cuántos son, y te pasamos todo." },
+  { p: "¿La puede usar una empresa que no se aloja en Villa Bordeu?", r: "Escribinos por WhatsApp o mail con la fecha y cuántos son, y te pasamos todo." },
   { p: "¿Se puede sumar café o almuerzo?", r: "Sí, el Resto y la cafetería están en el mismo edificio. Contanos qué necesitan cuando consultes." },
 ];
 
@@ -41,7 +41,7 @@ export default function SalaDeReuniones() {
         }
         bajada="Mesa para el equipo y pantalla para presentar, en el mismo predio donde duermen y comen."
         migas={[
-          { nombre: "El complejo", ruta: "/el-complejo" },
+          { nombre: "Instalaciones", ruta: "/instalaciones" },
           { nombre: "Sala de reuniones", ruta: "/sala-de-reuniones" },
         ]}
       >
@@ -52,7 +52,7 @@ export default function SalaDeReuniones() {
 
       <Citable>
         ACA Villa Bordeu tiene una sala de reuniones con pantalla y mesa larga en su predio de Bahía Blanca, pensada para inducciones, capacitaciones y
-        reuniones de equipos que se alojan en el complejo.
+        reuniones de equipos que se alojan en Villa Bordeu.
       </Citable>
 
       <section className="seccion-chica">

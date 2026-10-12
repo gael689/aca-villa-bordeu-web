@@ -131,8 +131,35 @@ img {
     height: 2px;
     background: currentColor;
   }
+  /* Una sección, un acento (pedido del dueño, oct/2026): en lo oscuro el
+     acento es el rojo; el ámbar queda solo para el Resto (clase .ambar). */
   .oscuro .etiqueta {
+    color: #ff3b4b;
+  }
+  .ambar .etiqueta,
+  .oscuro.ambar .etiqueta {
     color: var(--color-ambar);
+  }
+  /* Sobre claro el ámbar no se lee como texto (2,2:1): se usa como relleno.
+     Palabra destacada en tinta con un subrayado grueso ámbar. */
+  .ambar-marca {
+    background: linear-gradient(transparent 62%, var(--color-ambar) 62%, var(--color-ambar) 92%, transparent 92%);
+    padding: 0 0.06em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+  .ambar-pastilla,
+  .ambar .etiqueta.ambar-pastilla {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    background: var(--color-ambar);
+    color: var(--color-tinta);
+    padding: 0.35em 0.9em;
+  }
+  .ambar-pastilla::before,
+  .ambar .etiqueta.ambar-pastilla::before {
+    display: none;
   }
   .rojo-txt {
     color: var(--color-rojo);
@@ -231,6 +258,17 @@ img {
   }
   .btn-oscuro::before {
     background: var(--color-rojo);
+  }
+  /* Ámbar con texto tinta: 9,7:1. */
+  .btn-ambar {
+    background: var(--color-ambar);
+    color: var(--color-tinta);
+  }
+  .btn-ambar::before {
+    background: #f2b85c;
+  }
+  .btn-ambar .burbuja {
+    background: rgb(28 29 31 / 0.12);
   }
   .btn-claro {
     background: #fff;
@@ -430,6 +468,17 @@ img {
   .js .hero-in {
     animation: texto-sube 1.2s var(--ease-pt) both;
     animation-delay: calc(var(--i, 0) * 0.09s + 0.1s);
+  }
+  /* Instalaciones: los espacios de «Y más…» entran de a uno */
+  .tile-in {
+    animation: tile-in 0.8s var(--ease-pt) both;
+    animation-delay: calc(var(--i, 0) * 0.06s);
+  }
+  @keyframes tile-in {
+    from {
+      transform: translateY(24px) scale(0.97);
+      opacity: 0;
+    }
   }
   @keyframes texto-sube {
     from {

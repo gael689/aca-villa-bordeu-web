@@ -23,7 +23,7 @@ export const RUTAS: Ruta[] = [
     recorrido: [
       "La RN 3 sale de la Capital por Cañuelas y baja derecho por el centro de la provincia: Las Flores, Azul y después la llanura del sur hasta Tres Arroyos.",
       "Coronel Dorrego es la última ciudad antes de llegar: desde ahí quedan unos 100 km.",
-      "La RN 3 pasa por Bahía Blanca y el complejo está del lado suroeste, camino a General Cerri, sobre el acceso de las rutas 33 y 35. En Google Maps o Waze buscá «ACA Villa Bordeu» y el navegador te lleva hasta el Camino Parque Sesquicentenario 1699.",
+      "La RN 3 pasa por Bahía Blanca y Villa Bordeu está del lado suroeste, camino a General Cerri, sobre el acceso de las rutas 33 y 35. En Google Maps o Waze buscá «ACA Villa Bordeu» y el navegador te lleva hasta el Camino Parque Sesquicentenario 1699.",
       "El navegador puede proponerte otro camino: la RN 205 y la provincial 65 hasta la RN 33, que baja por Tornquist. Mide unos 677 km y termina en el mismo cruce, a metros del predio.",
     ],
     porQueParar: [
@@ -44,7 +44,7 @@ export const RUTAS: Ruta[] = [
       },
       {
         p: "¿Hay que cruzar Bahía Blanca para llegar?",
-        r: "Por la RN 3, la ruta pasa por la ciudad y el complejo queda del lado suroeste, camino a General Cerri. Por la RN 33 llegás directo al cruce donde está el predio.",
+        r: "Por la RN 3, la ruta pasa por la ciudad y Villa Bordeu queda del lado suroeste, camino a General Cerri. Por la RN 33 llegás directo al cruce donde está el predio.",
       },
       {
         p: "¿Puedo llegar de noche?",
@@ -70,11 +70,11 @@ export const RUTAS: Ruta[] = [
       "La RN 22 recorre el Alto Valle de punta a punta: Cipolletti, General Roca, Villa Regina. Es el tramo con más tránsito, entre chacras y camiones.",
       "Después de Chichinales la ruta deja el valle y sigue hasta Choele Choel. Más adelante, en Río Colorado, cruzás el río y pasás un tramo corto por La Pampa antes de entrar a la provincia de Buenos Aires.",
       "Médanos es el último pueblo. Unos kilómetros más adelante, la RN 22 termina en la RN 3: doblás hacia Bahía Blanca, pasás el acceso a General Cerri y llegás a Villa Bordeu.",
-      "El complejo está antes de la ciudad. No hace falta entrar a Bahía Blanca para llegar ni para volver a salir.",
+      "Villa Bordeu está antes de la ciudad. No hace falta entrar a Bahía Blanca para llegar ni para volver a salir.",
     ],
     porQueParar: [
       "Si vas hacia Buenos Aires o la costa, partís el viaje a la mitad y dormís con el auto bajo techo en la puerta del departamento.",
-      "Si venís por trabajo a la zona del Polo, Ingeniero White queda a 12 km del complejo.",
+      "Si venís por trabajo a la zona del Polo, Ingeniero White queda a 12 km de Villa Bordeu.",
       "La YPF del predio te deja salir con el tanque lleno a la mañana.",
     ],
     siguiente:
@@ -86,7 +86,7 @@ export const RUTAS: Ruta[] = [
       },
       {
         p: "¿Dónde está el empalme de la RN 22 con la RN 3?",
-        r: "Al sur de Bahía Blanca, después de Médanos. Desde ahí tomás la RN 3 hacia la ciudad y el complejo aparece antes de llegar.",
+        r: "Al sur de Bahía Blanca, después de Médanos. Desde ahí tomás la RN 3 hacia la ciudad y Villa Bordeu aparece antes de llegar.",
       },
       {
         p: "¿Cuánto se tarda en auto desde Neuquén?",
@@ -106,7 +106,7 @@ export const RUTAS: Ruta[] = [
     description:
       "Unos 814 km por la RN 33, por Venado Tuerto, Trenque Lauquen y Pigüé. La ruta termina en el cruce donde está ACA Villa Bordeu, en Bahía Blanca. Mirá el recorrido.",
     h1: "Cómo llegar desde Rosario por la Ruta 33",
-    bajada: "La RN 33 termina en el mismo cruce donde está el complejo.",
+    bajada: "La RN 33 termina en el mismo cruce donde está Villa Bordeu.",
     citable:
       "Desde Rosario, ACA Villa Bordeu queda a unos 814 km por la Ruta Nacional 33, que pasa por Venado Tuerto, Rufino, Trenque Lauquen, Pigüé y Tornquist. Son alrededor de 10 horas de manejo sin paradas. La RN 33 termina en la RN 3, en el suroeste de Bahía Blanca, y el alojamiento del Automóvil Club Argentino está sobre ese acceso.",
     km: 814,
@@ -116,7 +116,7 @@ export const RUTAS: Ruta[] = [
       "La RN 33 sale de Rosario hacia el sudoeste y cruza el sur de Santa Fe: Casilda, Firmat, Venado Tuerto y Rufino.",
       "Entra a Buenos Aires por General Villegas y baja por el oeste de la provincia hasta Trenque Lauquen, Guaminí y Pigüé. Es el corredor por el que el grano viaja al puerto de Bahía Blanca, así que vas a compartir la ruta con camiones.",
       "Tornquist, al pie de las sierras, es el último pueblo grande: desde ahí quedan 74 km.",
-      "La RN 33 termina en la RN 3, en el acceso suroeste de Bahía Blanca. El complejo está ahí mismo: llegás antes de entrar a la ciudad.",
+      "La RN 33 termina en la RN 3, en el acceso suroeste de Bahía Blanca. Villa Bordeu está ahí mismo: llegás antes de entrar a la ciudad.",
     ],
     porQueParar: [
       "Después de diez horas de ruta, el último kilómetro es el más corto: la RN 33 te deja en la puerta.",
@@ -132,11 +132,11 @@ export const RUTAS: Ruta[] = [
       },
       {
         p: "¿Qué tan lejos queda de Tornquist y de Pigüé?",
-        r: "Tornquist está a 74 km del complejo y Pigüé a 133 km, los dos sobre la misma RN 33.",
+        r: "Tornquist está a 74 km de Villa Bordeu y Pigüé a 133 km, los dos sobre la misma RN 33.",
       },
       {
-        p: "¿La RN 33 llega directo al complejo?",
-        r: "Sí. La RN 33 termina en el cruce con la RN 3, en el acceso suroeste de Bahía Blanca, y el complejo está sobre ese acceso.",
+        p: "¿La RN 33 llega directo a Villa Bordeu?",
+        r: "Sí. La RN 33 termina en el cruce con la RN 3, en el acceso suroeste de Bahía Blanca, y Villa Bordeu está sobre ese acceso.",
       },
       {
         p: "¿Puedo comer al llegar?",
@@ -161,7 +161,7 @@ export const RUTAS: Ruta[] = [
     recorrido: [
       "La RN 35 sale de Santa Rosa hacia el sur y atraviesa el este de La Pampa. Los pueblos quedan a un costado de la ruta, cada uno con su acceso.",
       "Pasando Jacinto Aráuz se entra a la provincia de Buenos Aires. Después del acceso a Villa Iris quedan unos 100 km.",
-      "La propia RN 35 marca Villa Bordeu en su kilómetro 8, a partir del cruce con la RN 33. Ahí está el complejo: llegás antes de entrar a la ciudad.",
+      "La propia RN 35 marca Villa Bordeu en su kilómetro 8, a partir del cruce con la RN 33. Ahí está el alojamiento: llegás antes de entrar a la ciudad.",
       "Si venís de más lejos, es la misma RN 35 que viene desde Río Cuarto, en Córdoba.",
     ],
     porQueParar: [
@@ -177,8 +177,8 @@ export const RUTAS: Ruta[] = [
         r: "Unos 322 km por la RN 35, medidos desde el centro de Santa Rosa: alrededor de 4 horas de manejo.",
       },
       {
-        p: "¿La RN 35 pasa por el complejo?",
-        r: "Sí. La RN 35 llega a Bahía Blanca por Villa Bordeu, junto al cruce con la RN 33, y el complejo está ahí.",
+        p: "¿La RN 35 pasa por Villa Bordeu?",
+        r: "Sí. La RN 35 llega a Bahía Blanca por Villa Bordeu, junto al cruce con la RN 33, y el alojamiento está ahí.",
       },
       {
         p: "¿A cuánto queda el centro de Bahía Blanca?",
@@ -208,7 +208,7 @@ export const RUTAS: Ruta[] = [
       "Si venís de Madryn o de más al sur, es la misma RN 3. En Viedma cruzás el río Negro y estás en Carmen de Patagones, ya en la provincia de Buenos Aires.",
       "Desde Patagones la ruta sube por Stroeder y Villalonga hasta Pedro Luro, donde cruza el río Colorado. Sigue el valle regado de Villarino: Hilario Ascasubi y Mayor Buratovich.",
       "Pasando Buratovich se encuentra el empalme con la RN 22, la que viene del Alto Valle. Seguís por la RN 3 y pasás el acceso a General Cerri.",
-      "Unos kilómetros después llegás a Villa Bordeu. El complejo está antes de la ciudad: no hace falta entrar a Bahía Blanca.",
+      "Unos kilómetros después llegás a Villa Bordeu. El alojamiento está antes de la ciudad: no hace falta entrar a Bahía Blanca.",
     ],
     porQueParar: [
       "Es la primera parada de la Red ACA en la provincia de Buenos Aires para el que sube desde el sur.",
@@ -224,7 +224,7 @@ export const RUTAS: Ruta[] = [
       },
       {
         p: "¿Y desde Pedro Luro?",
-        r: "Pedro Luro queda a 113 km del complejo, unos 90 minutos por la RN 3.",
+        r: "Pedro Luro queda a 113 km de Villa Bordeu, unos 90 minutos por la RN 3.",
       },
       {
         p: "¿Río Colorado está sobre este camino?",

@@ -12,7 +12,7 @@ const PRINCIPAL = [
   { href: "/empresas", texto: "Empresas" },
   { href: "/departamentos", texto: "Departamentos" },
   { href: "/restaurante", texto: "Restaurante" },
-  { href: "/el-complejo", texto: "El complejo" },
+  { href: "/instalaciones", texto: "Instalaciones" },
   { href: "/sala-de-reuniones", texto: "Sala de reuniones" },
   { href: "/estacion-de-servicio", texto: "Estación de servicio" },
   { href: "/socios-aca", texto: "Socios ACA" },
@@ -43,6 +43,9 @@ export function Footer() {
               <a href={telLink} className="flex items-center gap-3 text-white/85 hover:text-white">
                 <Icono nombre="telefono" className="size-5 shrink-0 text-rojo" /> {SITIO.telefono}
               </a>
+              <a href={linkGenerico()} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white/85 hover:text-white">
+                <Icono nombre="whatsapp" className="size-5 shrink-0 text-rojo" /> {SITIO.celular}
+              </a>
               <a href={mailLink} className="flex items-center gap-3 break-all text-white/85 hover:text-white">
                 <Icono nombre="sobre" className="size-5 shrink-0 text-rojo" /> {SITIO.mail}
               </a>
@@ -58,7 +61,7 @@ export function Footer() {
           </div>
 
           <nav aria-label="Secciones">
-            <p className="mb-4 text-[13px] font-semibold tracking-[0.18em] text-white/45 uppercase">El complejo</p>
+            <p className="mb-4 text-[13px] font-semibold tracking-[0.18em] text-white/45 uppercase">Villa Bordeu</p>
             <ul className="space-y-2">
               {PRINCIPAL.map((l) => (
                 <li key={l.href}>

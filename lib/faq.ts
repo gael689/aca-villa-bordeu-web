@@ -30,10 +30,10 @@ export const FAQ_GENERAL: Pregunta[] = [
   },
   {
     p: "¿Aceptan mascotas?",
-    r: "Sí, el complejo es pet friendly. Avisanos al consultar que venís con tu mascota.",
+    r: "Sí, Villa Bordeu es pet friendly. Avisanos al consultar que venís con tu mascota.",
   },
   {
-    p: "¿Qué hay en el complejo además de los departamentos?",
+    p: "¿Qué hay en Villa Bordeu además de los departamentos?",
     r: "El restaurante Resto, que cocina desde 1984, cafetería, bar con cava, room service, lavandería, gimnasio, sala de reuniones, juegos para chicos, una tienda con productos Villa Bordeu y la estación de servicio YPF.",
   },
   {
@@ -60,12 +60,12 @@ export const FAQ_EMPRESAS: Pregunta[] = [
     r: "Cada departamento tiene su cochera cubierta enfrente. Si vienen con camiones o equipos grandes, contanos qué traen y te confirmamos.",
   },
   {
-    p: "¿El equipo puede comer en el complejo?",
+    p: "¿El equipo puede comer sin salir del predio?",
     r: "Sí. Está el Resto, con parrilla, pastas y platos caseros, la cafetería y room service. Si necesitan algo para el mediodía, contanos cómo trabajan y lo vemos por WhatsApp.",
   },
   {
     p: "¿Hay lavandería?",
-    r: "Sí, hay lavandería en el complejo. Te explicamos cómo funciona cuando consultes.",
+    r: "Sí, hay lavandería en el predio. Te explicamos cómo funciona cuando consultes.",
   },
   {
     p: "¿Tienen lugar para reuniones o capacitaciones?",

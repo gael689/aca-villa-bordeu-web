@@ -83,7 +83,7 @@ export async function POST(req: Request) {
         html: `<div style="font-family:Arial,sans-serif;font-size:15px;line-height:1.55;color:#1c1d1f;max-width:560px">
           <p>¡Hola${datos.nombre ? ` ${escapar(datos.nombre)}` : ""}! Recibimos tu consulta y te respondemos lo antes posible.</p>
           <div style="background:#f6f5f2;border-radius:12px;padding:16px;white-space:pre-line">${escapar(datos.mensaje)}</div>
-          <p>Si preferís, escribinos por WhatsApp al ${SITIO.telefono}. Recepción abierta las 24 horas.</p>
+          <p>Si preferís, escribinos por WhatsApp al ${SITIO.celular} o llamá al ${SITIO.telefono}. Recepción abierta las 24 horas.</p>
           <p style="color:#55585a;font-size:13px">ACA Villa Bordeu · ${SITIO.direccion.calle}, ${SITIO.direccion.ciudad}</p>
         </div>`,
       });

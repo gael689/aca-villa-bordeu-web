@@ -17,7 +17,7 @@ export type Rubro = {
   bajada: string; // una frase debajo del H1
   citable: string; // 2–3 frases que se entienden solas (GEO)
   distancias: Distancia[]; // lugares de trabajo de ese rubro
-  necesidades: { titulo: string; texto: string }[]; // 4 cosas que necesita ese rubro y cómo las resuelve el complejo
+  necesidades: { titulo: string; texto: string }[]; // 4 cosas que necesita ese rubro y cómo las resuelve Villa Bordeu
   contexto: { texto: string; fuente: string; url: string }; // dato público con fuente (sin nombrar clientes)
   preguntas: Pregunta[]; // 4–5 propias
   foto: ClaveFoto;

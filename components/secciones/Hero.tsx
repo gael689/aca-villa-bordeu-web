@@ -53,7 +53,7 @@ export function Hero() {
         </h1>
 
         <p className="hero-in mt-5 max-w-[44ch] text-[clamp(16px,1.25vw,19px)] leading-snug text-white/85" style={vars(1)}>
-          Alojamiento, restaurante y servicios sobre el cruce de las rutas 3, 33 y 35.
+          Alojamiento, restaurante y servicios sobre el cruce de las rutas 3, 33 y 35, a minutos del puerto.
         </p>
 
         <div className="hero-in mt-8 flex flex-col items-center gap-3 sm:flex-row sm:gap-4" style={vars(2)}>
@@ -68,7 +68,7 @@ export function Hero() {
 
         {/* Una sola línea de datos: lo que hace elegir este lugar */}
         <ul className="hero-in mt-10 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[13px] font-semibold tracking-[0.08em] text-white/75 uppercase md:text-[14px]" style={vars(3)}>
-          {["26 departamentos", "Cochera", "Restaurante", "Wi-Fi", "Recepción 24 h"].map((d, i) => (
+          {["Desde 1984", "26 departamentos", "Cochera", "Restaurante", "Recepción 24 h"].map((d, i) => (
             <li key={d} className="flex items-center gap-5">
               {i > 0 && <span aria-hidden="true" className="size-1 rounded-full bg-rojo" />}
               {d}

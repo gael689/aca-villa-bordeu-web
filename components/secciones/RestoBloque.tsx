@@ -4,13 +4,13 @@ import { foto } from "@/lib/fotos";
 import { MENSAJE_MESA, linkWhatsApp } from "@/lib/mensaje";
 import { Icono } from "@/components/marca/Icono";
 
-/** El Resto en el inicio: foto grande con parallax, «desde 1984» y la carta. */
+/** El Resto en el inicio: foto grande con parallax, «desde 1984» y la carta. Acento ámbar, sin rojo (una sección, un acento). */
 export function RestoBloque() {
   const salon = foto("restaurante", "01-salon-noche.jpg", "Salón del Resto de noche, con luces cálidas en el techo");
   const cava = foto("restaurante", "03-cava-vinos.jpg", "Cava de vinos detrás de la barra");
   const cafe = foto("restaurante", "05-cafe-logo.jpg", "Café con el logo ACA dibujado en la espuma");
   return (
-    <section className="seccion overflow-hidden">
+    <section className="ambar seccion overflow-hidden">
       <div className="contenedor">
         <div className="grid gap-4 lg:grid-cols-12">
           <div className="tarjeta relative min-h-[420px] lg:col-span-8 lg:min-h-[560px]" data-clip>
@@ -22,18 +22,18 @@ export function RestoBloque() {
               <p className="font-display text-[clamp(56px,7vw,120px)] leading-[0.8] font-bold">
                 <span className="num" data-contador="1984">1984</span>
               </p>
-              <p className="mt-2 font-display text-[22px] font-semibold uppercase md:text-[28px]">El año en que abrió el Resto</p>
+              <p className="mt-2 font-display text-[22px] font-semibold uppercase md:text-[28px]">Abiertos desde entonces</p>
             </div>
           </div>
           <div className="flex flex-col gap-4 lg:col-span-4">
             <div className="rounded-[var(--radio)] bg-white p-7 shadow-[inset_0_0_0_1px_var(--linea)] md:p-9" data-reveal>
-              <p className="etiqueta">Restaurante</p>
+              <p className="etiqueta ambar-pastilla">Restaurante</p>
               <h2 className="t-h2 mt-4">
-                Comé sin salir <span className="rojo-txt">del complejo</span>
+                Comé sin salir <span className="ambar-marca">de Villa Bordeu</span>
               </h2>
               <p className="mt-4 text-asfalto">Parrilla, pastas y platos de siempre. Cocinamos desde 1984.</p>
               <div className="mt-7 flex flex-wrap gap-2.5">
-                <Link href="/restaurante" className="btn btn-oscuro">
+                <Link href="/restaurante" className="btn btn-ambar">
                   <span>Ver restaurante</span>
                   <span className="burbuja" aria-hidden="true">
                     <Icono nombre="der" className="size-4" grosor={2} />

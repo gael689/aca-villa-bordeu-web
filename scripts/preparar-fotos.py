@@ -5,7 +5,7 @@ Uso (desde la raíz del repo):  python scripts/preparar-fotos.py
 Fuentes: ../fotos-seleccion (las del dueño) y ../relevamiento/imagenes-sitio (sitio viejo, baja resolución).
 """
 import base64, io, json, pathlib
-from PIL import Image, ImageOps
+from PIL import Image, ImageFilter, ImageOps
 
 RAIZ = pathlib.Path(__file__).resolve().parent.parent
 CLIENTE = RAIZ.parent
@@ -31,9 +31,15 @@ dims, blur = {}, {}
 for clave, origen in fuentes():
     im = ImageOps.exif_transpose(Image.open(origen)).convert("RGB")
     im.thumbnail((MAX, MAX), Image.LANCZOS)
+    q = 88 if clave.startswith("portada/") else 84
+    # Las del dueño que llegaron por WhatsApp ya vienen comprimidas: volver a apretarlas
+    # suma bloques. Se guardan casi sin pérdida, con un enfoque suave que no exagera artefactos.
+    if clave not in VIEJAS and max(im.size) < 1800:
+        q = 93
+        im = im.filter(ImageFilter.UnsharpMask(radius=1.2, percent=45, threshold=4))
     destino = SALIDA / clave
     destino.parent.mkdir(parents=True, exist_ok=True)
-    im.save(destino, quality=88 if clave.startswith("portada/") else 84, optimize=True, progressive=True)
+    im.save(destino, quality=q, optimize=True, progressive=True)
     dims[clave] = list(im.size)
     chica = im.copy()
     chica.thumbnail((16, 16))

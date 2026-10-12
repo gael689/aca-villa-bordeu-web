@@ -68,14 +68,14 @@ export default async function PaginaRuta({ params }: PageProps<"/como-llegar/[ru
             </div>
             <div className="border-white/10 p-6 sm:border-l md:p-8">
               <p className="text-[13px] font-semibold tracking-[0.16em] text-white/50 uppercase">Distancia</p>
-              <p className="num font-display text-[52px] leading-none font-bold text-ambar">
+              <p className="num font-display text-[52px] leading-none font-bold text-rojo">
                 <span data-contador={r.km}>{r.km}</span>
                 <span className="ml-1 text-[20px] text-white/60">km</span>
               </p>
             </div>
             <div className="border-white/10 p-6 sm:border-l md:p-8">
               <p className="text-[13px] font-semibold tracking-[0.16em] text-white/50 uppercase">Manejando</p>
-              <p className="font-display text-[52px] leading-none font-bold text-ambar">{r.horas}</p>
+              <p className="font-display text-[52px] leading-none font-bold text-rojo">{r.horas}</p>
               <p className="text-[13px] text-white/50">sin tránsito ni paradas</p>
             </div>
           </div>
@@ -145,7 +145,7 @@ export default async function PaginaRuta({ params }: PageProps<"/como-llegar/[ru
           <ul className="mt-12 grid gap-3 md:grid-cols-3">
             {r.porQueParar.map((t, i) => (
               <li key={t.slice(0, 20)} className="rounded-[var(--radio)] bg-white/[0.05] p-7 text-white/85 [box-shadow:inset_0_0_0_1px_rgb(255_255_255/0.08)]" data-reveal data-delay={String(i * 0.08)}>
-                <p className="num font-display text-[40px] leading-none font-bold text-ambar">0{i + 1}</p>
+                <p className="num font-display text-[40px] leading-none font-bold text-rojo">0{i + 1}</p>
                 <p className="mt-4">{t}</p>
               </li>
             ))}

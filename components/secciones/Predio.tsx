@@ -5,7 +5,7 @@ import { foto } from "@/lib/fotos";
 import { Icono } from "@/components/marca/Icono";
 
 /**
- * Los lugares del complejo como un índice: número, nombre grande, una línea y
+ * Los lugares del predio como un índice: número, nombre grande, una línea y
  * la foto siempre a la vista. Nada que tocar para entenderlo.
  */
 export function Predio({ titulo = true }: { titulo?: boolean }) {
@@ -22,7 +22,7 @@ export function Predio({ titulo = true }: { titulo?: boolean }) {
             </h2>
           </div>
           <p className="lead text-asfalto lg:justify-self-end" data-reveal>
-            Dormís, comés, entrenás, te reunís y cargás combustible sin salir del complejo.
+            Dormís, comés, entrenás, te reunís y cargás combustible sin salir del predio.
           </p>
         </div>
       )}

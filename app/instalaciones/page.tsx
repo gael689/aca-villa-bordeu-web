@@ -7,10 +7,10 @@ import { Cierre, Citable, PortadaPagina, Servicios, TarjetaEnlace } from "@/comp
 import { Predio } from "@/components/secciones/Predio";
 
 export const metadata = meta({
-  title: "El complejo: gimnasio, cocheras y más · ACA Villa Bordeu",
+  title: "Instalaciones: gimnasio, cocheras y más · ACA Villa Bordeu",
   description:
-    "Departamentos, restaurante, gimnasio, sala de reuniones, lavandería, tienda y estación YPF en un mismo predio sobre la ruta, en Bahía Blanca. Recepción 24 h.",
-  ruta: "/el-complejo",
+    "Departamentos, restaurante, gimnasio, sala de reuniones, oficina de cortesía, lavandería, tienda y estación YPF en un mismo predio sobre la ruta, en Bahía Blanca. Recepción 24 h.",
+  ruta: "/instalaciones",
 });
 
 const BLOQUES = [
@@ -18,7 +18,10 @@ const BLOQUES = [
     id: "cocheras",
     titulo: "Cocheras cubiertas",
     texto: "Una por departamento, techada y enfrente de la puerta. La camioneta del trabajo o el auto de la familia quedan a la vista toda la noche.",
-    fotos: [foto("habitaciones", "06-pasillo.jpg", "Pasillo de los departamentos, con la puerta de cada uno")],
+    fotos: [
+      foto("predio", "01-exterior-atardecer.jpg", "Exterior de Villa Bordeu al atardecer, con el estacionamiento y la estación YPF al fondo"),
+      foto("habitaciones", "06-pasillo.jpg", "Pasillo de los departamentos, con la puerta de cada uno"),
+    ],
   },
   {
     id: "gimnasio",
@@ -31,9 +34,15 @@ const BLOQUES = [
     ],
   },
   {
+    id: "oficina",
+    titulo: "Oficina de cortesía",
+    texto: "Un escritorio privado para trabajar tranquilo, hacer una llamada o recibir a alguien, sin salir del predio.",
+    fotos: [foto("oficina-cortesia", "01-oficina.jpg", "Oficina de cortesía con escritorio de madera, sillón y paredes de listones")],
+  },
+  {
     id: "tienda",
     titulo: "Tienda Villa Bordeu",
-    texto: "Chops, tazas y botellas con la marca del complejo. Un recuerdo de la ruta o un regalo para la vuelta.",
+    texto: "Chops, tazas y botellas con la marca Villa Bordeu. Un recuerdo de la ruta o un regalo para la vuelta.",
     fotos: [
       foto("tienda", "01-vitrina-completa.jpg", "Vitrina de la tienda con productos Villa Bordeu"),
       foto("tienda", "02-chops-y-tazas.jpg", "Chops y tazas con el logo ACA Villa Bordeu"),
@@ -51,25 +60,25 @@ const BLOQUES = [
   },
 ];
 
-export default function ElComplejo() {
+export default function Instalaciones() {
   return (
     <>
       <PortadaPagina
         foto={foto("gimnasio", "01-gym-pared-verde.jpg", "Gimnasio de Villa Bordeu con pared verde y cartel de neón")}
-        etiqueta="El complejo"
+        etiqueta="Instalaciones"
         titulo={
           <>
             Todo en un <span className="text-rojo">mismo predio</span>
           </>
         }
-        bajada="Departamentos, restaurante, gimnasio, sala de reuniones, tienda y estación de servicio, sobre el cruce de rutas."
-        migas={[{ nombre: "El complejo", ruta: "/el-complejo" }]}
+        bajada="Departamentos, restaurante, gimnasio, sala de reuniones, oficina de cortesía, tienda y estación de servicio, sobre el cruce de rutas."
+        migas={[{ nombre: "Instalaciones", ruta: "/instalaciones" }]}
       >
-        <BotonConsultar origen="complejo-portada">Consultar disponibilidad</BotonConsultar>
+        <BotonConsultar origen="instalaciones-portada">Consultar disponibilidad</BotonConsultar>
       </PortadaPagina>
 
       <Citable>
-        En el predio de ACA Villa Bordeu hay 26 departamentos con cochera, restaurante, cafetería, gimnasio, sala de reuniones, lavandería, juegos para
+        En el predio de ACA Villa Bordeu hay 26 departamentos con cochera, restaurante, cafetería, gimnasio, sala de reuniones, oficina de cortesía, lavandería, juegos para
         chicos, una tienda y la estación de servicio YPF.
       </Citable>
 
@@ -107,12 +116,12 @@ export default function ElComplejo() {
       <section className="seccion">
         <div className="contenedor grid gap-3 md:grid-cols-2">
           <TarjetaEnlace href="/sala-de-reuniones" foto={foto("sala-reuniones", "01-mesa.jpg", "Sala de reuniones")} titulo="Sala de reuniones" texto="Para capacitaciones y reuniones de obra" />
-          <TarjetaEnlace href="/estacion-de-servicio" foto={foto("cafeteria", "02-cafeteria-mesas.jpg", "Cafetería")} titulo="Estación de servicio" texto="YPF en el mismo predio" />
+          <TarjetaEnlace href="/estacion-de-servicio" foto={foto("ypf", "01-surtidores-atardecer.jpg", "Surtidores de la estación YPF al atardecer")} titulo="Estación de servicio" texto="YPF en el mismo predio" />
         </div>
       </section>
 
       <Servicios oscuro />
-      <Cierre origen="complejo-cierre" />
+      <Cierre origen="instalaciones-cierre" />
       <JsonLd data={motelJsonLd()} />
     </>
   );

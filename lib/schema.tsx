@@ -52,12 +52,13 @@ export function motelJsonLd(): WithContext<Motel> {
     "@id": ID.motel,
     name: SITIO.nombre,
     description:
-      "Motel del Automóvil Club Argentino en Bahía Blanca, sobre el cruce de las rutas nacionales 3, 33 y 35. 26 departamentos con cochera cubierta, restaurante desde 1984, gimnasio, sala de reuniones, lavandería, recepción 24 horas y estación de servicio YPF.",
+      "Motel del Automóvil Club Argentino en Bahía Blanca, sobre el cruce de las rutas nacionales 3, 33 y 35. Abierto desde 1984. 26 departamentos con cochera cubierta, restaurante, gimnasio, sala de reuniones, lavandería, recepción 24 horas y estación de servicio YPF.",
     url: SITIO.url,
     image: [urlAbs("/fotos/restaurante/01-salon-noche.jpg"), urlAbs("/fotos/habitaciones/01-triple-dos-camas.jpg")],
     telephone: SITIO.telefonoE164,
     email: SITIO.mail,
     address: direccion,
+    foundingDate: String(SITIO.abiertoDesde),
     geo,
     numberOfRooms: SITIO.departamentos,
     petsAllowed: true,
@@ -111,7 +112,7 @@ export function restoJsonLd(): WithContext<Restaurant> {
     telephone: SITIO.telefonoE164,
     address: direccion,
     geo,
-    foundingDate: String(SITIO.restoDesde),
+    foundingDate: String(SITIO.abiertoDesde),
     servesCuisine: ["Argentina", "Parrilla", "Pastas"],
     acceptsReservations: true,
     hasMenu: {

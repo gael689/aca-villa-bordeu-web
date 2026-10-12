@@ -17,7 +17,7 @@ export const metadata = meta({
 
 const PREGUNTAS: Pregunta[] = [
   { p: "¿Dónde está la estación?", r: `Dentro del predio de ACA Villa Bordeu, en ${SITIO.direccion.calle}, sobre el acceso de las rutas 3 y 33 en Bahía Blanca.` },
-  { p: "¿Puedo cargar aunque no me aloje en el complejo?", r: "Sí, la estación atiende a todos los que pasan por la ruta." },
+  { p: "¿Puedo cargar aunque no me aloje en Villa Bordeu?", r: "Sí, la estación atiende a todos los que pasan por la ruta." },
   { p: "¿Hay dónde comer al lado?", r: "Sí: el Resto y la cafetería están en el mismo predio, a pasos de los surtidores." },
 ];
 
@@ -26,11 +26,7 @@ export default function EstacionDeServicio() {
   return (
     <>
       <PortadaPagina
-        fondo={
-          <div aria-hidden="true" className="absolute top-1/2 right-[4%] w-[min(60vw,640px)] -translate-y-1/2 text-white/[0.07]" data-parallax="8">
-            <Icono nombre="surtidor" className="h-auto w-full" grosor={0.6} />
-          </div>
-        }
+        foto={foto("ypf", "01-surtidores-atardecer.jpg", "Estación YPF de Villa Bordeu al atardecer, con los surtidores iluminados")}
         etiqueta="Estación de servicio"
         titulo={
           <>
@@ -40,7 +36,7 @@ export default function EstacionDeServicio() {
         bajada="Combustible en el mismo predio donde dormís y comés. Para seguir viaje o para la flota del equipo."
         alto="media"
         migas={[
-          { nombre: "El complejo", ruta: "/el-complejo" },
+          { nombre: "Instalaciones", ruta: "/instalaciones" },
           { nombre: "Estación de servicio", ruta: "/estacion-de-servicio" },
         ]}
       >

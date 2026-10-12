@@ -16,9 +16,11 @@ export const SITIO = {
   url: host.replace(/\/$/, ""),
   // Hasta publicar en el dominio, el sitio no se indexa (ver app/robots.ts).
   indexable: process.env.NEXT_PUBLIC_INDEXABLE === "1",
+  // WhatsApp va al celular; para llamar, el fijo de recepción.
   whatsapp: "5492916421036",
-  telefono: "+54 9 291 642-1036",
-  telefonoE164: "+5492916421036",
+  celular: "+54 9 291 642-1036",
+  telefono: "0291 488-6855",
+  telefonoE164: "+542914886855",
   mail: "info@acavillabordeu.com.ar",
   direccion: {
     calle: "Camino Parque Sesquicentenario 1699",
@@ -34,7 +36,8 @@ export const SITIO = {
   departamentos: 26,
   fundacionACA: 1904,
   aliancaYPF: 1936,
-  restoDesde: 1984,
+  // Villa Bordeu entero (alojamiento y Resto) abrió en 1984, no solo el restaurante.
+  abiertoDesde: 1984,
   redes: {
     facebook: "https://www.facebook.com/AcaVillaBordeu",
   },

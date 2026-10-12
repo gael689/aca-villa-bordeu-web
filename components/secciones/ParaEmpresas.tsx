@@ -2,10 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { foto } from "@/lib/fotos";
-import { Icono } from "@/components/marca/Icono";
-import { BotonConsultar } from "@/components/consulta/ConsultaContext";
 
 const RAZONES = [
   {
@@ -36,7 +33,7 @@ const RAZONES = [
 ];
 
 /**
- * Bloque «Para empresas» del inicio. Editorial, sin tarjetas: a la izquierda una
+ * Bloque «Por qué Villa Bordeu» de /empresas (en la v1 vivía en el inicio). Editorial, sin tarjetas: a la izquierda una
  * foto fija que cambia según la razón que se está leyendo a la derecha.
  * En celular, cada razón lleva su foto arriba.
  */
@@ -63,10 +60,10 @@ export function ParaEmpresas() {
         <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
           <div>
             <p className="etiqueta" data-reveal>
-              Para empresas
+              Por qué Villa Bordeu
             </p>
             <h2 className="t-h2 mt-4 max-w-[16ch]" data-split>
-              Tu equipo duerme, come y sale a trabajar <span className="rojo-txt">desde acá</span>
+              Cinco razones para alojar <span className="rojo-txt">al equipo acá</span>
             </h2>
           </div>
           <p className="lead text-asfalto lg:justify-self-end" data-reveal>
@@ -131,14 +128,6 @@ export function ParaEmpresas() {
           </ol>
         </div>
 
-        <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4" data-reveal>
-          <BotonConsultar modo="empresa" origen="inicio-empresas">
-            Consultar para mi equipo
-          </BotonConsultar>
-          <Link href="/empresas" className="enlace inline-flex items-center gap-2 text-[15px]">
-            Todo para empresas <Icono nombre="flecha" className="size-4" grosor={2} />
-          </Link>
-        </div>
       </div>
     </section>
   );

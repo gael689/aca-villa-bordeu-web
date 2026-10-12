@@ -8,7 +8,7 @@ import { BotonConsultar } from "@/components/consulta/ConsultaContext";
 import { Cierre, Citable, FaqLista, PortadaPagina, Servicios, TarjetaEnlace } from "@/components/secciones/Comunes";
 import { Distancias } from "@/components/secciones/Distancias";
 import { DiaEquipo } from "@/components/secciones/DiaEquipo";
-import { Predio } from "@/components/secciones/Predio";
+import { ParaEmpresas } from "@/components/secciones/ParaEmpresas";
 import { Cinta } from "@/components/secciones/Cinta";
 
 export const metadata = meta({
@@ -50,6 +50,9 @@ export default function Empresas() {
         Polo Petroquímico, el puerto y General Cerri.
       </Citable>
 
+      {/* Efecto de la v1: foto fija que cambia con la razón que se lee */}
+      <ParaEmpresas />
+
       {/* Cómo funciona */}
       <section className="seccion-chica">
         <div className="contenedor">
@@ -80,12 +83,6 @@ export default function Empresas() {
       </section>
 
       <DiaEquipo />
-
-      <section className="seccion">
-        <div className="contenedor">
-          <Predio />
-        </div>
-      </section>
 
       {/* Por rubro */}
       <section className="seccion gris">

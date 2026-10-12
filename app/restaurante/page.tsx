@@ -48,19 +48,19 @@ export default function Restaurante() {
         etiqueta="Resto · desde 1984"
         titulo={
           <>
-            Cocinamos <span className="text-rojo">desde 1984</span>
+            Cocinamos <span className="text-ambar">desde 1984</span>
           </>
         }
         bajada="El restaurante de Villa Bordeu, sobre la ruta. Para los que se alojan, para los equipos y para los que pasan."
         migas={[{ nombre: "Restaurante", ruta: "/restaurante" }]}
       >
-        <a href={linkWhatsApp(MENSAJE_MESA)} target="_blank" rel="noopener noreferrer" className="btn">
+        <a href={linkWhatsApp(MENSAJE_MESA)} target="_blank" rel="noopener noreferrer" className="btn btn-ambar">
           <span>Reservar mesa</span>
           <span className="burbuja" aria-hidden="true">
             <Icono nombre="whatsapp" className="size-4" />
           </span>
         </a>
-        <a href="#carta" className="btn btn-claro">
+        <a href="#carta" className="btn btn-fantasma">
           <span>Ver la carta</span>
           <span className="burbuja" aria-hidden="true">
             <Icono nombre="abajo" className="size-4" grosor={2} />
@@ -85,7 +85,7 @@ export default function Restaurante() {
       </section>
 
       {/* La carta: cada sección es un capítulo con su foto fija al costado */}
-      <section id="carta" className="oscuro grano relative">
+      <section id="carta" className="oscuro ambar grano relative">
         <div className="contenedor relative pt-[clamp(72px,8vw,140px)]">
           <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
             <div>
@@ -129,7 +129,7 @@ export default function Restaurante() {
                   {s.platos.map((p, n) => (
                     <li key={p.nombre} className="group break-inside-avoid border-b border-white/10 py-4">
                       <p className="flex items-baseline gap-3">
-                        <span className="num shrink-0 font-display text-[13px] font-bold text-rojo">{String(n + 1).padStart(2, "0")}</span>
+                        <span className="num shrink-0 font-display text-[13px] font-bold text-ambar">{String(n + 1).padStart(2, "0")}</span>
                         <span className="font-display text-[22px] leading-[1.05] font-semibold uppercase transition-colors group-hover:text-ambar">{p.nombre}</span>
                       </p>
                       {p.detalle && <p className="mt-1 pl-8 text-[15px] text-white/55">{p.detalle}</p>}

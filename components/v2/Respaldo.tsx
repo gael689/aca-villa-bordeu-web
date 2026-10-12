@@ -11,7 +11,14 @@ const DATOS = [
   { n: String(SITIO.aliancaYPF), t: "Primer convenio ACA–YPF" },
 ];
 
-/** «El respaldo del ACA»: corta, para dar confianza. Datos con fuente en relevamiento/mercado.md. */
+/**
+ * «El respaldo del ACA»: corta, para dar confianza. Datos con fuente en relevamiento/mercado.md.
+ *
+ * GUARDADA, SIN USO (12/10/2026): Rodrigo prefirió las dos tarjetas de la v1
+ * (`ViajeSocios`). Para volver atrás, en app/page.tsx cambiar <ViajeSocios /> por
+ * <Respaldo /> (import desde "@/components/v2/Respaldo"). Ojo: tiene la etiqueta
+ * oscura en rojo y el café con el logo, que también usa el bloque del Resto.
+ */
 export function Respaldo() {
   const f = foto("restaurante", "05-cafe-logo.jpg", "Café con el logo ACA dibujado en la espuma");
   return (

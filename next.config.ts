@@ -4,8 +4,10 @@ import type { NextConfig } from "next";
 // que siguen enlazadas desde directorios. Lista completa en ../relevamiento/sitio-actual.md §1.5.
 const viejas: [string, string][] = [
   ["/index.php", "/"],
+  // La sección se llamó «El complejo» hasta oct/2026; al dueño no le gusta la palabra.
+  ["/el-complejo", "/instalaciones"],
   ["/habitaciones.php", "/departamentos"],
-  ["/servicios.php", "/el-complejo"],
+  ["/servicios.php", "/instalaciones"],
   ["/resto.php", "/restaurante"],
   ["/reservas.php", "/consulta"],
   ["/ubicacion.php", "/como-llegar"],
@@ -49,7 +51,7 @@ const viejas: [string, string][] = [
   ["/comodidades.:ext(asp|htm|html)", "/departamentos"],
   ["/Motel.:ext(asp|htm|html)", "/departamentos"],
   ["/motel.:ext(asp|htm|html)", "/departamentos"],
-  ["/GiftShop.:ext(asp|htm|html)", "/el-complejo"],
+  ["/GiftShop.:ext(asp|htm|html)", "/instalaciones"],
   ["/reservas.:ext(asp|htm|html)", "/consulta"],
   ["/reservasmain.:ext(asp|htm|html)", "/consulta"],
   ["/pedido.:ext(asp|htm|html)", "/consulta"],

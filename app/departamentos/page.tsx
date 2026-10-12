@@ -50,7 +50,7 @@ export default function Departamentos() {
         <div className="contenedor grid gap-3 md:grid-cols-3">
           <TarjetaEnlace href="/restaurante" foto={foto("restaurante", "01-salon-noche.jpg", "Salón del Resto")} titulo="Restaurante" texto="Cocinamos desde 1984" />
           <TarjetaEnlace href="/empresas" foto={foto("sala-reuniones", "01-mesa.jpg", "Sala de reuniones")} titulo="Para empresas" texto="Alojá a tu equipo completo" />
-          <TarjetaEnlace href="/el-complejo" foto={foto("gimnasio", "01-gym-pared-verde.jpg", "Gimnasio")} titulo="El complejo" texto="Gimnasio, sala y más" />
+          <TarjetaEnlace href="/instalaciones" foto={foto("gimnasio", "01-gym-pared-verde.jpg", "Gimnasio")} titulo="Instalaciones" texto="Gimnasio, sala y más" />
         </div>
       </section>
 

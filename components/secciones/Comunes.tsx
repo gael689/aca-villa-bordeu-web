@@ -175,7 +175,7 @@ export function Cierre({
       </div>
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgb(10_10_11/0.35),rgb(10_10_11/0.85))]" />
       <div className="contenedor relative py-[clamp(110px,16vw,240px)] text-center">
-        <p className="etiqueta justify-center !text-ambar" data-reveal>
+        <p className="etiqueta justify-center !text-white/75" data-reveal>
           Te respondemos por WhatsApp o mail
         </p>
         <h2 className="t-display mx-auto mt-5 max-w-[12ch]" data-split>

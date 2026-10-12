@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { MapPin } from "lucide-react";
 import { DISTANCIAS_V2 } from "@/lib/datos";
+import { MAPAS, SITIO } from "@/lib/sitio";
 import { Distancias } from "@/components/secciones/Distancias";
 
 /** «Bien ubicado para llegar y seguir»: la ubicación vendida como ventaja. */
@@ -18,7 +19,14 @@ export function Ubicacion() {
             </h2>
           </div>
           <div className="lg:justify-self-end" data-reveal>
-            <p className="lead max-w-[30ch] text-asfalto">Estás cerca de todo, sin necesidad de entrar al centro.</p>
+            <p className="lead max-w-[34ch] text-asfalto">A minutos del puerto, del Polo Petroquímico y de Cerri, sin entrar al centro.</p>
+            <a href={MAPAS.google} target="_blank" rel="noopener noreferrer" className="mt-4 flex items-start gap-2.5 text-[15px] hover:text-rojo">
+              <MapPin className="mt-0.5 size-5 shrink-0 text-rojo" aria-hidden="true" />
+              <span>
+                <span className="block font-semibold">{SITIO.direccion.calle}</span>
+                <span className="text-asfalto">{SITIO.direccion.acceso} · {SITIO.direccion.ciudad}</span>
+              </span>
+            </a>
             <Link href="/como-llegar" className="btn btn-oscuro mt-6">
               <span>Cómo llegar</span>
               <span className="burbuja" aria-hidden="true">

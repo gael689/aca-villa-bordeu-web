@@ -11,7 +11,7 @@ export function LogoACA({ className = "h-8 w-auto", titulo }: { className?: stri
 }
 
 /**
- * Lockup del complejo: ACA + «Villa Bordeu», como el cartel y el perfil de Facebook.
+ * Lockup de Villa Bordeu: ACA + «Villa Bordeu», como el cartel y el perfil de Facebook.
  * `tono="claro"` para usar sobre fotos o fondos oscuros.
  */
 export function Lockup({ className = "", tono = "oscuro" }: { className?: string; tono?: "oscuro" | "claro" }) {

@@ -59,7 +59,7 @@ export default function PaginaConsulta() {
             </span>
             <span>
               <span className="block text-[13px] font-semibold text-asfalto">WhatsApp</span>
-              <span className="block font-semibold">{SITIO.telefono}</span>
+              <span className="block font-semibold">{SITIO.celular}</span>
             </span>
           </a>
           <a href={telLink} className="flex items-center gap-4 rounded-[var(--radio)] bg-white p-6 shadow-[inset_0_0_0_1px_var(--linea)] transition-colors hover:bg-hormigon">

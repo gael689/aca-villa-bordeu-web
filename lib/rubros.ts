@@ -36,7 +36,7 @@ export const RUBROS: Rubro[] = [
       {
         titulo: "La ropa de trabajo",
         texto:
-          "Hay lavandería en el complejo. La ropa de la semana se resuelve acá y nadie tiene que buscar dónde lavar en la ciudad.",
+          "Hay lavandería en el predio. La ropa de la semana se resuelve acá y nadie tiene que buscar dónde lavar en la ciudad.",
       },
       {
         titulo: "La camioneta, a la vista",
@@ -65,7 +65,7 @@ export const RUBROS: Rubro[] = [
       },
       {
         p: "¿Dónde lava el equipo la ropa de trabajo?",
-        r: "En la lavandería del complejo. Al consultar, contanos cuántos son y por cuánto tiempo, y te explicamos cómo funciona.",
+        r: "En la lavandería del predio. Al consultar, contanos cuántos son y por cuánto tiempo, y te explicamos cómo funciona.",
       },
       {
         p: "¿Queda cerca de Puerto Rosales?",
@@ -101,7 +101,7 @@ export const RUBROS: Rubro[] = [
       {
         titulo: "Parques eólicos de la zona",
         texto:
-          "La zona tiene parques y proyectos eólicos en Bahía Blanca, Tornquist, Coronel Rosales y Villarino. Tornquist está a 74 km por la RN 33, que sale del mismo cruce donde está el complejo.",
+          "La zona tiene parques y proyectos eólicos en Bahía Blanca, Tornquist, Coronel Rosales y Villarino. Tornquist está a 74 km por la RN 33, que sale del mismo cruce donde está Villa Bordeu.",
       },
       {
         titulo: "Rotaciones y relevos",
@@ -123,7 +123,7 @@ export const RUBROS: Rubro[] = [
     preguntas: [
       {
         p: "¿Sirve como base para una obra sobre la RN 22?",
-        r: "Sí. La RN 22 arranca en la RN 3, al sur de Bahía Blanca, y desde el complejo se llega sin entrar a la ciudad. Médanos queda a 39 km y Río Colorado a 163 km.",
+        r: "Sí. La RN 22 arranca en la RN 3, al sur de Bahía Blanca, y desde Villa Bordeu se llega sin entrar a la ciudad. Médanos queda a 39 km y Río Colorado a 163 km.",
       },
       {
         p: "¿A cuánto quedan los parques eólicos?",
@@ -196,8 +196,8 @@ export const RUBROS: Rubro[] = [
         r: "Sí. Escribinos con la fecha y te respondemos. Si llega tarde, la recepción está abierta las 24 horas.",
       },
       {
-        p: "¿Desde el complejo se sale directo a las rutas?",
-        r: "Sí. El complejo está sobre el acceso de la RN 3 y 33, y la RN 35 empieza en ese mismo cruce. La RN 22 sale de la RN 3 hacia el sur, sin pasar por la ciudad.",
+        p: "¿Desde Villa Bordeu se sale directo a las rutas?",
+        r: "Sí. Villa Bordeu está sobre el acceso de la RN 3 y 33, y la RN 35 empieza en ese mismo cruce. La RN 22 sale de la RN 3 hacia el sur, sin pasar por la ciudad.",
       },
       {
         p: "¿Dónde cargan combustible?",
@@ -232,7 +232,7 @@ export const RUBROS: Rubro[] = [
       {
         titulo: "La exposición, al lado",
         texto:
-          "El complejo está pegado al predio de la Sociedad Rural de Bahía Blanca. Expositores, cabañeros y compradores quedan a un paso de la muestra.",
+          "Villa Bordeu está pegado al predio de la Sociedad Rural de Bahía Blanca. Expositores, cabañeros y compradores quedan a un paso de la muestra.",
       },
       {
         titulo: "Del campo al puerto",
@@ -254,7 +254,7 @@ export const RUBROS: Rubro[] = [
     preguntas: [
       {
         p: "¿Qué tan cerca está de la Sociedad Rural?",
-        r: "Pegado. El acceso al predio de la Rural queda a 1 km del complejo, sobre el mismo Camino Parque Sesquicentenario.",
+        r: "Pegado. El acceso al predio de la Rural queda a 1 km del alojamiento, sobre el mismo Camino Parque Sesquicentenario.",
       },
       {
         p: "¿Conviene consultar con tiempo para la exposición?",
@@ -266,7 +266,7 @@ export const RUBROS: Rubro[] = [
       },
       {
         p: "¿Puedo ir con mi perro?",
-        r: "Sí, el complejo es pet friendly. Avisanos al consultar que viajás con mascota.",
+        r: "Sí, Villa Bordeu es pet friendly. Avisanos al consultar que viajás con mascota.",
       },
     ],
     foto: "restaurante/01-salon-noche.jpg",
