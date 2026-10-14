@@ -35,8 +35,7 @@
   --linea: color-mix(in srgb, #1c1d1f 13%, transparent);
   --radio: 22px;
   --acento: var(--color-dorado);
-  --resalte-color: currentColor;
-  --resalte-fondo: linear-gradient(transparent 62%, var(--color-amarillo) 62%, var(--color-amarillo) 92%, transparent 92%);
+  --resalte-color: var(--color-amarillo);
   --foco: var(--color-tinta);
 }
 
@@ -49,7 +48,6 @@
 .bg-black {
   --acento: var(--color-amarillo);
   --resalte-color: var(--color-amarillo);
-  --resalte-fondo: none;
   --foco: var(--color-amarillo);
 }
 /* Superficies claras dentro de secciones oscuras. */
@@ -58,15 +56,13 @@
 .bg-hormigon,
 .gris {
   --acento: var(--color-dorado);
-  --resalte-color: currentColor;
-  --resalte-fondo: linear-gradient(transparent 62%, var(--color-amarillo) 62%, var(--color-amarillo) 92%, transparent 92%);
+  --resalte-color: var(--color-amarillo);
   --foco: var(--color-tinta);
 }
 /* Sobre el relleno amarillo todo va en tinta. */
 .bg-amarillo {
   --acento: var(--color-tinta);
   --resalte-color: currentColor;
-  --resalte-fondo: none;
   --foco: var(--color-tinta);
 }
 
@@ -170,15 +166,11 @@ img {
     height: 2px;
     background: currentColor;
   }
-  /* La palabra destacada de un título. Sobre claro el amarillo no se lee
-     como texto (1,7:1): va en tinta con un subrayado grueso de marcador.
-     Sobre oscuro, directamente en amarillo. */
+  /* La palabra destacada de un título, en letra amarilla (pedido del
+     cliente, oct/2026: sin subrayado de marcador). Sobre el relleno amarillo
+     queda en tinta. */
   .resalte {
     color: var(--resalte-color);
-    background: var(--resalte-fondo);
-    padding: 0 0.06em;
-    -webkit-box-decoration-break: clone;
-    box-decoration-break: clone;
   }
   .pastilla {
     display: inline-flex;
