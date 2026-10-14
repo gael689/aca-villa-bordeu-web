@@ -44,7 +44,7 @@ export function PortadaPagina({
           </>
         ) : (
           <>
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_30%,#2a1517_0%,#141516_60%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_30%,#2a2412_0%,#141516_60%)]" />
             {fondo}
           </>
         )}
@@ -209,7 +209,7 @@ export function Servicios({ titulo = "Lo que hay en el predio", oscuro = false }
           {SERVICIOS.map((s, i) => (
             <li key={s.titulo} className={`group p-5 transition-colors md:p-7 ${oscuro ? "bg-grafito hover:bg-grafito-2" : "bg-papel hover:bg-white"}`} data-reveal data-delay={String((i % 4) * 0.06)}>
               <span data-dibujar className="block">
-                <Icono nombre={s.icono} className="size-9 text-rojo transition-transform duration-500 group-hover:-translate-y-1" grosor={1.4} />
+                <Icono nombre={s.icono} className="size-9 text-acento transition-transform duration-500 group-hover:-translate-y-1" grosor={1.4} />
               </span>
               <p className="mt-5 font-display text-[22px] leading-none font-bold uppercase md:text-[26px]">{s.titulo}</p>
               <p className={`mt-2 text-[15px] ${oscuro ? "text-white/60" : "text-asfalto"}`}>{s.texto}</p>
@@ -232,7 +232,7 @@ export function TarjetaEnlace({ href, foto: f, titulo, texto }: { href: string; 
           <p className="font-display text-[30px] leading-none font-bold uppercase">{titulo}</p>
           {texto && <p className="mt-2 text-[15px] text-white/75">{texto}</p>}
         </div>
-        <span className="grid size-11 shrink-0 place-items-center rounded-full bg-white text-tinta transition-transform duration-500 ease-[var(--ease-pt)] group-hover:rotate-[-45deg] group-hover:bg-rojo group-hover:text-white">
+        <span className="grid size-11 shrink-0 place-items-center rounded-full bg-white text-tinta transition-transform duration-500 ease-[var(--ease-pt)] group-hover:rotate-[-45deg] group-hover:bg-amarillo group-hover:text-tinta">
           <Icono nombre="der" className="size-5" grosor={2} />
         </span>
       </div>

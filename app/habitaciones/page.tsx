@@ -2,45 +2,45 @@ import { foto } from "@/lib/fotos";
 import { meta } from "@/lib/meta";
 import { SITIO } from "@/lib/sitio";
 import { FAQ_GENERAL } from "@/lib/faq";
-import { JsonLd, departamentosJsonLd } from "@/lib/schema";
+import { JsonLd, habitacionesJsonLd } from "@/lib/schema";
 import { BotonConsultar } from "@/components/consulta/ConsultaContext";
 import { Cierre, Citable, FaqLista, PortadaPagina, Servicios, TarjetaEnlace } from "@/components/secciones/Comunes";
-import { TiposDepto } from "@/components/secciones/TiposDepto";
+import { TiposHabitacion } from "@/components/secciones/TiposHabitacion";
 
 export const metadata = meta({
-  title: "Departamentos en Bahía Blanca sobre la ruta · ACA Villa Bordeu",
+  title: "Habitaciones en Bahía Blanca sobre la ruta · ACA Villa Bordeu",
   description:
-    "26 departamentos single, doble y triple con baño privado, wifi y cochera cubierta en la puerta, sobre las rutas 3 y 33 en Bahía Blanca. Pet friendly.",
-  ruta: "/departamentos",
+    "26 habitaciones single, doble y triple con baño privado, wifi y cochera cubierta en la puerta, sobre las rutas 3 y 33 en Bahía Blanca. Pet friendly.",
+  ruta: "/habitaciones",
 });
 
-export default function Departamentos() {
+export default function Habitaciones() {
   return (
     <>
       <PortadaPagina
-        foto={foto("habitaciones", "01-triple-dos-camas.jpg", "Departamento con paredes grafito, cabecera de madera y luz cálida")}
-        etiqueta="Departamentos"
+        foto={foto("habitaciones", "01-triple-dos-camas.jpg", "Habitación con paredes grafito, cabecera de madera y luz cálida")}
+        etiqueta="Habitaciones"
         titulo={
           <>
-            Departamentos en Bahía Blanca, <span className="text-rojo">sobre la ruta</span>
+            Habitaciones en Bahía Blanca, <span className="resalte">sobre la ruta</span>
           </>
         }
-        bajada="26 departamentos con baño privado y la cochera cubierta en la puerta. Para quedarse una noche o varias semanas."
-        migas={[{ nombre: "Departamentos", ruta: "/departamentos" }]}
+        bajada="26 habitaciones con baño privado y la cochera cubierta en la puerta. Para quedarse una noche o varias semanas."
+        migas={[{ nombre: "Habitaciones", ruta: "/habitaciones" }]}
       >
-        <BotonConsultar modo="viaje" origen="deptos-portada">
+        <BotonConsultar modo="viaje" origen="habitaciones-portada">
           Consultar disponibilidad
         </BotonConsultar>
       </PortadaPagina>
 
       <Citable>
-        ACA Villa Bordeu tiene {SITIO.departamentos} departamentos single, doble y triple en Bahía Blanca, todos con baño privado, wifi, calefacción y aire,
+        ACA Villa Bordeu tiene {SITIO.habitaciones} habitaciones single, doble y triple en Bahía Blanca, todas con baño privado, wifi, calefacción y aire,
         y una cochera cubierta frente a cada puerta.
       </Citable>
 
       <section className="seccion-chica">
         <div className="contenedor">
-          <TiposDepto />
+          <TiposHabitacion />
         </div>
       </section>
 
@@ -55,8 +55,8 @@ export default function Departamentos() {
       </section>
 
       <FaqLista preguntas={FAQ_GENERAL.filter((q) => /cochera|noche|mascota|adaptado|desayuno|reservo|Cuánto/.test(q.p))} />
-      <Cierre modo="viaje" origen="deptos-cierre" imagen={foto("habitaciones", "03-doble-vista-larga.jpg", "Departamento doble")} />
-      <JsonLd data={departamentosJsonLd()} />
+      <Cierre modo="viaje" origen="habitaciones-cierre" imagen={foto("habitaciones", "03-doble-vista-larga.jpg", "Habitación doble")} />
+      <JsonLd data={habitacionesJsonLd()} />
     </>
   );
 }

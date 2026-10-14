@@ -34,8 +34,8 @@ const HITOS = [
   {
     anio: "Hoy",
     titulo: "Todo en un mismo predio",
-    texto: "26 departamentos, gimnasio, sala de reuniones, tienda propia y la estación YPF. La base de los equipos que trabajan en la zona y de los viajeros que van al sur.",
-    foto: foto("habitaciones", "01-triple-dos-camas.jpg", "Departamento con paredes grafito y cabecera de madera"),
+    texto: "26 habitaciones, gimnasio, sala de reuniones, tienda propia y la estación YPF. La base de los equipos que trabajan en la zona y de los viajeros que van al sur.",
+    foto: foto("habitaciones", "01-triple-dos-camas.jpg", "Habitación con paredes grafito y cabecera de madera"),
   },
 ];
 
@@ -47,7 +47,7 @@ export default function Historia() {
         etiqueta="Nuestra historia"
         titulo={
           <>
-            Más de un siglo <span className="text-rojo">en la ruta</span>
+            Más de un siglo <span className="resalte">en la ruta</span>
           </>
         }
         bajada="Del club que en 1904 pedía caminos al cruce de rutas donde hoy paran los equipos que trabajan en Bahía Blanca."
@@ -61,9 +61,9 @@ export default function Historia() {
             <span aria-hidden="true" className="absolute top-0 bottom-0 left-[11px] w-[2px] bg-[color:var(--linea)] md:left-1/2" />
             {HITOS.map((h, i) => (
               <li key={h.anio} className={`relative grid gap-6 pb-16 pl-10 md:grid-cols-2 md:gap-16 md:pl-0 ${i % 2 ? "" : "md:[&>*:first-child]:order-2"}`}>
-                <span aria-hidden="true" className="absolute top-3 left-0 size-6 rounded-full border-4 border-papel bg-rojo md:left-1/2 md:-translate-x-1/2" />
+                <span aria-hidden="true" className="absolute top-3 left-0 size-6 rounded-full border-4 border-papel bg-amarillo md:left-1/2 md:-translate-x-1/2" />
                 <div className={i % 2 ? "md:pl-12" : "md:pr-12 md:text-right"}>
-                  <p className="font-display text-[clamp(72px,9vw,150px)] leading-[0.85] font-bold text-rojo" data-reveal>
+                  <p className="font-display text-[clamp(72px,9vw,150px)] leading-[0.85] font-bold text-acento" data-reveal>
                     {h.anio}
                   </p>
                   <h2 className="mt-3 font-display text-[32px] leading-none font-bold uppercase" data-reveal>

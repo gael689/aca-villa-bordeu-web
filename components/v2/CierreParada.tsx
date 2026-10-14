@@ -15,7 +15,7 @@ export function CierreParada() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgb(10_10_11/0.35),rgb(10_10_11/0.85))]" />
       <div className="contenedor relative py-[clamp(100px,14vw,200px)] text-center">
         <h2 className="t-display mx-auto max-w-[14ch]" data-split>
-          ¿Hacemos una <span className="text-rojo">parada</span>?
+          ¿Hacemos una <span className="resalte">parada</span>?
         </h2>
         <p className="lead mx-auto mt-5 text-white/80" data-reveal>
           Consultá disponibilidad y encontrá tu próxima parada en Bahía Blanca.

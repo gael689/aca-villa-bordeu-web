@@ -5,7 +5,7 @@ import { Icono } from "@/components/marca/Icono";
 
 /**
  * «A cuánto estás». Cada destino es una fila con su ruta dibujada: una línea
- * punteada (la doble amarilla de la ruta, en rojo) que crece desde el predio
+ * punteada (la doble amarilla de la ruta) que crece desde el predio
  * hasta su distancia al entrar en pantalla (motor: data-linea + data-contador).
  */
 export function Distancias({
@@ -57,13 +57,13 @@ export function Distancias({
               </span>
               <span className="relative ml-1 block h-[3px] flex-1">
                 <span
-                  className="absolute inset-y-0 left-0 block rounded-full bg-[repeating-linear-gradient(90deg,var(--color-rojo)_0_14px,transparent_14px_22px)]"
+                  className="absolute inset-y-0 left-0 block rounded-full bg-[repeating-linear-gradient(90deg,var(--color-amarillo-hondo)_0_14px,transparent_14px_22px)]"
                   style={{ width: `${Math.max(8, (d.km / max) * 100)}%` }}
                   data-linea
                   data-delay={String(i * 0.08)}
                 />
                 <span
-                  className="absolute top-1/2 block size-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-rojo bg-papel"
+                  className="absolute top-1/2 block size-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-amarillo bg-papel"
                   style={{ left: `${Math.max(8, (d.km / max) * 100)}%` }}
                 />
               </span>

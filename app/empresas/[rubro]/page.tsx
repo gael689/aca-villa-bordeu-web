@@ -70,7 +70,7 @@ export default async function PaginaRubro({ params }: PageProps<"/empresas/[rubr
           <ul className="mt-12 grid gap-x-16 border-t border-[color:var(--linea)] md:grid-cols-2">
             {r.necesidades.map((n, i) => (
               <li key={n.titulo} className="grid grid-cols-[auto_1fr] gap-x-5 border-b border-[color:var(--linea)] py-8" data-reveal data-delay={String((i % 2) * 0.08)}>
-                <p className="num font-display text-[15px] font-bold text-rojo">0{i + 1}</p>
+                <p className="num font-display text-[15px] font-bold text-acento">0{i + 1}</p>
                 <div>
                   <p className="font-display text-[26px] leading-none font-bold uppercase">{n.titulo}</p>
                   <p className="mt-3 text-asfalto">{n.texto}</p>
@@ -92,7 +92,7 @@ export default async function PaginaRubro({ params }: PageProps<"/empresas/[rubr
               Oficina de cortesía
             </p>
             <h2 className="t-h2 mt-4 max-w-[14ch]" data-split>
-              Un escritorio para <span className="rojo-txt">el que coordina</span>
+              Un escritorio para <span className="resalte">el que coordina</span>
             </h2>
             <p className="lead mt-5 text-asfalto" data-reveal>
               {r.oficina}
@@ -104,7 +104,7 @@ export default async function PaginaRubro({ params }: PageProps<"/empresas/[rubr
       {/* Contexto con fuente */}
       <section className="oscuro grano relative overflow-hidden seccion-chica">
         <div className="contenedor relative grid gap-8 lg:grid-cols-[auto_1fr] lg:items-center">
-          <span className="grid size-16 place-items-center rounded-full bg-rojo">
+          <span className="grid size-16 place-items-center rounded-full bg-amarillo text-tinta">
             <Icono nombre="casco" className="size-8" grosor={1.6} />
           </span>
           <div>

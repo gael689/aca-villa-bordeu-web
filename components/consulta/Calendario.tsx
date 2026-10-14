@@ -75,7 +75,7 @@ export function Calendario({
 
       <div className="grid grid-cols-7 text-center" role="grid" aria-label="Elegí entrada y salida">
         {SEMANA.map((d) => (
-          <span key={d} className="pb-2 text-[11px] font-medium tracking-[0.2em] text-rojo-tinta" role="columnheader">
+          <span key={d} className="pb-2 text-[11px] font-medium tracking-[0.2em] text-acento" role="columnheader">
             {d}
           </span>
         ))}
@@ -110,7 +110,7 @@ export function Calendario({
                   "relative mx-auto grid size-10 place-items-center rounded-full text-[15px] transition-colors",
                   pasado ? "text-tinta/25" : "cursor-pointer hover:bg-hormigon",
                   esE || esS ? "!bg-grafito text-crema" : "",
-                  esHoy && !esE && !esS ? "ring-1 ring-rojo ring-inset" : "",
+                  esHoy && !esE && !esS ? "ring-1 ring-acento ring-inset" : "",
                 ].join(" ")}
               >
                 {i + 1}

@@ -26,15 +26,15 @@ export function ViajeSocios() {
           </div>
         </Link>
 
-        <Link href="/socios-aca" className="group tarjeta relative flex min-h-[440px] flex-col justify-between bg-rojo p-7 text-white md:p-10" data-reveal data-delay="0.1">
-          <LogoACA className="h-12 w-auto self-start text-white" />
-          <p aria-hidden="true" className="pointer-events-none absolute -right-6 -bottom-10 font-display text-[min(46vw,340px)] leading-none font-bold text-white/10">
+        <Link href="/socios-aca" className="group tarjeta relative flex min-h-[440px] flex-col justify-between bg-amarillo p-7 text-tinta md:p-10" data-reveal data-delay="0.1">
+          <LogoACA className="h-12 w-auto self-start text-tinta" />
+          <p aria-hidden="true" className="pointer-events-none absolute -right-6 -bottom-10 font-display text-[min(46vw,340px)] leading-none font-bold text-tinta/10">
             1904
           </p>
           <div className="relative">
-            <p className="etiqueta !text-white">Socios ACA</p>
+            <p className="etiqueta !text-tinta">Socios ACA</p>
             <p className="t-h2 mt-4 max-w-[12ch]">Tu carnet también vale acá</p>
-            <p className="mt-4 max-w-[38ch] text-white">Villa Bordeu es parte de la Red Hotelera del Automóvil Club Argentino. Contanos que sos socio al consultar.</p>
+            <p className="mt-4 max-w-[38ch] text-tinta/85">Villa Bordeu es parte de la Red Hotelera del Automóvil Club Argentino. Contanos que sos socio al consultar.</p>
             <span className="mt-6 inline-flex items-center gap-2 text-[15px] font-semibold">
               Beneficios y la red hacia el sur
               <Icono nombre="flecha" className="size-5 transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1" grosor={2} />

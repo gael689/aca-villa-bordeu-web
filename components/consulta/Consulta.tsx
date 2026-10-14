@@ -116,7 +116,7 @@ function Contador({
           onClick={() => onCambiar(Math.max(min, valor - 1))}
           disabled={valor <= min}
           aria-label={`Menos ${etiqueta.toLowerCase()}`}
-          className="grid size-11 place-items-center rounded-full bg-white shadow-[inset_0_0_0_1px_var(--linea)] transition hover:shadow-[inset_0_0_0_1.5px_var(--color-rojo)] disabled:opacity-30"
+          className="grid size-11 place-items-center rounded-full bg-white shadow-[inset_0_0_0_1px_var(--linea)] transition hover:shadow-[inset_0_0_0_1.5px_var(--color-amarillo-hondo)] disabled:opacity-30"
         >
           <Icono nombre="menos" className="size-4" grosor={2} />
         </button>
@@ -128,7 +128,7 @@ function Contador({
           onClick={() => onCambiar(Math.min(max, valor + 1))}
           disabled={valor >= max}
           aria-label={`Más ${etiqueta.toLowerCase()}`}
-          className="grid size-11 place-items-center rounded-full bg-white shadow-[inset_0_0_0_1px_var(--linea)] transition hover:shadow-[inset_0_0_0_1.5px_var(--color-rojo)] disabled:opacity-30"
+          className="grid size-11 place-items-center rounded-full bg-white shadow-[inset_0_0_0_1px_var(--linea)] transition hover:shadow-[inset_0_0_0_1.5px_var(--color-amarillo-hondo)] disabled:opacity-30"
         >
           <Icono nombre="mas" className="size-4" grosor={2} />
         </button>
@@ -158,7 +158,7 @@ function Opcion({
         "flex min-h-12 items-center gap-2.5 rounded-2xl px-4 py-2.5 text-left text-[15px] font-semibold transition-all duration-300",
         activa
           ? "bg-tinta text-white shadow-[0_10px_24px_-14px_rgb(0_0_0/0.6)]"
-          : "bg-white text-tinta shadow-[inset_0_0_0_1px_var(--linea)] hover:shadow-[inset_0_0_0_1.5px_var(--color-rojo)]",
+          : "bg-white text-tinta shadow-[inset_0_0_0_1px_var(--linea)] hover:shadow-[inset_0_0_0_1.5px_var(--color-amarillo-hondo)]",
       ].join(" ")}
     >
       {children}
@@ -171,14 +171,14 @@ function Interruptor({ etiqueta, ayuda, icono, valor, onCambiar }: { etiqueta: s
     <label className="flex cursor-pointer items-center justify-between gap-4 border-b border-[color:var(--linea)] py-4">
       <span>
         <span className="flex items-center gap-2 text-[16px] font-semibold">
-          <Icono nombre={icono} className="size-5 text-rojo" /> {etiqueta}
+          <Icono nombre={icono} className="size-5 text-acento" /> {etiqueta}
         </span>
         {ayuda && <span className="block text-sm text-asfalto">{ayuda}</span>}
       </span>
       <input type="checkbox" checked={valor} onChange={(e) => onCambiar(e.target.checked)} className="peer sr-only" />
       <span
         aria-hidden="true"
-        className="relative h-7 w-12 shrink-0 rounded-full bg-hormigon transition-colors peer-checked:bg-rojo peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-rojo after:absolute after:top-1 after:left-1 after:size-5 after:rounded-full after:bg-white after:shadow after:transition-transform after:duration-300 peer-checked:after:translate-x-5"
+        className="relative h-7 w-12 shrink-0 rounded-full bg-hormigon transition-colors peer-checked:bg-amarillo peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-tinta after:absolute after:top-1 after:left-1 after:size-5 after:rounded-full after:bg-white after:shadow after:transition-transform after:duration-300 peer-checked:after:translate-x-5"
       />
     </label>
   );
@@ -428,7 +428,7 @@ export function Consulta() {
             {pasos.map((p, i) => (
               <li key={p} className="flex-1" aria-current={i === paso ? "step" : undefined}>
                 <button type="button" onClick={() => i < paso && ir(i)} disabled={i >= paso} className="block w-full text-left disabled:cursor-default">
-                  <span className={`block h-[3px] rounded-full transition-colors duration-500 ${i <= paso ? "bg-rojo" : "bg-tinta/12"}`} />
+                  <span className={`block h-[3px] rounded-full transition-colors duration-500 ${i <= paso ? "bg-amarillo" : "bg-tinta/12"}`} />
                   <span className={`mt-1.5 block text-[12px] font-semibold ${i === paso ? "text-tinta" : "text-asfalto"}`}>{p}</span>
                 </button>
               </li>
@@ -450,7 +450,7 @@ export function Consulta() {
                   ))}
                 </div>
                 <p className="mt-6 rounded-2xl bg-white p-4 text-[15px] text-asfalto shadow-[inset_0_0_0_1px_var(--linea)]">
-                  {SITIO.departamentos} departamentos con cochera cubierta en la puerta, restaurante, gimnasio y estación de servicio en el mismo predio.
+                  {SITIO.habitaciones} habitaciones con cochera cubierta en la puerta, restaurante, gimnasio y estación de servicio en el mismo predio.
                 </p>
               </div>
             )}
@@ -485,7 +485,7 @@ export function Consulta() {
                     const activa = necesidades.includes(n);
                     return (
                       <Opcion key={n} activa={activa} onClick={() => setNecesidades((v) => (activa ? v.filter((x) => x !== n) : [...v, n]))}>
-                        <Icono nombre={ICONO_NECESIDAD[n]} className={`size-5 shrink-0 ${activa ? "text-white" : "text-rojo"}`} grosor={1.8} />
+                        <Icono nombre={ICONO_NECESIDAD[n]} className={`size-5 shrink-0 ${activa ? "text-white" : "text-acento"}`} grosor={1.8} />
                         {n}
                         {activa && <Icono nombre="check" className="ml-auto size-4" grosor={2.4} />}
                       </Opcion>
@@ -558,7 +558,7 @@ export function Consulta() {
                 <Contador etiqueta="Chicos" valor={ninos} min={0} max={10} onCambiar={setNinos} />
                 <Interruptor etiqueta="Soy socio ACA" ayuda="Tenés beneficios en toda la red" icono="escudo" valor={socio} onCambiar={setSocio} />
                 <Interruptor etiqueta="Viajo con mascota" ayuda="Somos pet friendly" icono="pata" valor={mascota} onCambiar={setMascota} />
-                <Interruptor etiqueta="Necesito departamento adaptado" icono="accesible" valor={adaptado} onCambiar={setAdaptado} />
+                <Interruptor etiqueta="Necesito habitación adaptada" icono="accesible" valor={adaptado} onCambiar={setAdaptado} />
               </div>
             )}
 
@@ -594,7 +594,7 @@ export function Consulta() {
                   {envio === "enviando" ? "Enviando…" : "Enviar por mail"}
                 </button>
                 {envio === "error" && (
-                  <p className="text-sm text-rojo-tinta" role="alert">
+                  <p className="text-sm text-error" role="alert">
                     No se pudo enviar. Probá por WhatsApp o escribinos a {SITIO.mail}.
                   </p>
                 )}
@@ -686,7 +686,7 @@ function Campo({
         placeholder={placeholder}
         required={requerido}
         maxLength={120}
-        className="h-12 w-full rounded-xl bg-white px-4 text-[16px] shadow-[inset_0_0_0_1px_var(--linea)] outline-none transition-shadow placeholder:text-asfalto/60 focus:shadow-[inset_0_0_0_2px_var(--color-rojo)]"
+        className="h-12 w-full rounded-xl bg-white px-4 text-[16px] shadow-[inset_0_0_0_1px_var(--linea)] outline-none transition-shadow placeholder:text-asfalto/60 focus:shadow-[inset_0_0_0_2px_var(--color-tinta)]"
       />
     </label>
   );

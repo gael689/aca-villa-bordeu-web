@@ -9,13 +9,13 @@ import { Icono } from "@/components/marca/Icono";
 import { Escudo } from "@/components/marca/Escudo";
 
 const PRINCIPAL = [
+  { href: "/socios-aca", texto: "Socios ACA" },
   { href: "/empresas", texto: "Empresas" },
-  { href: "/departamentos", texto: "Departamentos" },
+  { href: "/habitaciones", texto: "Habitaciones" },
   { href: "/restaurante", texto: "Restaurante" },
   { href: "/instalaciones", texto: "Instalaciones" },
   { href: "/sala-de-reuniones", texto: "Sala de reuniones" },
   { href: "/estacion-de-servicio", texto: "Estación de servicio" },
-  { href: "/socios-aca", texto: "Socios ACA" },
   { href: "/historia", texto: "Historia" },
   { href: "/preguntas-frecuentes", texto: "Preguntas frecuentes" },
   { href: "/contacto", texto: "Contacto" },
@@ -27,13 +27,13 @@ export function Footer() {
       <div className="contenedor relative">
         <div className="grid gap-12 pb-14 sm:grid-cols-2 lg:grid-cols-[1.25fr_1fr_1fr_1fr]">
           <div>
-            <LogoACA className="h-10 w-auto text-rojo" titulo="Automóvil Club Argentino" />
+            <LogoACA className="h-10 w-auto text-marca-aca" titulo="Automóvil Club Argentino" />
             <p className="mt-5 max-w-[30ch] text-white/70">
               Alojamiento del Automóvil Club Argentino sobre el cruce de las rutas 3, 33 y 35, en Bahía Blanca.
             </p>
             <address className="mt-6 space-y-2.5 not-italic">
               <a href={MAPAS.google} target="_blank" rel="noopener noreferrer" className="flex gap-3 text-white/85 hover:text-white">
-                <Icono nombre="pin" className="mt-0.5 size-5 shrink-0 text-rojo" />
+                <Icono nombre="pin" className="mt-0.5 size-5 shrink-0 text-acento" />
                 <span>
                   {SITIO.direccion.calle}
                   <br />
@@ -41,17 +41,17 @@ export function Footer() {
                 </span>
               </a>
               <a href={telLink} className="flex items-center gap-3 text-white/85 hover:text-white">
-                <Icono nombre="telefono" className="size-5 shrink-0 text-rojo" /> {SITIO.telefono}
+                <Icono nombre="telefono" className="size-5 shrink-0 text-acento" /> {SITIO.telefono}
               </a>
               <a href={linkGenerico()} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white/85 hover:text-white">
-                <Icono nombre="whatsapp" className="size-5 shrink-0 text-rojo" /> {SITIO.celular}
+                <Icono nombre="whatsapp" className="size-5 shrink-0 text-acento" /> {SITIO.celular}
               </a>
               <a href={mailLink} className="flex items-center gap-3 break-all text-white/85 hover:text-white">
-                <Icono nombre="sobre" className="size-5 shrink-0 text-rojo" /> {SITIO.mail}
+                <Icono nombre="sobre" className="size-5 shrink-0 text-acento" /> {SITIO.mail}
               </a>
             </address>
             <div className="mt-6 flex gap-2">
-              <a href={SITIO.redes.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="grid size-11 place-items-center rounded-full bg-white/8 transition-colors hover:bg-rojo">
+              <a href={SITIO.redes.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="grid size-11 place-items-center rounded-full bg-white/8 transition-colors hover:bg-amarillo hover:text-tinta">
                 <Icono nombre="facebook" className="size-5" />
               </a>
               <a href={linkGenerico()} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="grid size-11 place-items-center rounded-full bg-white/8 transition-colors hover:bg-wpp">

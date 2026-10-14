@@ -153,7 +153,7 @@ export function Galeria({ fotos, nombre, transicion }: { fotos: Foto[]; nombre: 
                   type="button"
                   onClick={() => mover(-1)}
                   aria-label="Foto anterior"
-                  className="grid size-12 place-items-center border border-crema/25 transition-colors hover:border-rojo"
+                  className="grid size-12 place-items-center border border-crema/25 transition-colors hover:border-amarillo"
                 >
                   <Icono nombre="izq" className="size-5" />
                 </button>
@@ -161,7 +161,7 @@ export function Galeria({ fotos, nombre, transicion }: { fotos: Foto[]; nombre: 
                   type="button"
                   onClick={() => mover(1)}
                   aria-label="Foto siguiente"
-                  className="grid size-12 place-items-center border border-crema/25 transition-colors hover:border-rojo"
+                  className="grid size-12 place-items-center border border-crema/25 transition-colors hover:border-amarillo"
                 >
                   <Icono nombre="der" className="size-5" />
                 </button>

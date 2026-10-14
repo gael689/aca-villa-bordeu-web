@@ -25,7 +25,7 @@ export function Trabajo() {
             Trabajo y estadías
           </p>
           <h2 className="t-h2 mt-4 max-w-[16ch]" data-split>
-            También es una buena base <span className="rojo-txt">para trabajar</span>
+            También es una buena base <span className="resalte">para trabajar</span>
           </h2>
           <p className="mt-5 max-w-[46ch] text-asfalto" data-reveal>
             Para estadías laborales, equipos o viajes de trabajo, Villa Bordeu reúne alojamiento, restaurante, estacionamiento y servicios en un mismo lugar.
@@ -33,7 +33,7 @@ export function Trabajo() {
           <ul className="mt-8 grid grid-cols-2 gap-x-6 border-t border-[color:var(--linea)]">
             {BENEFICIOS.map(({ Icono, titulo, texto }, i) => (
               <li key={titulo} className="border-b border-[color:var(--linea)] py-5" data-reveal data-delay={String(i * 0.06)}>
-                <Icono className="size-6 text-rojo" strokeWidth={1.6} aria-hidden="true" />
+                <Icono className="size-6 text-acento" strokeWidth={1.6} aria-hidden="true" />
                 <p className="mt-3 font-display text-[22px] leading-none font-bold uppercase">{titulo}</p>
                 <p className="mt-1 text-[14px] text-asfalto">{texto}</p>
               </li>

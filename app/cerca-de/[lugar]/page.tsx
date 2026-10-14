@@ -57,7 +57,7 @@ export default async function PaginaLugar({ params }: PageProps<"/cerca-de/[luga
               <p className="font-display text-[clamp(32px,4vw,56px)] leading-none font-bold uppercase">{l.distancia.lugar}</p>
             </div>
             <div className="flex items-end gap-8">
-              <p className="num font-display text-[clamp(64px,8vw,120px)] leading-none font-bold text-rojo">
+              <p className="num font-display text-[clamp(64px,8vw,120px)] leading-none font-bold text-acento">
                 <span data-contador={l.distancia.km}>{l.distancia.km}</span>
                 <span className="ml-1 text-[24px] text-white/60">km</span>
               </p>
@@ -88,7 +88,7 @@ export default async function PaginaLugar({ params }: PageProps<"/cerca-de/[luga
             <ul className="mt-5 space-y-3">
               {l.paraQuien.map((q) => (
                 <li key={q} className="flex gap-3">
-                  <Icono nombre="check" className="mt-1 size-5 shrink-0 text-rojo" grosor={2.4} />
+                  <Icono nombre="check" className="mt-1 size-5 shrink-0 text-acento" grosor={2.4} />
                   <span>{q}</span>
                 </li>
               ))}

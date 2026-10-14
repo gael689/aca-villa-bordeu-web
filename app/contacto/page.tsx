@@ -23,7 +23,7 @@ export default function Contacto() {
         etiqueta="Contacto"
         titulo={
           <>
-            Estamos <span className="text-rojo">las 24 horas</span>
+            Estamos <span className="resalte">las 24 horas</span>
           </>
         }
         bajada="Escribinos, llamanos o vení directo: la recepción siempre está abierta."
@@ -46,14 +46,14 @@ export default function Contacto() {
                 <span className="block text-[13px] font-semibold text-asfalto">Llamar</span>
                 <span className="block font-display text-[30px] leading-none font-bold">{SITIO.telefono}</span>
               </span>
-              <Icono nombre="telefono" className="size-8 text-rojo" />
+              <Icono nombre="telefono" className="size-8 text-acento" />
             </a>
             <a href={mailLink} className="flex items-center justify-between gap-4 rounded-[var(--radio)] bg-white p-6 shadow-[inset_0_0_0_1px_var(--linea)] md:p-8">
               <span className="min-w-0">
                 <span className="block text-[13px] font-semibold text-asfalto">Mail</span>
                 <span className="block truncate font-display text-[24px] leading-none font-bold sm:text-[28px]">{SITIO.mail}</span>
               </span>
-              <Icono nombre="sobre" className="size-8 shrink-0 text-rojo" />
+              <Icono nombre="sobre" className="size-8 shrink-0 text-acento" />
             </a>
             <a href={MAPAS.google} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between gap-4 rounded-[var(--radio)] bg-grafito p-6 text-white md:p-8">
               <span>
@@ -63,7 +63,7 @@ export default function Contacto() {
                   {SITIO.direccion.acceso} · {SITIO.direccion.ciudad}
                 </span>
               </span>
-              <Icono nombre="pin" className="size-8 shrink-0 text-rojo" />
+              <Icono nombre="pin" className="size-8 shrink-0 text-acento" />
             </a>
             <BotonConsultar origen="contacto" className="btn w-full">
               Armar mi consulta

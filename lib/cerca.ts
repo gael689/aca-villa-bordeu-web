@@ -10,17 +10,17 @@ export const LUGARES: LugarCerca[] = [
     nombre: "Polo Petroquímico",
     title: "Hotel cerca del Polo Petroquímico | ACA Villa Bordeu",
     description:
-      "A 12 km de Ingeniero White y de Puerto Galván, unos 20 minutos. Departamentos con cochera cubierta, restaurante y recepción 24 h en Bahía Blanca. Consultá.",
+      "A 12 km de Ingeniero White y de Puerto Galván, unos 20 minutos. Habitaciones con cochera cubierta, restaurante y recepción 24 h en Bahía Blanca. Consultá.",
     h1: "Hotel cerca del Polo Petroquímico de Bahía Blanca",
     bajada: "Ingeniero White y Puerto Galván, a unos 20 minutos de Villa Bordeu.",
     citable:
-      "ACA Villa Bordeu, el alojamiento del Automóvil Club Argentino en Bahía Blanca, queda a 12 km del Polo Petroquímico de Ingeniero White, unos 20 minutos en auto. Puerto Galván está a la misma distancia. Tiene 26 departamentos con cochera cubierta frente a cada uno, restaurante y recepción las 24 horas.",
+      "ACA Villa Bordeu, el alojamiento del Automóvil Club Argentino en Bahía Blanca, queda a 12 km del Polo Petroquímico de Ingeniero White, unos 20 minutos en auto. Puerto Galván está a la misma distancia. Tiene 26 habitaciones con cochera cubierta frente a cada una, restaurante y recepción las 24 horas.",
     distancia: { lugar: "Polo Petroquímico (Ingeniero White)", km: 12, min: 20 },
     textos: [
       "El Polo Petroquímico está en Ingeniero White, sobre la ría, al sur de Bahía Blanca. ACA Villa Bordeu está en el acceso suroeste de la ciudad: son 12 km, unos 20 minutos medidos sin tránsito.",
       "Puerto Galván queda a 12 km, también unos 20 minutos. Para trabajos en Puerto Rosales, del lado de Punta Alta, la distancia sube a 43 km.",
       "Para una cuadrilla, lo que pesa es la logística de todos los días: salir a la misma hora, cargar combustible y volver a un lugar donde se come sin tener que salir otra vez.",
-      "Al volver del turno, la camioneta queda bajo techo frente al departamento. En el mismo predio están el Resto, la lavandería, el gimnasio y la estación YPF.",
+      "Al volver del turno, la camioneta queda bajo techo frente a la habitación. En el mismo predio están el Resto, la lavandería, el gimnasio y la estación YPF.",
     ],
     paraQuien: [
       "Contratistas que mandan cuadrillas a una parada de planta",
@@ -31,7 +31,7 @@ export const LUGARES: LugarCerca[] = [
     preguntas: [
       {
         p: "¿Qué hotel queda cerca del Polo Petroquímico?",
-        r: "ACA Villa Bordeu está a 12 km de Ingeniero White, unos 20 minutos en auto. Tiene 26 departamentos con cochera cubierta frente a cada uno.",
+        r: "ACA Villa Bordeu está a 12 km de Ingeniero White, unos 20 minutos en auto. Tiene 26 habitaciones con cochera cubierta frente a cada una.",
       },
       {
         p: "¿Y Puerto Galván?",
@@ -39,11 +39,11 @@ export const LUGARES: LugarCerca[] = [
       },
       {
         p: "¿Pueden alojarse cuadrillas enteras?",
-        r: "Son 26 departamentos single, doble y triple. Escribinos por WhatsApp o mail con cuántos son y las fechas, y te pasamos todo.",
+        r: "Son 26 habitaciones single, doble y triple. Escribinos por WhatsApp o mail con cuántos son y las fechas, y te pasamos todo.",
       },
       {
         p: "¿Hay lugar para dejar las camionetas?",
-        r: "Sí. Cada departamento tiene su cochera cubierta enfrente.",
+        r: "Sí. Cada habitación tiene su cochera cubierta enfrente.",
       },
     ],
     rubro: "petroquimica-y-puerto",
@@ -53,11 +53,11 @@ export const LUGARES: LugarCerca[] = [
     nombre: "General Daniel Cerri",
     title: "Hotel cerca de General Cerri | ACA Villa Bordeu",
     description:
-      "A 7 km de General Daniel Cerri, unos 10 minutos por la RN 3. Departamentos con cochera, restaurante y estación YPF en el acceso de Bahía Blanca. Escribinos.",
+      "A 7 km de General Daniel Cerri, unos 10 minutos por la RN 3. Habitaciones con cochera, restaurante y estación YPF en el acceso de Bahía Blanca. Escribinos.",
     h1: "Hotel cerca de General Cerri",
     bajada: "Cerri queda a 7 km por la RN 3, unos 10 minutos.",
     citable:
-      "ACA Villa Bordeu, el alojamiento del Automóvil Club Argentino en Bahía Blanca, queda a 7 km de General Daniel Cerri, unos 10 minutos por la Ruta Nacional 3. Tiene 26 departamentos con cochera cubierta frente a cada uno, restaurante y estación de servicio YPF.",
+      "ACA Villa Bordeu, el alojamiento del Automóvil Club Argentino en Bahía Blanca, queda a 7 km de General Daniel Cerri, unos 10 minutos por la Ruta Nacional 3. Tiene 26 habitaciones con cochera cubierta frente a cada una, restaurante y estación de servicio YPF.",
     distancia: { lugar: "General Daniel Cerri", km: 7, min: 10 },
     textos: [
       "General Daniel Cerri es una localidad del partido de Bahía Blanca, al suroeste de la ciudad, sobre la RN 3. Villa Bordeu está en el mismo lado de la ciudad: entre uno y otro hay 7 km de ruta.",
@@ -94,12 +94,12 @@ export const LUGARES: LugarCerca[] = [
     h1: "Alojamiento cerca del aeropuerto de Bahía Blanca",
     bajada: "Del aeropuerto Comandante Espora a Villa Bordeu, unos 35 minutos.",
     citable:
-      "ACA Villa Bordeu, el alojamiento del Automóvil Club Argentino en Bahía Blanca, queda a 23 km del aeropuerto Comandante Espora, unos 35 minutos en auto. Tiene recepción las 24 horas, 26 departamentos con cochera cubierta y restaurante en el mismo predio.",
+      "ACA Villa Bordeu, el alojamiento del Automóvil Club Argentino en Bahía Blanca, queda a 23 km del aeropuerto Comandante Espora, unos 35 minutos en auto. Tiene recepción las 24 horas, 26 habitaciones con cochera cubierta y restaurante en el mismo predio.",
     distancia: { lugar: "Aeropuerto Comandante Espora", km: 23, min: 35 },
     textos: [
       "El aeropuerto Comandante Espora está al este de Bahía Blanca. Villa Bordeu está en el extremo opuesto, en el suroeste, sobre el cruce de las rutas: son 23 km, unos 35 minutos medidos sin tránsito.",
       "La distancia es mayor que desde un hotel del centro, pero tiene una ventaja si venís a trabajar al Polo, a Cerri o sobre las rutas: dormís del lado donde vas a trabajar y no cruzás la ciudad cada mañana.",
-      "Si llegás en el último vuelo, la recepción está abierta las 24 horas. Si alquilás auto en el aeropuerto, lo dejás bajo techo frente al departamento.",
+      "Si llegás en el último vuelo, la recepción está abierta las 24 horas. Si alquilás auto en el aeropuerto, lo dejás bajo techo frente a la habitación.",
     ],
     paraQuien: [
       "Equipos que rotan y llegan en avión",
@@ -121,7 +121,7 @@ export const LUGARES: LugarCerca[] = [
       },
       {
         p: "Alquilo auto en el aeropuerto: ¿dónde lo dejo?",
-        r: "En la cochera cubierta que tiene cada departamento enfrente.",
+        r: "En la cochera cubierta que tiene cada habitación enfrente.",
       },
     ],
     rubro: "energia",
@@ -131,7 +131,7 @@ export const LUGARES: LugarCerca[] = [
     nombre: "Sociedad Rural de Bahía Blanca",
     title: "Hotel al lado de la Rural de Bahía Blanca | ACA Villa Bordeu",
     description:
-      "Pegado al predio de la Sociedad Rural de Bahía Blanca, en Villa Bordeu. Para la exposición: departamentos con cochera, restaurante y estación YPF. Escribinos.",
+      "Pegado al predio de la Sociedad Rural de Bahía Blanca, en Villa Bordeu. Para la exposición: habitaciones con cochera, restaurante y estación YPF. Escribinos.",
     h1: "Hotel al lado de la Sociedad Rural de Bahía Blanca",
     bajada: "El predio de la exposición está pegado a ACA Villa Bordeu.",
     citable:
@@ -143,7 +143,7 @@ export const LUGARES: LugarCerca[] = [
       nota: "Sobre el mismo Camino Parque Sesquicentenario.",
     },
     textos: [
-      "Villa Bordeu es el paraje donde la Sociedad Rural de Bahía Blanca tiene su predio y hace la exposición anual, con cabañas de toda la región. El alojamiento está al lado: del departamento al acceso de la Rural hay 1 km.",
+      "Villa Bordeu es el paraje donde la Sociedad Rural de Bahía Blanca tiene su predio y hace la exposición anual, con cabañas de toda la región. El alojamiento está al lado: de la habitación al acceso de la Rural hay 1 km.",
       "Durante la exposición llegan expositores, cabañeros, compradores y familias que vienen del campo. Dormir acá significa ir y volver de la muestra sin cruzar Bahía Blanca, con la camioneta bajo techo y la cena en el Resto.",
       "Las rutas 33 y 35, las que vienen de la zona agrícola, llegan a este mismo cruce. Si viajás con tu perro, se aceptan mascotas.",
     ],

@@ -14,14 +14,14 @@ import { Cinta } from "@/components/secciones/Cinta";
 export const metadata = meta({
   title: "Alojamiento para empresas en Bahía Blanca · ACA Villa Bordeu",
   description:
-    "Alojamiento para equipos de trabajo sobre la ruta en Bahía Blanca: 26 departamentos con cochera, restaurante, lavandería y gimnasio. Consultá por WhatsApp.",
+    "Alojamiento para equipos de trabajo sobre la ruta en Bahía Blanca: 26 habitaciones con cochera, restaurante, lavandería y gimnasio. Consultá por WhatsApp.",
   ruta: "/empresas",
 });
 
 const PASOS = [
   { n: "01", titulo: "Nos contás", texto: "Cuántos son, desde cuándo y qué necesitan. Por la consulta de la web, por WhatsApp o por mail." },
   { n: "02", titulo: "Te respondemos", texto: "Te pasamos todo por el mismo medio y armamos la estadía a la medida del equipo." },
-  { n: "03", titulo: "Llega el equipo", texto: "Recepción las 24 horas, cada uno a su departamento y las camionetas en la puerta." },
+  { n: "03", titulo: "Llega el equipo", texto: "Recepción las 24 horas, cada uno a su habitación y las camionetas en la puerta." },
 ];
 
 export default function Empresas() {
@@ -32,7 +32,7 @@ export default function Empresas() {
         etiqueta="Para empresas"
         titulo={
           <>
-            Alojamiento para <span className="text-rojo">empresas</span> en Bahía Blanca
+            Alojamiento para <span className="resalte">empresas</span> en Bahía Blanca
           </>
         }
         bajada="Tu equipo duerme, come y sale a trabajar desde un mismo predio, sobre el cruce de rutas y sin entrar al centro."
@@ -46,7 +46,7 @@ export default function Empresas() {
       <Cinta tono="oscuro" />
 
       <Citable>
-        ACA Villa Bordeu aloja equipos de trabajo en {SITIO.departamentos} departamentos con cochera cubierta, sobre las rutas 3, 33 y 35, a minutos del
+        ACA Villa Bordeu aloja equipos de trabajo en {SITIO.habitaciones} habitaciones con cochera cubierta, sobre las rutas 3, 33 y 35, a minutos del
         Polo Petroquímico, el puerto y General Cerri.
       </Citable>
 
@@ -62,7 +62,7 @@ export default function Empresas() {
           <ol className="mt-8 grid border-t border-[color:var(--linea)] md:grid-cols-3">
             {PASOS.map((p, i) => (
               <li key={p.n} className="border-b border-[color:var(--linea)] py-8 md:border-b-0 md:py-10 md:pr-10 md:[&+li]:border-l md:[&+li]:pl-10" data-reveal data-delay={String(i * 0.1)}>
-                <p className="num font-display text-[56px] leading-none font-bold text-rojo">{p.n}</p>
+                <p className="num font-display text-[56px] leading-none font-bold text-acento">{p.n}</p>
                 <p className="mt-4 font-display text-[28px] leading-none font-bold uppercase">{p.titulo}</p>
                 <p className="mt-3 max-w-[34ch] text-asfalto">{p.texto}</p>
               </li>

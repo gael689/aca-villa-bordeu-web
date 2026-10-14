@@ -7,7 +7,7 @@ const ESCENAS = [
   { momento: "A la tarde", titulo: "Reunión de equipo", texto: "La sala con pantalla para ordenar el día siguiente.", f: foto("sala-reuniones", "01-mesa.jpg", "Sala de reuniones con mesa larga") },
   { momento: "Al volver", titulo: "Un rato de gimnasio", texto: "Para soltar el cuerpo después de la jornada.", f: foto("gimnasio", "01-gym-pared-verde.jpg", "Gimnasio con pared verde y neón") },
   { momento: "De noche", titulo: "Cena en el Resto", texto: "Mesa larga para todos, sin tener que manejar.", f: foto("restaurante", "01-salon-noche.jpg", "Salón del restaurante de noche") },
-  { momento: "A descansar", titulo: "Cada uno a su departamento", texto: "Silencio, cama hecha y la ropa lista en la lavandería.", f: foto("habitaciones", "03-doble-vista-larga.jpg", "Departamento doble listo para descansar") },
+  { momento: "A descansar", titulo: "Cada uno a su habitación", texto: "Silencio, cama hecha y la ropa lista en la lavandería.", f: foto("habitaciones", "03-doble-vista-larga.jpg", "Habitación doble lista para descansar") },
 ];
 
 /**
@@ -22,7 +22,7 @@ export function DiaEquipo() {
           <div>
             <p className="etiqueta">Un día de tu equipo</p>
             <p className="t-h2 mt-4 max-w-[14ch]">
-              Todo resuelto, <span className="rojo-txt">de punta a punta</span>
+              Todo resuelto, <span className="resalte">de punta a punta</span>
             </p>
           </div>
           <p className="hidden font-display text-[clamp(40px,5vw,84px)] leading-none font-bold text-white uppercase lg:block" data-dia-hora aria-hidden="true">
@@ -41,7 +41,7 @@ export function DiaEquipo() {
                 <Image src={e.f.src} alt={e.f.alt} fill sizes="(min-width: 1024px) 30vw, 78vw" placeholder="blur" blurDataURL={e.f.blurDataURL} className="object-cover transition-transform duration-[1.6s] ease-[var(--ease-pt)] group-data-[activa=true]:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-5 md:p-7">
-                  <p className="num font-display text-[15px] font-bold text-rojo">
+                  <p className="num font-display text-[15px] font-bold text-acento">
                     0{i + 1} · {e.momento}
                   </p>
                   <p className="mt-2 font-display text-[32px] leading-none font-bold uppercase md:text-[38px]">{e.titulo}</p>
@@ -53,7 +53,7 @@ export function DiaEquipo() {
         </div>
         <div className="contenedor mt-8 hidden w-full lg:block">
           <div className="h-[3px] overflow-hidden rounded-full bg-white/10">
-            <div data-dia-barra className="h-full origin-left scale-x-0 bg-rojo" />
+            <div data-dia-barra className="h-full origin-left scale-x-0 bg-amarillo" />
           </div>
         </div>
       </div>

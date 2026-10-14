@@ -30,7 +30,7 @@ export default function ComoLlegar() {
         etiqueta="Cómo llegar"
         titulo={
           <>
-            En el cruce de <span className="text-rojo">las rutas</span>
+            En el cruce de <span className="resalte">las rutas</span>
           </>
         }
         bajada={`${SITIO.direccion.calle}, ${SITIO.direccion.acceso}. Al suroeste de Bahía Blanca, sin entrar al centro.`}
@@ -83,7 +83,7 @@ export default function ComoLlegar() {
                 <Link href={`/como-llegar/${r.slug}`} className="group flex h-full flex-col justify-between gap-10 rounded-[var(--radio)] bg-grafito p-7 text-white transition-transform duration-500 ease-[var(--ease-pt)] hover:-translate-y-1">
                   <div className="flex items-start justify-between">
                     <Escudo numero={r.rutaNacional} className="h-16 w-auto text-white" />
-                    <Icono nombre="flecha" className="size-6 text-white/50 transition-all group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-rojo" grosor={2} />
+                    <Icono nombre="flecha" className="size-6 text-white/50 transition-all group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-acento" grosor={2} />
                   </div>
                   <div>
                     <p className="font-display text-[34px] leading-none font-bold uppercase">Desde {r.origen}</p>
@@ -95,14 +95,14 @@ export default function ComoLlegar() {
               </li>
             ))}
             <li data-reveal>
-              <div className="flex h-full flex-col justify-between gap-6 rounded-[var(--radio)] bg-rojo p-7 text-white">
+              <div className="flex h-full flex-col justify-between gap-6 rounded-[var(--radio)] bg-amarillo p-7 text-tinta">
                 <p className="font-display text-[30px] leading-none font-bold uppercase">Cerca del trabajo</p>
                 <ul className="space-y-2">
                   {LUGARES.map((l) => (
                     <li key={l.slug}>
-                      <Link href={`/cerca-de/${l.slug}`} className="flex items-center justify-between gap-3 border-b border-white/25 pb-2 font-semibold">
+                      <Link href={`/cerca-de/${l.slug}`} className="flex items-center justify-between gap-3 border-b border-tinta/20 pb-2 font-semibold">
                         {l.nombre}
-                        <span className="num text-white/75">{l.distancia.km} km</span>
+                        <span className="num text-tinta/70">{l.distancia.km} km</span>
                       </Link>
                     </li>
                   ))}
@@ -132,7 +132,7 @@ export default function ComoLlegar() {
               <li key={d.lugar} className="flex items-center justify-between gap-4 py-4" data-reveal>
                 <span className="font-display text-[24px] leading-none font-bold uppercase">{d.lugar}</span>
                 <span className="num text-right">
-                  <span className="font-display text-[28px] font-bold text-rojo">{d.km}</span> km
+                  <span className="font-display text-[28px] font-bold text-acento">{d.km}</span> km
                   <span className="ml-3 text-asfalto">~{d.min} min</span>
                 </span>
               </li>

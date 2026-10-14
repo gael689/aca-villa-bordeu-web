@@ -1,11 +1,11 @@
 import { Escudo } from "@/components/marca/Escudo";
 import { LogoACA } from "@/components/marca/Logo";
 
-const ITEMS = ["ACA desde 1904", "Villa Bordeu desde 1984", "Estación YPF en el predio", "26 departamentos", "Recepción 24 horas", "Pet friendly"];
+const ITEMS = ["ACA desde 1904", "Villa Bordeu desde 1984", "Estación YPF en el predio", "26 habitaciones", "Recepción 24 horas", "Pet friendly"];
 const RUTAS = ["3", "33", "35", "22"];
 
 /** Cinta en movimiento con los escudos de ruta. Se inclina apenas con la velocidad del scroll. */
-export function Cinta({ tono = "rojo" }: { tono?: "rojo" | "oscuro" }) {
+export function Cinta({ tono = "amarillo" }: { tono?: "amarillo" | "oscuro" }) {
   const fila = (
     <div className="flex shrink-0 items-center gap-8 pr-8 md:gap-12 md:pr-12">
       {ITEMS.map((t, i) => (
@@ -21,8 +21,8 @@ export function Cinta({ tono = "rojo" }: { tono?: "rojo" | "oscuro" }) {
     </div>
   );
   return (
-    <div className={`overflow-hidden py-5 md:py-7 ${tono === "rojo" ? "bg-rojo text-white" : "bg-grafito text-white"}`}>
-      <p className="sr-only">ACA desde 1904, Villa Bordeu desde 1984, estación YPF en el predio, 26 departamentos, recepción 24 horas, pet friendly.</p>
+    <div className={`overflow-hidden py-5 md:py-7 ${tono === "amarillo" ? "bg-amarillo text-tinta" : "bg-grafito text-white"}`}>
+      <p className="sr-only">ACA desde 1904, Villa Bordeu desde 1984, estación YPF en el predio, 26 habitaciones, recepción 24 horas, pet friendly.</p>
       <div data-sesgo aria-hidden="true">
         <div className="marquesina">
           {fila}

@@ -11,7 +11,7 @@ export default function NoEncontrada() {
       <div className="contenedor relative pt-[var(--header-h)]">
         <p className="etiqueta !text-white/70">Error 404</p>
         <h1 className="t-display mt-5 max-w-[11ch]">
-          Esta salida <span className="text-rojo">no lleva</span> a ningún lado
+          Esta salida <span className="resalte">no lleva</span> a ningún lado
         </h1>
         <p className="lead mt-6 text-white/75">Volvé a la ruta: desde el inicio llegás a todo.</p>
         <div className="mt-10 flex flex-wrap gap-3">

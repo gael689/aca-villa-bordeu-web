@@ -10,11 +10,11 @@ export const RUBROS: Rubro[] = [
     nombre: "Petroquímica y puerto",
     title: "Alojamiento para personal del Polo Petroquímico | ACA",
     description:
-      "Departamentos con cochera cubierta a 12 km de Ingeniero White, con restaurante, lavandería y recepción 24 h. Contanos cuántos son y te respondemos por WhatsApp.",
+      "Habitaciones con cochera cubierta a 12 km de Ingeniero White, con restaurante, lavandería y recepción 24 h. Contanos cuántos son y te respondemos por WhatsApp.",
     h1: "Alojamiento para personal del Polo Petroquímico",
-    bajada: "A 12 km de Ingeniero White, con la camioneta bajo techo frente a cada departamento.",
+    bajada: "A 12 km de Ingeniero White, con la camioneta bajo techo frente a cada habitación.",
     citable:
-      "ACA Villa Bordeu es el alojamiento del Automóvil Club Argentino en Bahía Blanca, a 12 km del Polo Petroquímico de Ingeniero White y de Puerto Galván. Tiene 26 departamentos con cochera cubierta en la puerta, restaurante, lavandería y recepción las 24 horas. Las empresas consultan por WhatsApp o por mail.",
+      "ACA Villa Bordeu es el alojamiento del Automóvil Club Argentino en Bahía Blanca, a 12 km del Polo Petroquímico de Ingeniero White y de Puerto Galván. Tiene 26 habitaciones con cochera cubierta en la puerta, restaurante, lavandería y recepción las 24 horas. Las empresas consultan por WhatsApp o por mail.",
     distancias: [
       { lugar: "Polo Petroquímico (Ingeniero White)", km: 12, min: 20 },
       { lugar: "Puerto Galván", km: 12, min: 20 },
@@ -23,7 +23,7 @@ export const RUBROS: Rubro[] = [
       { lugar: "Centro de Bahía Blanca", km: 8, min: 15, nota: "Por si hay que hacer trámites o compras." },
     ],
     oficina:
-      "El que coordina la parada tiene dónde repasar el cronograma, completar los permisos de trabajo o hacer la llamada con planta, sin ocupar el departamento ni la mesa del Resto.",
+      "El que coordina la parada tiene dónde repasar el cronograma, completar los permisos de trabajo o hacer la llamada con planta, sin ocupar la habitación ni la mesa del Resto.",
     necesidades: [
       {
         titulo: "Turnos que arrancan temprano",
@@ -33,7 +33,7 @@ export const RUBROS: Rubro[] = [
       {
         titulo: "Paradas de planta",
         texto:
-          "Una parada junta mucha gente durante pocos días. Con 26 departamentos en el mismo predio, el equipo duerme cerca y a la mañana se organiza en la cochera antes de salir.",
+          "Una parada junta mucha gente durante pocos días. Con 26 habitaciones en el mismo predio, el equipo duerme cerca y a la mañana se organiza en la cochera antes de salir.",
       },
       {
         titulo: "La ropa de trabajo",
@@ -43,7 +43,7 @@ export const RUBROS: Rubro[] = [
       {
         titulo: "La camioneta, a la vista",
         texto:
-          "Cada departamento tiene su cochera cubierta enfrente. Las herramientas quedan bajo techo a pocos pasos, y la estación YPF del predio sirve para cargar antes de ir a planta.",
+          "Cada habitación tiene su cochera cubierta enfrente. Las herramientas quedan bajo techo a pocos pasos, y la estación YPF del predio sirve para cargar antes de ir a planta.",
       },
     ],
     contexto: {
@@ -82,11 +82,11 @@ export const RUBROS: Rubro[] = [
     nombre: "Energía",
     title: "Alojamiento para obras de energía | Bahía Blanca",
     description:
-      "Base para equipos de gas, ductos y parques eólicos: 26 departamentos con cochera en el cruce de las rutas 3, 33 y 35, con estación YPF. Consultá por WhatsApp.",
+      "Base para equipos de gas, ductos y parques eólicos: 26 habitaciones con cochera en el cruce de las rutas 3, 33 y 35, con estación YPF. Consultá por WhatsApp.",
     h1: "Alojamiento para equipos de energía en Bahía Blanca",
     bajada: "Para obras de gas, ductos y parques eólicos: salís a la ruta que toque desde el mismo cruce.",
     citable:
-      "ACA Villa Bordeu, el alojamiento del Automóvil Club Argentino en Bahía Blanca, está en el suroeste de la ciudad, donde se cruzan las rutas nacionales 3, 33 y 35, cerca del empalme con la RN 22. Queda a 7 km de General Cerri y a 12 km de Puerto Galván. Tiene 26 departamentos con cochera cubierta y estación de servicio YPF en el predio.",
+      "ACA Villa Bordeu, el alojamiento del Automóvil Club Argentino en Bahía Blanca, está en el suroeste de la ciudad, donde se cruzan las rutas nacionales 3, 33 y 35, cerca del empalme con la RN 22. Queda a 7 km de General Cerri y a 12 km de Puerto Galván. Tiene 26 habitaciones con cochera cubierta y estación de servicio YPF en el predio.",
     distancias: [
       { lugar: "General Daniel Cerri", km: 7, min: 10 },
       { lugar: "Puerto Galván", km: 12, min: 20 },
@@ -150,11 +150,11 @@ export const RUBROS: Rubro[] = [
     nombre: "Obra vial y transporte",
     title: "Alojamiento para obra vial y choferes | Bahía Blanca",
     description:
-      "Sobre el cruce de las rutas 3, 33 y 35: departamentos con cochera, restaurante, recepción 24 h y estación YPF en el mismo predio. Escribinos con cuántos son.",
+      "Sobre el cruce de las rutas 3, 33 y 35: habitaciones con cochera, restaurante, recepción 24 h y estación YPF en el mismo predio. Escribinos con cuántos son.",
     h1: "Alojamiento para obra vial y transporte en Bahía Blanca",
     bajada: "Estás en el cruce: cada mañana salís a la ruta que te toca.",
     citable:
-      "ACA Villa Bordeu es el alojamiento del Automóvil Club Argentino sobre el acceso de las rutas nacionales 3 y 33, en el suroeste de Bahía Blanca, la zona donde Vialidad Nacional ubica la confluencia de las rutas 3, 33, 22, 35 y 252. Tiene 26 departamentos con cochera cubierta, restaurante, recepción 24 horas y estación YPF.",
+      "ACA Villa Bordeu es el alojamiento del Automóvil Club Argentino sobre el acceso de las rutas nacionales 3 y 33, en el suroeste de Bahía Blanca, la zona donde Vialidad Nacional ubica la confluencia de las rutas 3, 33, 22, 35 y 252. Tiene 26 habitaciones con cochera cubierta, restaurante, recepción 24 horas y estación YPF.",
     distancias: [
       { lugar: "Médanos (RN 22)", km: 39, min: 35 },
       { lugar: "Tornquist (RN 33)", km: 74, min: 60 },
@@ -178,7 +178,7 @@ export const RUBROS: Rubro[] = [
       {
         titulo: "Dónde dejar los vehículos",
         texto:
-          "Cada departamento tiene cochera cubierta enfrente. Si vienen con camiones o equipos grandes, contanos qué traen cuando consultes y vemos cómo acomodarlos.",
+          "Cada habitación tiene cochera cubierta enfrente. Si vienen con camiones o equipos grandes, contanos qué traen cuando consultes y vemos cómo acomodarlos.",
       },
       {
         titulo: "Comer bien después de la jornada",
@@ -207,7 +207,7 @@ export const RUBROS: Rubro[] = [
       },
       {
         p: "¿Dónde cargan combustible?",
-        r: "En la estación de servicio YPF que está dentro del predio, a metros de los departamentos.",
+        r: "En la estación de servicio YPF que está dentro del predio, a metros de las habitaciones.",
       },
     ],
     foto: "cafeteria/01-recepcion-cafeteria.jpg",
@@ -217,11 +217,11 @@ export const RUBROS: Rubro[] = [
     nombre: "Agro",
     title: "Alojamiento para el agro, al lado de la Rural | Bahía Blanca",
     description:
-      "Pegado al predio de la Sociedad Rural de Bahía Blanca y a 12 km del puerto: departamentos con cochera, restaurante y estación YPF. Contanos cuántos son.",
+      "Pegado al predio de la Sociedad Rural de Bahía Blanca y a 12 km del puerto: habitaciones con cochera, restaurante y estación YPF. Contanos cuántos son.",
     h1: "Alojamiento para el agro en Bahía Blanca",
     bajada: "Al lado del predio de la Rural y sobre las rutas que traen la cosecha al puerto.",
     citable:
-      "ACA Villa Bordeu es el alojamiento del Automóvil Club Argentino en Villa Bordeu, Bahía Blanca, pegado al predio de la Sociedad Rural donde se hace la exposición anual. Está sobre las rutas 33 y 35, que llegan desde la zona agrícola, y a 12 km del puerto de Ingeniero White. Tiene 26 departamentos con cochera cubierta y restaurante.",
+      "ACA Villa Bordeu es el alojamiento del Automóvil Club Argentino en Villa Bordeu, Bahía Blanca, pegado al predio de la Sociedad Rural donde se hace la exposición anual. Está sobre las rutas 33 y 35, que llegan desde la zona agrícola, y a 12 km del puerto de Ingeniero White. Tiene 26 habitaciones con cochera cubierta y restaurante.",
     distancias: [
       { lugar: "Predio de la Sociedad Rural", km: 1, min: 5 },
       { lugar: "Puerto de Ingeniero White", km: 12, min: 20 },
@@ -250,7 +250,7 @@ export const RUBROS: Rubro[] = [
       {
         titulo: "La camioneta cargada, enfrente",
         texto:
-          "Con la cochera cubierta en la puerta del departamento, cargar y descargar es cuestión de dos pasos. Y si viajás con tu perro, se aceptan mascotas.",
+          "Con la cochera cubierta en la puerta de la habitación, cargar y descargar es cuestión de dos pasos. Y si viajás con tu perro, se aceptan mascotas.",
       },
     ],
     contexto: {

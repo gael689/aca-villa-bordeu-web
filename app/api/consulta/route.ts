@@ -54,7 +54,7 @@ export async function POST(req: Request) {
 
   const html = `
   <div style="font-family:Arial,sans-serif;font-size:15px;line-height:1.55;color:#1c1d1f;max-width:560px">
-    <p style="margin:0 0 4px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#b3121f">Consulta desde la web · ${tipo}</p>
+    <p style="margin:0 0 4px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#846400">Consulta desde la web · ${tipo}</p>
     <h1 style="margin:0 0 16px;font-size:22px">${escapar(quien)}</h1>
     <div style="background:#f6f5f2;border-radius:12px;padding:16px;white-space:pre-line">${escapar(datos.mensaje)}</div>
     <p style="margin:16px 0 0"><strong>Contacto:</strong> ${escapar(contacto)}</p>

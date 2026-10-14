@@ -9,7 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const fijas: [string, number][] = [
     ["/", 1],
     ["/empresas", 0.9],
-    ["/departamentos", 0.9],
+    ["/habitaciones", 0.9],
     ["/restaurante", 0.8],
     ["/instalaciones", 0.7],
     ["/sala-de-reuniones", 0.6],

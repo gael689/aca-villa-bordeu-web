@@ -11,12 +11,14 @@ Preview: https://aca-villa-bordeu-web.vercel.app (noindex). Dominio a mantener: 
 - Contacto en `lib/sitio.ts`: **llamar** al fijo 0291 488-6855 (`telefono`, `telLink`, JSON-LD) · **WhatsApp** al +54 9 291 642-1036 (`celular`) · info@acavillabordeu.com.ar.
 - **Nunca la palabra «complejo»** (al dueño no le gusta): «Instalaciones» en títulos y menú (`/instalaciones`), «el predio» o «Villa Bordeu» en los textos.
 - **1984 es el año de Villa Bordeu entero**, no solo del Resto (`SITIO.abiertoDesde`).
-- **Una sección, un acento**: nunca rojo y ámbar juntos. El ámbar es solo del Resto (clase `.ambar`); en el resto del sitio, rojo. Sobre fondo claro el ámbar va como relleno (`.btn-ambar`, `.ambar-pastilla`, `.ambar-marca`), nunca como texto (2,2:1).
+- **La web es amarilla, no roja** (pedido del cliente, oct/2026): amarillo ACA `#F1BB01`, el de aca.org.ar. Sobre fondo claro el amarillo va como relleno (`.btn`, `.pastilla`, `bg-amarillo` con texto tinta) o como marcador (`.resalte`), nunca como texto (1,7:1). `text-acento` y `.resalte` se adaptan solos al fondo (variables `--acento`/`--resalte-*` en `globals.css`): dorado `#846400` o marcador sobre claro, amarillo sobre oscuro. Sobre `bg-amarillo`, texto tinta, nunca blanco.
 - Oficina de cortesía: se muestra, sin condiciones (las pone el hotel por WhatsApp/mail).
 - `components/v2/Respaldo.tsx` («El respaldo del ACA») está guardado sin uso: si el dueño quiere volver, reemplaza a `<ViajeSocios />` en `app/page.tsx`.
-- 26 departamentos (single/doble/triple) = lo que el sitio viejo llamaba habitaciones. Pet friendly, recepción 24 h y lavandería: confirmados.
+- **Habitaciones, nunca «departamentos»** (pedido del cliente, oct/2026; femenino: «cada habitación», «las 26»). Son 26 (single/doble/triple), página `/habitaciones` (`/departamentos` redirige). Pet friendly, recepción 24 h y lavandería: confirmados.
 - No afirmar remodelación ni nombrar empresas como clientes sin confirmación.
-- Rojo de marca `#DF1D2E` (logo ACA 2024). El logo está vectorizado desde el favicon (`lib/logo.ts`): reemplazar si el ACA pasa el vector.
+- El rojo `#DF1D2E` queda **solo en el logo ACA** (`text-marca-aca`, favicon), como en aca.org.ar. El logo está vectorizado desde el favicon (`lib/logo.ts`): reemplazar si el ACA pasa el vector.
+- Menú: Socios (`/socios-aca`) va primero, antes de Empresas.
+- og:image: `scripts/og-inicio.mjs` regenera `public/og/inicio.jpg`.
 
 ## Técnico
 

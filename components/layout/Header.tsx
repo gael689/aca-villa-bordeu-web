@@ -93,7 +93,7 @@ export function Header() {
                       type="button"
                       aria-expanded={mega}
                       onClick={() => setMega((v) => !v)}
-                      className={`flex h-10 items-center gap-1.5 rounded-full px-4 text-[15px] font-semibold whitespace-nowrap transition-colors ${claro ? "hover:bg-white/12" : "hover:bg-tinta/6"} ${activo(m.href) || m.hijos.some((h) => activo(h.href)) ? "text-rojo" : ""}`}
+                      className={`flex h-10 items-center gap-1.5 rounded-full px-4 text-[15px] font-semibold whitespace-nowrap transition-colors ${claro ? "hover:bg-white/12" : "hover:bg-tinta/6"} ${activo(m.href) || m.hijos.some((h) => activo(h.href)) ? (claro ? "text-amarillo" : "text-dorado") : ""}`}
                     >
                       {m.texto}
                       <Icono nombre="der" className={`size-3.5 transition-transform duration-300 ${mega ? "-rotate-90" : "rotate-90"}`} grosor={2.2} />
@@ -108,7 +108,7 @@ export function Header() {
                                   href={h.href}
                                   className="group flex items-center gap-3 rounded-2xl p-2.5 transition-colors hover:bg-papel"
                                 >
-                                  <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-papel text-rojo transition-colors group-hover:bg-rojo group-hover:text-white">
+                                  <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-papel text-acento transition-colors group-hover:bg-amarillo group-hover:text-tinta">
                                     {h.icono && <Icono nombre={h.icono} className="size-5" grosor={1.7} />}
                                   </span>
                                   <span>
@@ -140,7 +140,7 @@ export function Header() {
                     key={m.href}
                     href={m.href}
                     aria-current={activo(m.href) ? "page" : undefined}
-                    className={`flex h-10 items-center rounded-full px-4 text-[15px] font-semibold whitespace-nowrap transition-colors ${claro ? "hover:bg-white/12" : "hover:bg-tinta/6"} ${activo(m.href) ? "text-rojo" : ""}`}
+                    className={`flex h-10 items-center rounded-full px-4 text-[15px] font-semibold whitespace-nowrap transition-colors ${claro ? "hover:bg-white/12" : "hover:bg-tinta/6"} ${activo(m.href) ? (claro ? "text-amarillo" : "text-dorado") : ""}`}
                   >
                     {m.texto}
                   </Link>
@@ -186,7 +186,7 @@ export function Header() {
                   <li key={m.href + m.texto} className="item border-b border-white/10" style={{ ["--i" as string]: i }}>
                     <Link
                       href={m.href}
-                      className={`flex items-center justify-between py-3.5 font-display text-[34px] leading-none font-bold uppercase sm:text-[42px] ${activo(m.href) ? "text-rojo" : ""}`}
+                      className={`flex items-center justify-between py-3.5 font-display text-[34px] leading-none font-bold uppercase sm:text-[42px] ${activo(m.href) ? "text-acento" : ""}`}
                     >
                       {m.texto}
                       <Icono nombre="flecha" className="size-6 text-white/40" grosor={1.8} />

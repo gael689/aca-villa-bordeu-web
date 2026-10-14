@@ -17,7 +17,7 @@ const DATOS = [
  * GUARDADA, SIN USO (12/10/2026): Rodrigo prefirió las dos tarjetas de la v1
  * (`ViajeSocios`). Para volver atrás, en app/page.tsx cambiar <ViajeSocios /> por
  * <Respaldo /> (import desde "@/components/v2/Respaldo"). Ojo: tiene la etiqueta
- * oscura en rojo y el café con el logo, que también usa el bloque del Resto.
+ * oscura en amarillo y el café con el logo, que también usa el bloque del Resto.
  */
 export function Respaldo() {
   const f = foto("restaurante", "05-cafe-logo.jpg", "Café con el logo ACA dibujado en la espuma");
@@ -28,7 +28,7 @@ export function Respaldo() {
           <Image src={f.src} alt={f.alt} fill sizes="(min-width: 1024px) 42vw, 100vw" placeholder="blur" blurDataURL={f.blurDataURL} className="object-cover" />
         </div>
         <div>
-          <LogoACA className="h-11 w-auto text-rojo" titulo="Automóvil Club Argentino" />
+          <LogoACA className="h-11 w-auto text-marca-aca" titulo="Automóvil Club Argentino" />
           <h2 className="t-h2 mt-8 max-w-[14ch]" data-split>
             El respaldo del ACA
           </h2>

@@ -89,7 +89,7 @@ export function mensajeViaje(c: EstadoViaje): string {
   l.push(`• ${quienes}`);
   if (c.socio) l.push("• Soy socio ACA");
   if (c.mascota) l.push("• Viajo con mascota");
-  if (c.adaptado) l.push("• Necesito un departamento adaptado");
+  if (c.adaptado) l.push("• Necesito una habitación adaptada");
   if (c.nombre) l.push(`• Mi nombre: ${c.nombre}`);
   l.push("Gracias!", FIRMA);
   return l.join("\n");

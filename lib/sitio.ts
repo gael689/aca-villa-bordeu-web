@@ -33,7 +33,7 @@ export const SITIO = {
     lat: -38.700554,
     lng: -62.333004,
   },
-  departamentos: 26,
+  habitaciones: 26,
   fundacionACA: 1904,
   aliancaYPF: 1936,
   // Villa Bordeu entero (alojamiento y Resto) abrió en 1984, no solo el restaurante.

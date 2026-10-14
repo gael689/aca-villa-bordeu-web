@@ -1,6 +1,6 @@
-import type { Apartment, BreadcrumbList, FAQPage, GasStation, Motel, Organization, Restaurant, WebSite, WithContext } from "schema-dts";
+import type { BreadcrumbList, FAQPage, GasStation, HotelRoom, Motel, Organization, Restaurant, WebSite, WithContext } from "schema-dts";
 import { SITIO, urlAbs } from "./sitio";
-import { TIPOS, INCLUYE } from "./departamentos";
+import { TIPOS, INCLUYE } from "./habitaciones";
 import { CARTA } from "./carta";
 import type { Pregunta } from "./tipos";
 
@@ -52,7 +52,7 @@ export function motelJsonLd(): WithContext<Motel> {
     "@id": ID.motel,
     name: SITIO.nombre,
     description:
-      "Motel del Automóvil Club Argentino en Bahía Blanca, sobre el cruce de las rutas nacionales 3, 33 y 35. Abierto desde 1984. 26 departamentos con cochera cubierta, restaurante, gimnasio, sala de reuniones, lavandería, recepción 24 horas y estación de servicio YPF.",
+      "Motel del Automóvil Club Argentino en Bahía Blanca, sobre el cruce de las rutas nacionales 3, 33 y 35. Abierto desde 1984. 26 habitaciones con cochera cubierta, restaurante, gimnasio, sala de reuniones, lavandería, recepción 24 horas y estación de servicio YPF.",
     url: SITIO.url,
     image: [urlAbs("/fotos/restaurante/01-salon-noche.jpg"), urlAbs("/fotos/habitaciones/01-triple-dos-camas.jpg")],
     telephone: SITIO.telefonoE164,
@@ -60,7 +60,7 @@ export function motelJsonLd(): WithContext<Motel> {
     address: direccion,
     foundingDate: String(SITIO.abiertoDesde),
     geo,
-    numberOfRooms: SITIO.departamentos,
+    numberOfRooms: SITIO.habitaciones,
     petsAllowed: true,
     starRating: { "@type": "Rating", ratingValue: 3 },
     brand: { "@type": "Brand", name: "Automóvil Club Argentino" },
@@ -85,11 +85,11 @@ export function motelJsonLd(): WithContext<Motel> {
   };
 }
 
-export function departamentosJsonLd(): WithContext<Apartment>[] {
+export function habitacionesJsonLd(): WithContext<HotelRoom>[] {
   return TIPOS.map((t) => ({
     "@context": "https://schema.org",
-    "@type": "Apartment",
-    name: `Departamento ${t.nombre} · ${SITIO.nombre}`,
+    "@type": "HotelRoom",
+    name: `Habitación ${t.nombre} · ${SITIO.nombre}`,
     description: `${t.camas}. ${t.frase}`,
     image: t.fotos.map((f) => urlAbs(f.src)),
     occupancy: { "@type": "QuantitativeValue", maxValue: t.personas },

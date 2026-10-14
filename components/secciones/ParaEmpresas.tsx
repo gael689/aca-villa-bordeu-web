@@ -7,13 +7,13 @@ import { foto } from "@/lib/fotos";
 const RAZONES = [
   {
     titulo: "Todo el equipo en un mismo predio",
-    texto: "26 departamentos single, doble y triple, uno al lado del otro. Nadie queda repartido por la ciudad.",
-    f: foto("habitaciones", "02-doble-escritorio.jpg", "Departamento con escritorio, TV y dos camas"),
+    texto: "26 habitaciones single, doble y triple, una al lado de la otra. Nadie queda repartido por la ciudad.",
+    f: foto("habitaciones", "02-doble-escritorio.jpg", "Habitación con escritorio, TV y dos camas"),
   },
   {
     titulo: "La camioneta, en la puerta",
-    texto: "Cada departamento tiene su cochera cubierta enfrente. Las herramientas quedan bajo techo y a la vista.",
-    f: foto("habitaciones", "06-pasillo.jpg", "Pasillo de los departamentos con puertas de madera"),
+    texto: "Cada habitación tiene su cochera cubierta enfrente. Las herramientas quedan bajo techo y a la vista.",
+    f: foto("habitaciones", "06-pasillo.jpg", "Pasillo de las habitaciones con puertas de madera"),
   },
   {
     titulo: "Comen sin salir",
@@ -27,7 +27,7 @@ const RAZONES = [
   },
   {
     titulo: "Una oficina para el que coordina",
-    texto: "Una oficina de cortesía con escritorio privado: para cerrar el parte del día, hacer una llamada o recibir a un proveedor sin ocupar el departamento.",
+    texto: "Una oficina de cortesía con escritorio privado: para cerrar el parte del día, hacer una llamada o recibir a un proveedor sin ocupar la habitación.",
     f: foto("oficina-cortesia", "01-oficina.jpg", "Oficina de cortesía con escritorio de madera y paredes de listones"),
   },
   {
@@ -68,7 +68,7 @@ export function ParaEmpresas() {
               Por qué Villa Bordeu
             </p>
             <h2 className="t-h2 mt-4 max-w-[16ch]" data-split>
-              Seis razones para alojar <span className="rojo-txt">al equipo acá</span>
+              Seis razones para alojar <span className="resalte">al equipo acá</span>
             </h2>
           </div>
           <p className="lead text-asfalto lg:justify-self-end" data-reveal>
@@ -98,7 +98,7 @@ export function ParaEmpresas() {
                 </span>
                 <span className="flex gap-1.5">
                   {RAZONES.map((r, i) => (
-                    <span key={r.titulo} className={`h-1 rounded-full transition-all duration-500 ${i === activa ? "w-8 bg-rojo" : "w-3 bg-white/40"}`} />
+                    <span key={r.titulo} className={`h-1 rounded-full transition-all duration-500 ${i === activa ? "w-8 bg-amarillo" : "w-3 bg-white/40"}`} />
                   ))}
                 </span>
               </div>
@@ -119,7 +119,7 @@ export function ParaEmpresas() {
                 <div className="relative mb-6 aspect-[16/10] overflow-hidden rounded-[var(--radio)] lg:hidden">
                   <Image src={r.f.src} alt={r.f.alt} fill sizes="100vw" placeholder="blur" blurDataURL={r.f.blurDataURL} className="object-cover" />
                 </div>
-                <p className={`num font-display text-[15px] font-bold transition-colors duration-500 ${i === activa ? "text-rojo" : "text-asfalto"}`}>
+                <p className={`num font-display text-[15px] font-bold transition-colors duration-500 ${i === activa ? "text-acento" : "text-asfalto"}`}>
                   {String(i + 1).padStart(2, "0")}
                 </p>
                 <h3

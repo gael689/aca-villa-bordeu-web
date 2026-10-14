@@ -1,32 +1,32 @@
 import Image from "next/image";
 import Link from "next/link";
-import { TIPOS, INCLUYE } from "@/lib/departamentos";
+import { TIPOS, INCLUYE } from "@/lib/habitaciones";
 import { Icono } from "@/components/marca/Icono";
 import { BotonConsultar } from "@/components/consulta/ConsultaContext";
 
-/** Los tres tipos de departamento, en tarjetas que se apilan al bajar (CSS sticky, sin JS). */
-export function DeptosApilados() {
+/** Los tres tipos de habitación, en tarjetas que se apilan al bajar (CSS sticky, sin JS). */
+export function HabitacionesApiladas() {
   return (
     <section className="seccion">
       <div className="contenedor">
         <div className="mb-10 grid gap-6 md:mb-16 lg:grid-cols-2 lg:items-end">
           <div>
             <p className="etiqueta" data-reveal>
-              Departamentos
+              Habitaciones
             </p>
             <h2 className="t-h2 mt-4" data-split>
-              Descansá <span className="rojo-txt">como necesitás</span>
+              Descansá <span className="resalte">como necesitás</span>
             </h2>
           </div>
           <div data-reveal>
-            <p className="inline-flex items-center gap-2 rounded-full bg-rojo px-4 py-2 text-[15px] font-semibold text-white">
-              <Icono nombre="auto" className="size-5" grosor={1.8} /> Cochera frente al departamento
+            <p className="inline-flex items-center gap-2 rounded-full bg-amarillo px-4 py-2 text-[15px] font-semibold text-tinta">
+              <Icono nombre="auto" className="size-5" grosor={1.8} /> Cochera frente a la habitación
             </p>
-            <p className="lead mt-4 text-asfalto">Single, doble o triple. Todos traen lo mismo.</p>
+            <p className="lead mt-4 text-asfalto">Single, doble o triple. Todas traen lo mismo.</p>
             <ul className="mt-5 flex flex-wrap gap-2">
               {INCLUYE.map((i) => (
                 <li key={i} className="chip">
-                  <Icono nombre="check" className="size-3.5 text-rojo" grosor={2.6} />
+                  <Icono nombre="check" className="size-3.5 text-acento" grosor={2.6} />
                   {i}
                 </li>
               ))}
@@ -52,7 +52,7 @@ export function DeptosApilados() {
                 </div>
                 <div className="flex flex-col justify-between gap-8 p-6 md:p-10">
                   <div>
-                    <p className="num font-display text-[15px] font-bold text-rojo">0{i + 1} / 03</p>
+                    <p className="num font-display text-[15px] font-bold text-acento">0{i + 1} / 03</p>
                     <h3 className="mt-3 font-display text-[clamp(36px,3.6vw,60px)] leading-[0.92] font-bold uppercase">{t.nombre}</h3>
                     <p className="mt-2 font-semibold">{t.camas}</p>
                     <p className="mt-3 max-w-[34ch] text-asfalto">{t.frase}</p>
@@ -61,7 +61,7 @@ export function DeptosApilados() {
                     <BotonConsultar modo="viaje" origen={`inicio-${t.slug}`} className="btn">
                       Consultar disponibilidad
                     </BotonConsultar>
-                    <Link href={`/departamentos#${t.slug}`} className="btn btn-fantasma sin-burbuja">
+                    <Link href={`/habitaciones#${t.slug}`} className="btn btn-fantasma sin-burbuja">
                       Ver fotos
                     </Link>
                   </div>

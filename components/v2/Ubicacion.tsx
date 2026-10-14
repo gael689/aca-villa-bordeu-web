@@ -15,13 +15,13 @@ export function Ubicacion() {
               Ubicación
             </p>
             <h2 className="t-h2 mt-4 max-w-[14ch]" data-split>
-              Bien ubicado para <span className="rojo-txt">llegar y seguir</span>
+              Bien ubicado para <span className="resalte">llegar y seguir</span>
             </h2>
           </div>
           <div className="lg:justify-self-end" data-reveal>
             <p className="lead max-w-[34ch] text-asfalto">A minutos del puerto, del Polo Petroquímico y de Cerri, sin entrar al centro.</p>
-            <a href={MAPAS.google} target="_blank" rel="noopener noreferrer" className="mt-4 flex items-start gap-2.5 text-[15px] hover:text-rojo">
-              <MapPin className="mt-0.5 size-5 shrink-0 text-rojo" aria-hidden="true" />
+            <a href={MAPAS.google} target="_blank" rel="noopener noreferrer" className="mt-4 flex items-start gap-2.5 text-[15px] hover:text-acento">
+              <MapPin className="mt-0.5 size-5 shrink-0 text-acento" aria-hidden="true" />
               <span>
                 <span className="block font-semibold">{SITIO.direccion.calle}</span>
                 <span className="text-asfalto">{SITIO.direccion.acceso} · {SITIO.direccion.ciudad}</span>

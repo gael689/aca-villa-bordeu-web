@@ -22,7 +22,7 @@ export function MosaicoDesplegable({ principales, extras, className }: { princip
           aria-expanded={abierto}
           aria-controls={id}
           onClick={() => setAbierto((a) => !a)}
-          className="group flex size-full items-center justify-between gap-4 rounded-[var(--radio)] bg-rojo p-5 text-left text-white transition-colors duration-500 hover:bg-rojo-tinta md:p-6 lg:flex-col lg:items-start"
+          className="group flex size-full items-center justify-between gap-4 rounded-[var(--radio)] bg-amarillo p-5 text-left text-tinta transition-colors duration-500 hover:bg-amarillo-hondo md:p-6 lg:flex-col lg:items-start"
         >
           <span>
             <span className="block font-display text-[clamp(26px,2.4vw,38px)] leading-none font-bold uppercase">{abierto ? "Ver menos" : "Y más…"}</span>

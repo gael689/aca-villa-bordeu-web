@@ -48,13 +48,13 @@ export default function Restaurante() {
         etiqueta="Resto · desde 1984"
         titulo={
           <>
-            Cocinamos <span className="text-ambar">desde 1984</span>
+            Cocinamos <span className="resalte">desde 1984</span>
           </>
         }
         bajada="El restaurante de Villa Bordeu, sobre la ruta. Para los que se alojan, para los equipos y para los que pasan."
         migas={[{ nombre: "Restaurante", ruta: "/restaurante" }]}
       >
-        <a href={linkWhatsApp(MENSAJE_MESA)} target="_blank" rel="noopener noreferrer" className="btn btn-ambar">
+        <a href={linkWhatsApp(MENSAJE_MESA)} target="_blank" rel="noopener noreferrer" className="btn">
           <span>Reservar mesa</span>
           <span className="burbuja" aria-hidden="true">
             <Icono nombre="whatsapp" className="size-4" />
@@ -85,7 +85,7 @@ export default function Restaurante() {
       </section>
 
       {/* La carta: cada sección es un capítulo con su foto fija al costado */}
-      <section id="carta" className="oscuro ambar grano relative">
+      <section id="carta" className="oscuro grano relative">
         <div className="contenedor relative pt-[clamp(72px,8vw,140px)]">
           <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
             <div>
@@ -93,7 +93,7 @@ export default function Restaurante() {
                 La carta
               </p>
               <h2 className="t-h2 mt-4" data-split>
-                Platos de siempre, <span className="text-ambar">hechos acá</span>
+                Platos de siempre, <span className="resalte">hechos acá</span>
               </h2>
             </div>
             <div className="flex flex-wrap gap-2 lg:justify-self-end" data-reveal>
@@ -103,7 +103,7 @@ export default function Restaurante() {
                   href={`#${slug(s.nombre)}`}
                   className="rounded-full px-4 py-2 text-[14px] font-semibold text-white/75 [box-shadow:inset_0_0_0_1px_rgb(255_255_255/0.18)] transition-colors hover:bg-white hover:text-tinta"
                 >
-                  <span className="num mr-1.5 text-ambar">{String(k + 1).padStart(2, "0")}</span>
+                  <span className="num mr-1.5 text-amarillo">{String(k + 1).padStart(2, "0")}</span>
                   {s.nombre}
                 </a>
               ))}
@@ -118,7 +118,7 @@ export default function Restaurante() {
               <div className="contenedor grid gap-8 py-[clamp(48px,6vw,96px)] lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
                 <div className="lg:sticky lg:top-[calc(var(--header-h)+32px)] lg:self-start">
                   <p className="num font-display text-[clamp(64px,8vw,128px)] leading-[0.8] font-bold text-white/10">{String(k + 1).padStart(2, "0")}</p>
-                  <h3 className="-mt-4 font-display text-[clamp(34px,3.6vw,60px)] leading-[0.95] font-bold text-ambar uppercase md:-mt-7" data-reveal>
+                  <h3 className="-mt-4 font-display text-[clamp(34px,3.6vw,60px)] leading-[0.95] font-bold text-amarillo uppercase md:-mt-7" data-reveal>
                     {s.nombre}
                   </h3>
                   <div className="relative mt-6 aspect-[16/10] overflow-hidden rounded-[var(--radio)] lg:aspect-[4/3]" data-clip>
@@ -129,8 +129,8 @@ export default function Restaurante() {
                   {s.platos.map((p, n) => (
                     <li key={p.nombre} className="group break-inside-avoid border-b border-white/10 py-4">
                       <p className="flex items-baseline gap-3">
-                        <span className="num shrink-0 font-display text-[13px] font-bold text-ambar">{String(n + 1).padStart(2, "0")}</span>
-                        <span className="font-display text-[22px] leading-[1.05] font-semibold uppercase transition-colors group-hover:text-ambar">{p.nombre}</span>
+                        <span className="num shrink-0 font-display text-[13px] font-bold text-amarillo">{String(n + 1).padStart(2, "0")}</span>
+                        <span className="font-display text-[22px] leading-[1.05] font-semibold uppercase transition-colors group-hover:text-amarillo">{p.nombre}</span>
                       </p>
                       {p.detalle && <p className="mt-1 pl-8 text-[15px] text-white/55">{p.detalle}</p>}
                     </li>

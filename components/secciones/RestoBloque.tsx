@@ -4,13 +4,13 @@ import { foto } from "@/lib/fotos";
 import { MENSAJE_MESA, linkWhatsApp } from "@/lib/mensaje";
 import { Icono } from "@/components/marca/Icono";
 
-/** El Resto en el inicio: foto grande con parallax, «desde 1984» y la carta. Acento ámbar, sin rojo (una sección, un acento). */
+/** El Resto en el inicio: foto grande con parallax, «desde 1984» y la carta. Amarillo como relleno sobre fondo claro. */
 export function RestoBloque() {
   const salon = foto("restaurante", "01-salon-noche.jpg", "Salón del Resto de noche, con luces cálidas en el techo");
   const cava = foto("restaurante", "03-cava-vinos.jpg", "Cava de vinos detrás de la barra");
   const cafe = foto("restaurante", "05-cafe-logo.jpg", "Café con el logo ACA dibujado en la espuma");
   return (
-    <section className="ambar seccion overflow-hidden">
+    <section className="seccion overflow-hidden">
       <div className="contenedor">
         <div className="grid gap-4 lg:grid-cols-12">
           <div className="tarjeta relative min-h-[420px] lg:col-span-8 lg:min-h-[560px]" data-clip>
@@ -27,13 +27,13 @@ export function RestoBloque() {
           </div>
           <div className="flex flex-col gap-4 lg:col-span-4">
             <div className="rounded-[var(--radio)] bg-white p-7 shadow-[inset_0_0_0_1px_var(--linea)] md:p-9" data-reveal>
-              <p className="etiqueta ambar-pastilla">Restaurante</p>
+              <p className="etiqueta pastilla">Restaurante</p>
               <h2 className="t-h2 mt-4">
-                Comé sin salir <span className="ambar-marca">de Villa Bordeu</span>
+                Comé sin salir <span className="resalte">de Villa Bordeu</span>
               </h2>
               <p className="mt-4 text-asfalto">Parrilla, pastas y platos de siempre. Cocinamos desde 1984.</p>
               <div className="mt-7 flex flex-wrap gap-2.5">
-                <Link href="/restaurante" className="btn btn-ambar">
+                <Link href="/restaurante" className="btn">
                   <span>Ver restaurante</span>
                   <span className="burbuja" aria-hidden="true">
                     <Icono nombre="der" className="size-4" grosor={2} />

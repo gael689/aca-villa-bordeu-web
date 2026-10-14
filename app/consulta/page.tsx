@@ -22,7 +22,7 @@ export default function PaginaConsulta() {
         etiqueta="Consultar disponibilidad"
         titulo={
           <>
-            Contanos qué <span className="text-rojo">necesitás</span>
+            Contanos qué <span className="resalte">necesitás</span>
           </>
         }
         bajada="Te respondemos por WhatsApp o mail. La recepción atiende las 24 horas."
@@ -31,11 +31,11 @@ export default function PaginaConsulta() {
       />
       <section className="seccion-chica">
         <div className="contenedor grid gap-3 md:grid-cols-2">
-          <div className="flex flex-col justify-between gap-10 rounded-[var(--radio)] bg-rojo p-8 text-white md:p-10">
+          <div className="flex flex-col justify-between gap-10 rounded-[var(--radio)] bg-amarillo p-8 text-tinta md:p-10">
             <div>
               <Icono nombre="casco" className="size-10" grosor={1.5} />
               <p className="mt-6 font-display text-[44px] leading-none font-bold uppercase">Vengo por trabajo</p>
-              <p className="mt-3 max-w-[34ch] text-white/85">Cuántos son, desde cuándo y qué necesitan. En un minuto queda armado el pedido.</p>
+              <p className="mt-3 max-w-[34ch] text-tinta/80">Cuántos son, desde cuándo y qué necesitan. En un minuto queda armado el pedido.</p>
             </div>
             <BotonConsultar modo="empresa" origen="consulta-empresa" className="btn btn-claro self-start">
               Consultar para mi equipo
@@ -72,7 +72,7 @@ export default function PaginaConsulta() {
             </span>
           </a>
           <a href={mailLink} className="flex items-center gap-4 rounded-[var(--radio)] bg-white p-6 shadow-[inset_0_0_0_1px_var(--linea)] transition-colors hover:bg-hormigon">
-            <span className="grid size-12 place-items-center rounded-full bg-rojo text-white">
+            <span className="grid size-12 place-items-center rounded-full bg-amarillo text-tinta">
               <Icono nombre="sobre" className="size-6" />
             </span>
             <span className="min-w-0">

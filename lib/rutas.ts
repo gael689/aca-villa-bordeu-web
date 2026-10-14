@@ -27,7 +27,7 @@ export const RUTAS: Ruta[] = [
       "El navegador puede proponerte otro camino: la RN 205 y la provincial 65 hasta la RN 33, que baja por Tornquist. Mide unos 677 km y termina en el mismo cruce, a metros del predio.",
     ],
     porQueParar: [
-      "Después de nueve horas de manejo, parás en el acceso y dejás el auto bajo techo, frente al departamento.",
+      "Después de nueve horas de manejo, parás en el acceso y dejás el auto bajo techo, frente a la habitación.",
       "Cenás en el Resto, que cocina desde 1984, y a la mañana cargás en la YPF del predio antes de seguir.",
       "Al otro día salís derecho a la RN 3 sur o a la RN 22, sin volver a cruzar la ciudad.",
     ],
@@ -73,7 +73,7 @@ export const RUTAS: Ruta[] = [
       "Villa Bordeu está antes de la ciudad. No hace falta entrar a Bahía Blanca para llegar ni para volver a salir.",
     ],
     porQueParar: [
-      "Si vas hacia Buenos Aires o la costa, partís el viaje a la mitad y dormís con el auto bajo techo en la puerta del departamento.",
+      "Si vas hacia Buenos Aires o la costa, partís el viaje a la mitad y dormís con el auto bajo techo en la puerta de la habitación.",
       "Si venís por trabajo a la zona del Polo, Ingeniero White queda a 12 km de Villa Bordeu.",
       "La YPF del predio te deja salir con el tanque lleno a la mañana.",
     ],

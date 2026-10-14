@@ -40,14 +40,14 @@ export default function Socios() {
     <>
       <PortadaPagina
         fondo={
-          <div aria-hidden="true" className="absolute top-1/2 -right-[6%] w-[min(80vw,900px)] -translate-y-1/2 text-rojo/25" data-parallax="8">
+          <div aria-hidden="true" className="absolute top-1/2 -right-[6%] w-[min(80vw,900px)] -translate-y-1/2 text-amarillo/25" data-parallax="8">
             <LogoACA className="h-auto w-full" />
           </div>
         }
         etiqueta="Socios ACA"
         titulo={
           <>
-            Tu carnet <span className="text-rojo">también vale acá</span>
+            Tu carnet <span className="resalte">también vale acá</span>
           </>
         }
         bajada="Villa Bordeu es parte de la Red Hotelera del Automóvil Club Argentino: la primera parada ACA camino al sur."
@@ -73,7 +73,7 @@ export default function Socios() {
             { n: 28, t: "Hoteles propios en la Red Hotelera ACA" },
           ].map((c, i) => (
             <div key={c.t} className="rounded-[var(--radio)] bg-white p-7 shadow-[inset_0_0_0_1px_var(--linea)]" data-reveal data-delay={String(i * 0.08)}>
-              <p className="num font-display text-[72px] leading-none font-bold text-rojo">
+              <p className="num font-display text-[72px] leading-none font-bold text-acento">
                 <span data-contador={c.n}>{c.n}</span>
               </p>
               <p className="mt-3 text-asfalto">{c.t}</p>
@@ -104,11 +104,11 @@ export default function Socios() {
             </a>
           </div>
           <ol className="relative pl-10">
-            <span aria-hidden="true" className="absolute top-3 bottom-3 left-[13px] w-[3px] rounded-full bg-gradient-to-b from-rojo to-white/15" data-linea style={{ transformOrigin: "top" }} />
+            <span aria-hidden="true" className="absolute top-3 bottom-3 left-[13px] w-[3px] rounded-full bg-gradient-to-b from-amarillo to-white/15" data-linea style={{ transformOrigin: "top" }} />
             {RED_SUR.map((h, i) => (
               <li key={h.nombre} className="relative border-b border-white/8 py-4" data-reveal data-delay={String(i * 0.04)}>
-                <span className={`absolute top-1/2 -left-10 -translate-y-1/2 rounded-full ${h.aca ? "size-[29px] border-[3px] border-rojo bg-grafito" : "ml-[7px] size-[15px] bg-white/40"}`} />
-                <p className={`font-display text-[26px] leading-none font-bold uppercase ${h.aca ? "text-rojo" : ""}`}>{h.nombre}</p>
+                <span className={`absolute top-1/2 -left-10 -translate-y-1/2 rounded-full ${h.aca ? "size-[29px] border-[3px] border-amarillo bg-grafito" : "ml-[7px] size-[15px] bg-white/40"}`} />
+                <p className={`font-display text-[26px] leading-none font-bold uppercase ${h.aca ? "text-acento" : ""}`}>{h.nombre}</p>
                 <p className="text-[14px] text-white/55">{h.lugar}</p>
               </li>
             ))}

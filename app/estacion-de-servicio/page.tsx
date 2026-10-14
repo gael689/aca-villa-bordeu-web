@@ -30,7 +30,7 @@ export default function EstacionDeServicio() {
         etiqueta="Estación de servicio"
         titulo={
           <>
-            ACA YPF <span className="text-rojo">en la ruta</span>
+            ACA YPF <span className="resalte">en la ruta</span>
           </>
         }
         bajada="Combustible en el mismo predio donde dormís y comés. Para seguir viaje o para la flota del equipo."
@@ -50,7 +50,7 @@ export default function EstacionDeServicio() {
 
       <Citable>
         La estación de servicio ACA YPF de Villa Bordeu está en el acceso de las rutas nacionales 3 y 33, en Bahía Blanca, dentro del mismo predio que los
-        departamentos y el restaurante del Automóvil Club Argentino.
+        habitaciones y el restaurante del Automóvil Club Argentino.
       </Citable>
 
       <section className="seccion-chica">
@@ -59,7 +59,7 @@ export default function EstacionDeServicio() {
             <Image src={aerea.src} alt={aerea.alt} fill sizes="(min-width: 1024px) 55vw, 100vw" placeholder="blur" blurDataURL={aerea.blurDataURL} className="object-cover" />
           </div>
           <div className="rounded-[var(--radio)] bg-grafito p-8 text-white md:p-10" data-reveal>
-            <LogoACA className="h-9 w-auto text-rojo" />
+            <LogoACA className="h-9 w-auto text-marca-aca" />
             <p className="mt-6 font-display text-[30px] leading-[1] font-bold uppercase">ACA e YPF, juntos desde 1936</p>
             <p className="mt-4 text-white/70">
               El convenio entre el Automóvil Club Argentino e YPF armó una red de estaciones en todo el país. Hoy la alianza suma 190 estaciones, y una de ellas
@@ -75,7 +75,7 @@ export default function EstacionDeServicio() {
       <section className="seccion-chica gris">
         <div className="contenedor grid gap-3 md:grid-cols-2">
           <TarjetaEnlace href="/restaurante" foto={foto("restaurante", "01-salon-noche.jpg", "Salón del Resto")} titulo="Comé en el Resto" texto="A pasos de los surtidores" />
-          <TarjetaEnlace href="/departamentos" foto={foto("habitaciones", "01-triple-dos-camas.jpg", "Departamento")} titulo="Quedate a dormir" texto="Con el auto en la puerta" />
+          <TarjetaEnlace href="/habitaciones" foto={foto("habitaciones", "01-triple-dos-camas.jpg", "Habitación")} titulo="Quedate a dormir" texto="Con el auto en la puerta" />
         </div>
       </section>
 

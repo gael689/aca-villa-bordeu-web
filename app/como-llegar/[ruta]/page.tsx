@@ -68,14 +68,14 @@ export default async function PaginaRuta({ params }: PageProps<"/como-llegar/[ru
             </div>
             <div className="border-white/10 p-6 sm:border-l md:p-8">
               <p className="text-[13px] font-semibold tracking-[0.16em] text-white/50 uppercase">Distancia</p>
-              <p className="num font-display text-[52px] leading-none font-bold text-rojo">
+              <p className="num font-display text-[52px] leading-none font-bold text-acento">
                 <span data-contador={r.km}>{r.km}</span>
                 <span className="ml-1 text-[20px] text-white/60">km</span>
               </p>
             </div>
             <div className="border-white/10 p-6 sm:border-l md:p-8">
               <p className="text-[13px] font-semibold tracking-[0.16em] text-white/50 uppercase">Manejando</p>
-              <p className="font-display text-[52px] leading-none font-bold text-rojo">{r.horas}</p>
+              <p className="font-display text-[52px] leading-none font-bold text-acento">{r.horas}</p>
               <p className="text-[13px] text-white/50">sin tránsito ni paradas</p>
             </div>
           </div>
@@ -96,22 +96,22 @@ export default async function PaginaRuta({ params }: PageProps<"/como-llegar/[ru
             </h2>
             {/* Línea de ruta con las localidades */}
             <ol className="relative mt-10 space-y-5 pl-8">
-              <span aria-hidden="true" className="absolute top-2 bottom-2 left-[9px] w-[3px] origin-top rounded-full bg-rojo" data-linea style={{ transformOrigin: "top" }} />
+              <span aria-hidden="true" className="absolute top-2 bottom-2 left-[9px] w-[3px] origin-top rounded-full bg-amarillo" data-linea style={{ transformOrigin: "top" }} />
               <li className="relative" data-reveal>
-                <span className="absolute top-1.5 -left-8 size-[21px] rounded-full border-[3px] border-rojo bg-papel" />
+                <span className="absolute top-1.5 -left-8 size-[21px] rounded-full border-[3px] border-amarillo bg-papel" />
                 <p className="font-display text-[22px] font-bold uppercase">{r.origen}</p>
               </li>
               {r.pasaPor.map((l, i) => (
                 <li key={l} className="relative" data-reveal data-delay={String(i * 0.05)}>
-                  <span className="absolute top-2 -left-[27px] size-[11px] rounded-full bg-rojo" />
+                  <span className="absolute top-2 -left-[27px] size-[11px] rounded-full bg-amarillo" />
                   <p className="text-[17px] font-semibold text-asfalto">{l}</p>
                 </li>
               ))}
               <li className="relative" data-reveal>
-                <span className="absolute top-1 -left-8 grid size-[21px] place-items-center rounded-full bg-rojo text-white">
+                <span className="absolute top-1 -left-8 grid size-[21px] place-items-center rounded-full bg-amarillo text-tinta">
                   <Icono nombre="pin" className="size-3" grosor={2.6} />
                 </span>
-                <p className="font-display text-[22px] font-bold text-rojo uppercase">ACA Villa Bordeu</p>
+                <p className="font-display text-[22px] font-bold text-acento uppercase">ACA Villa Bordeu</p>
               </li>
             </ol>
           </div>
@@ -145,13 +145,13 @@ export default async function PaginaRuta({ params }: PageProps<"/como-llegar/[ru
           <ul className="mt-12 grid gap-3 md:grid-cols-3">
             {r.porQueParar.map((t, i) => (
               <li key={t.slice(0, 20)} className="rounded-[var(--radio)] bg-white/[0.05] p-7 text-white/85 [box-shadow:inset_0_0_0_1px_rgb(255_255_255/0.08)]" data-reveal data-delay={String(i * 0.08)}>
-                <p className="num font-display text-[40px] leading-none font-bold text-rojo">0{i + 1}</p>
+                <p className="num font-display text-[40px] leading-none font-bold text-acento">0{i + 1}</p>
                 <p className="mt-4">{t}</p>
               </li>
             ))}
           </ul>
           {r.siguiente && (
-            <p className="mt-10 max-w-[60ch] rounded-[var(--radio)] bg-rojo p-6 text-[17px] md:p-8" data-reveal>
+            <p className="mt-10 max-w-[60ch] rounded-[var(--radio)] bg-amarillo p-6 text-[17px] text-tinta md:p-8" data-reveal>
               <strong className="block font-display text-[24px] uppercase">¿Seguís viaje?</strong>
               {r.siguiente}{" "}
               <Link href="/socios-aca" className="enlace">

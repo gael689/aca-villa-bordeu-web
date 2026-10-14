@@ -11,13 +11,13 @@ export function Escudo({
 }: {
   numero: string;
   className?: string;
-  tono?: "claro" | "oscuro" | "rojo";
+  tono?: "claro" | "oscuro" | "amarillo";
   dibujar?: boolean;
 }) {
   const colores = {
     claro: { borde: "currentColor", fondo: "transparent", texto: "currentColor" },
     oscuro: { borde: "#151617", fondo: "#F6F5F2", texto: "#151617" },
-    rojo: { borde: "#DF1D2E", fondo: "transparent", texto: "currentColor" },
+    amarillo: { borde: "#F1BB01", fondo: "transparent", texto: "currentColor" },
   }[tono];
   return (
     <svg viewBox="0 0 48 56" className={className} role="img" aria-label={`Ruta Nacional ${numero}`} data-dibujar={dibujar || undefined}>

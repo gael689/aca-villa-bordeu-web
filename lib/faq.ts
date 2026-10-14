@@ -18,7 +18,7 @@ export const FAQ_GENERAL: Pregunta[] = [
   },
   {
     p: "¿Tienen cochera?",
-    r: "Sí. Cada uno de los 26 departamentos tiene su cochera cubierta enfrente, así que el auto queda a la vista.",
+    r: "Sí. Cada una de las 26 habitaciones tiene su cochera cubierta enfrente, así que el auto queda a la vista.",
   },
   {
     p: "¿Puedo llegar de noche?",
@@ -33,12 +33,12 @@ export const FAQ_GENERAL: Pregunta[] = [
     r: "Sí, Villa Bordeu es pet friendly. Avisanos al consultar que venís con tu mascota.",
   },
   {
-    p: "¿Qué hay en Villa Bordeu además de los departamentos?",
+    p: "¿Qué hay en Villa Bordeu además de las habitaciones?",
     r: "El restaurante Resto, que cocina desde 1984, cafetería, bar con cava, room service, lavandería, gimnasio, sala de reuniones, juegos para chicos, una tienda con productos Villa Bordeu y la estación de servicio YPF.",
   },
   {
-    p: "¿Tienen departamento adaptado?",
-    r: "Sí, hay un departamento adaptado. Pedilo cuando consultes así te lo reservamos.",
+    p: "¿Tienen habitación adaptada?",
+    r: "Sí, hay una habitación adaptada. Pedila cuando consultes así te la reservamos.",
   },
   {
     p: "Soy socio del ACA, ¿tengo beneficio?",
@@ -49,7 +49,7 @@ export const FAQ_GENERAL: Pregunta[] = [
 export const FAQ_EMPRESAS: Pregunta[] = [
   {
     p: "¿Entra todo mi equipo junto?",
-    r: "Tenemos 26 departamentos single, doble y triple, todos en el mismo predio. Escribinos por WhatsApp o mail con cuántos son y las fechas, y te decimos cómo los acomodamos.",
+    r: "Tenemos 26 habitaciones single, doble y triple, todas en el mismo predio. Escribinos por WhatsApp o mail con cuántos son y las fechas, y te decimos cómo los acomodamos.",
   },
   {
     p: "¿Pueden quedarse varias semanas?",
@@ -57,7 +57,7 @@ export const FAQ_EMPRESAS: Pregunta[] = [
   },
   {
     p: "¿Dónde dejamos las camionetas?",
-    r: "Cada departamento tiene su cochera cubierta enfrente. Si vienen con camiones o equipos grandes, contanos qué traen y te confirmamos.",
+    r: "Cada habitación tiene su cochera cubierta enfrente. Si vienen con camiones o equipos grandes, contanos qué traen y te confirmamos.",
   },
   {
     p: "¿El equipo puede comer sin salir del predio?",

@@ -9,7 +9,7 @@ import { Predio } from "@/components/secciones/Predio";
 export const metadata = meta({
   title: "Instalaciones: gimnasio, cocheras y más · ACA Villa Bordeu",
   description:
-    "Departamentos, restaurante, gimnasio, sala de reuniones, oficina de cortesía, lavandería, tienda y estación YPF en un mismo predio sobre la ruta, en Bahía Blanca. Recepción 24 h.",
+    "Habitaciones, restaurante, gimnasio, sala de reuniones, oficina de cortesía, lavandería, tienda y estación YPF en un mismo predio sobre la ruta, en Bahía Blanca. Recepción 24 h.",
   ruta: "/instalaciones",
 });
 
@@ -17,10 +17,10 @@ const BLOQUES = [
   {
     id: "cocheras",
     titulo: "Cocheras cubiertas",
-    texto: "Una por departamento, techada y enfrente de la puerta. La camioneta del trabajo o el auto de la familia quedan a la vista toda la noche.",
+    texto: "Una por habitación, techada y enfrente de la puerta. La camioneta del trabajo o el auto de la familia quedan a la vista toda la noche.",
     fotos: [
       foto("predio", "01-exterior-atardecer.jpg", "Exterior de Villa Bordeu al atardecer, con el estacionamiento y la estación YPF al fondo"),
-      foto("habitaciones", "06-pasillo.jpg", "Pasillo de los departamentos, con la puerta de cada uno"),
+      foto("habitaciones", "06-pasillo.jpg", "Pasillo de las habitaciones, con la puerta de cada una"),
     ],
   },
   {
@@ -68,17 +68,17 @@ export default function Instalaciones() {
         etiqueta="Instalaciones"
         titulo={
           <>
-            Todo en un <span className="text-rojo">mismo predio</span>
+            Todo en un <span className="resalte">mismo predio</span>
           </>
         }
-        bajada="Departamentos, restaurante, gimnasio, sala de reuniones, oficina de cortesía, tienda y estación de servicio, sobre el cruce de rutas."
+        bajada="Habitaciones, restaurante, gimnasio, sala de reuniones, oficina de cortesía, tienda y estación de servicio, sobre el cruce de rutas."
         migas={[{ nombre: "Instalaciones", ruta: "/instalaciones" }]}
       >
         <BotonConsultar origen="instalaciones-portada">Consultar disponibilidad</BotonConsultar>
       </PortadaPagina>
 
       <Citable>
-        En el predio de ACA Villa Bordeu hay 26 departamentos con cochera, restaurante, cafetería, gimnasio, sala de reuniones, oficina de cortesía, lavandería, juegos para
+        En el predio de ACA Villa Bordeu hay 26 habitaciones con cochera, restaurante, cafetería, gimnasio, sala de reuniones, oficina de cortesía, lavandería, juegos para
         chicos, una tienda y la estación de servicio YPF.
       </Citable>
 
@@ -99,7 +99,7 @@ export default function Instalaciones() {
               ))}
             </div>
             <div>
-              <p className="num font-display text-[15px] font-bold text-rojo" data-reveal>
+              <p className="num font-display text-[15px] font-bold text-acento" data-reveal>
                 0{i + 1}
               </p>
               <h2 className="t-h2 mt-3" data-split>

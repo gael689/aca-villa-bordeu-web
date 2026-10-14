@@ -39,7 +39,7 @@ export const DISTANCIAS_ZONA: Distancia[] = [
 export type Servicio = { icono: IconoNombre; titulo: string; texto: string };
 
 export const SERVICIOS: Servicio[] = [
-  { icono: "auto", titulo: "Cochera en la puerta", texto: "Cubierta, frente a cada departamento." },
+  { icono: "auto", titulo: "Cochera en la puerta", texto: "Cubierta, frente a cada habitación." },
   { icono: "campana", titulo: "Recepción 24 h", texto: "Llegás a la hora que llegues." },
   { icono: "cubiertos", titulo: "Restaurante", texto: "El Resto cocina desde 1984." },
   { icono: "taza", titulo: "Desayuno", texto: "También sin TACC." },
@@ -49,8 +49,8 @@ export const SERVICIOS: Servicio[] = [
   { icono: "reunion", titulo: "Oficina de cortesía", texto: "Un escritorio privado para trabajar tranquilo." },
   { icono: "surtidor", titulo: "Estación YPF", texto: "Cargás sin salir del predio." },
   { icono: "pata", titulo: "Pet friendly", texto: "Tu mascota también viaja." },
-  { icono: "wifi", titulo: "Wi-Fi", texto: "En los departamentos y en el Resto." },
-  { icono: "accesible", titulo: "Departamento adaptado", texto: "Pensado para moverse sin barreras." },
+  { icono: "wifi", titulo: "Wi-Fi", texto: "En las habitaciones y en el Resto." },
+  { icono: "accesible", titulo: "Habitación adaptada", texto: "Pensada para moverse sin barreras." },
   { icono: "hamaca", titulo: "Juegos para chicos", texto: "Al aire libre, en el parque." },
 ];
 
@@ -68,7 +68,7 @@ export type PuntoPredio = {
 };
 
 export const PREDIO: PuntoPredio[] = [
-  { id: "deptos", titulo: "Departamentos", texto: "Los 26, en planta baja, cada uno con su cochera cubierta enfrente.", icono: "cama", x: 62, y: 39, foto: ["habitaciones", "01-triple-dos-camas.jpg"], href: "/departamentos" },
+  { id: "habitaciones", titulo: "Habitaciones", texto: "Las 26, en planta baja, cada una con su cochera cubierta enfrente.", icono: "cama", x: 62, y: 39, foto: ["habitaciones", "01-triple-dos-camas.jpg"], href: "/habitaciones" },
   { id: "cocheras", titulo: "Cocheras cubiertas", texto: "La camioneta queda en la puerta, a la vista.", icono: "auto", x: 73, y: 46, foto: ["predio", "01-exterior-atardecer.jpg"] },
   { id: "resto", titulo: "Restaurante y bar", texto: "El Resto, la cava y la barra, abiertos también para quien pasa.", icono: "cubiertos", x: 42, y: 53, foto: ["restaurante", "01-salon-noche.jpg"], href: "/restaurante" },
   { id: "recepcion", titulo: "Recepción 24 h", texto: "Atención las 24 horas, para el que llega de noche por la ruta.", icono: "campana", x: 27, y: 40, foto: ["cafeteria", "01-recepcion-cafeteria.jpg"] },

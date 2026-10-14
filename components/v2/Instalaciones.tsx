@@ -23,8 +23,8 @@ type Tile = { Icono: LucideIcon; t: string; d: string; f: Foto | null; clase: st
 // Lo principal, con el formato de «Todo en un mismo lugar»: verbo, ícono y una línea.
 // Asimétrico en escritorio (4 columnas), dos columnas en celular.
 const PRINCIPALES: Tile[] = [
-  { Icono: BedDouble, t: "Dormí", d: "26 departamentos con baño privado.", f: foto("habitaciones", "01-triple-dos-camas.jpg", "Departamento con cabecera de madera y luz cálida"), clase: "col-span-2 row-span-2", href: "/departamentos" },
-  { Icono: SquareParking, t: "Estacioná", d: "Cochera cubierta frente al departamento.", f: foto("predio", "01-exterior-atardecer.jpg", "Exterior de Villa Bordeu al atardecer, con el estacionamiento y la estación YPF"), clase: "col-span-2" },
+  { Icono: BedDouble, t: "Dormí", d: "26 habitaciones con baño privado.", f: foto("habitaciones", "01-triple-dos-camas.jpg", "Habitación con cabecera de madera y luz cálida"), clase: "col-span-2 row-span-2", href: "/habitaciones" },
+  { Icono: SquareParking, t: "Estacioná", d: "Cochera cubierta frente a la habitación.", f: foto("predio", "01-exterior-atardecer.jpg", "Exterior de Villa Bordeu al atardecer, con el estacionamiento y la estación YPF"), clase: "col-span-2" },
   { Icono: UtensilsCrossed, t: "Comé", d: "Restaurante en el predio.", f: foto("restaurante", "01-salon-noche.jpg", "Salón del Resto de noche"), clase: "", href: "/restaurante" },
   { Icono: Dumbbell, t: "Entrená", d: "Gimnasio con ventanales.", f: foto("gimnasio", "01-gym-pared-verde.jpg", "Gimnasio con pared verde y neón"), clase: "" },
   { Icono: Fuel, t: "Cargá", d: "Estación YPF en el predio.", f: foto("ypf", "01-surtidores-atardecer.jpg", "Surtidores de la estación YPF al atardecer"), clase: "", href: "/estacion-de-servicio" },
@@ -52,7 +52,7 @@ function Contenido({ Icono, t, d, f }: Tile) {
         </>
       ) : null}
       <span className="absolute inset-x-0 bottom-0 flex items-end gap-3 p-3.5 md:p-5">
-        <span className="grid size-9 shrink-0 place-items-center rounded-full bg-rojo text-white md:size-10">
+        <span className="grid size-9 shrink-0 place-items-center rounded-full bg-amarillo text-tinta md:size-10">
           <Icono className="size-[18px] md:size-5" strokeWidth={1.75} aria-hidden="true" />
         </span>
         <span className="min-w-0">
@@ -105,7 +105,7 @@ export function Instalaciones() {
               Instalaciones
             </p>
             <h2 className="t-h2 mt-4" data-split>
-              Todo en un <span className="rojo-txt">mismo lugar</span>
+              Todo en un <span className="resalte">mismo lugar</span>
             </h2>
           </div>
           <p className="lead text-asfalto lg:justify-self-end" data-reveal>

@@ -1,6 +1,6 @@
 import { Hero } from "@/components/secciones/Hero";
 import { Cinta } from "@/components/secciones/Cinta";
-import { DeptosApilados } from "@/components/secciones/DeptosApilados";
+import { HabitacionesApiladas } from "@/components/secciones/HabitacionesApiladas";
 import { RestoBloque } from "@/components/secciones/RestoBloque";
 import { FaqLista } from "@/components/secciones/Comunes";
 import { Instalaciones } from "@/components/v2/Instalaciones";
@@ -19,7 +19,7 @@ import { JsonLd, motelJsonLd } from "@/lib/schema";
 export const metadata = meta({
   title: "ACA Villa Bordeu · Alojamiento en Bahía Blanca sobre la Ruta 3",
   description:
-    "Una parada estratégica en Bahía Blanca: departamentos con cochera, restaurante, Wi-Fi y recepción 24 h sobre el cruce de las rutas 3, 33 y 35. Red Hotelera ACA.",
+    "Una parada estratégica en Bahía Blanca: habitaciones con cochera, restaurante, Wi-Fi y recepción 24 h sobre el cruce de las rutas 3, 33 y 35. Red Hotelera ACA.",
   ruta: "/",
 });
 
@@ -30,7 +30,7 @@ export default function Inicio() {
       <Cinta />
       <Instalaciones />
       <Ubicacion />
-      <DeptosApilados />
+      <HabitacionesApiladas />
       <Trabajo />
       <RestoBloque />
       <ServiciosLinea />

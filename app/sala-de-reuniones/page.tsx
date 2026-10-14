@@ -36,7 +36,7 @@ export default function SalaDeReuniones() {
         etiqueta="Sala de reuniones"
         titulo={
           <>
-            Sala de reuniones <span className="text-rojo">sobre la ruta</span>
+            Sala de reuniones <span className="resalte">sobre la ruta</span>
           </>
         }
         bajada="Mesa para el equipo y pantalla para presentar, en el mismo predio donde duermen y comen."
@@ -77,7 +77,7 @@ export default function SalaDeReuniones() {
           <ul className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {USOS.map((u, i) => (
               <li key={u.titulo} className="rounded-[var(--radio)] bg-white p-7 shadow-[inset_0_0_0_1px_var(--linea)]" data-reveal data-delay={String(i * 0.07)}>
-                <Icono nombre={u.icono} className="size-8 text-rojo" grosor={1.5} />
+                <Icono nombre={u.icono} className="size-8 text-acento" grosor={1.5} />
                 <p className="mt-5 font-display text-[26px] leading-none font-bold uppercase">{u.titulo}</p>
                 <p className="mt-2 text-asfalto">{u.texto}</p>
               </li>

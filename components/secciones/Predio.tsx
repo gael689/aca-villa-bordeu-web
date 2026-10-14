@@ -18,7 +18,7 @@ export function Predio({ titulo = true }: { titulo?: boolean }) {
               El predio
             </p>
             <h2 className="t-h2 mt-4" data-split>
-              Todo en un <span className="rojo-txt">mismo lugar</span>
+              Todo en un <span className="resalte">mismo lugar</span>
             </h2>
           </div>
           <p className="lead text-asfalto lg:justify-self-end" data-reveal>
@@ -32,9 +32,9 @@ export function Predio({ titulo = true }: { titulo?: boolean }) {
           const f = p.foto ? foto(p.foto[0], p.foto[1], p.titulo) : null;
           const fila = (
             <>
-              <span className="num font-display text-[15px] font-bold text-rojo md:text-[17px]">{String(i + 1).padStart(2, "0")}</span>
+              <span className="num font-display text-[15px] font-bold text-acento md:text-[17px]">{String(i + 1).padStart(2, "0")}</span>
               <span className="min-w-0">
-                <span className="block font-display text-[clamp(26px,3.2vw,52px)] leading-[0.95] font-bold uppercase transition-colors duration-500 group-hover:text-rojo">
+                <span className="block font-display text-[clamp(26px,3.2vw,52px)] leading-[0.95] font-bold uppercase transition-colors duration-500 group-hover:text-acento">
                   {p.titulo}
                 </span>
                 <span className="mt-2 block max-w-[46ch] text-[15px] text-asfalto md:text-base">{p.texto}</span>

@@ -1,10 +1,11 @@
 @import "tailwindcss";
 
 /* ── Tokens ─────────────────────────────────────────────────────────────
-   Rojo del logo ACA 2024 + el grafito, la madera y el ámbar de las fotos.
-   Contrastes: tinta/papel 16,5 · papel/grafito 17 · rojo/papel 4,43 (solo
-   textos grandes y bordes) · rojo-tinta/papel 6,37 · blanco/rojo 4,82 ·
-   ámbar/grafito 6,41. */
+   Amarillo de aca.org.ar (#F1BB01, botones y separadores) + el grafito y la
+   madera de las fotos. El rojo queda solo en el logo ACA (`marca-aca`).
+   Contrastes: tinta/papel 16,5 · papel/grafito 17 · tinta/amarillo 9,9 ·
+   amarillo/grafito 10,4 · dorado/papel 5,1 · amarillo/papel 1,7 (nunca
+   texto sobre claro: ahí va como relleno o como marcador). */
 @theme inline {
   --color-papel: #f6f5f2;
   --color-hormigon: #e7e5e0;
@@ -12,9 +13,13 @@
   --color-asfalto: #55585a;
   --color-grafito: #141516;
   --color-grafito-2: #1e2022;
-  --color-rojo: #df1d2e;
-  --color-rojo-tinta: #b3121f;
-  --color-ambar: #e8a33d;
+  --color-amarillo: #f1bb01;
+  --color-amarillo-hondo: #dba900;
+  --color-dorado: #846400;
+  --color-marca-aca: #df1d2e;
+  --color-error: #b3121f;
+  /* Acento según el fondo: dorado sobre claro, amarillo sobre oscuro. */
+  --color-acento: var(--acento);
   --color-wpp: #1fa855;
 
   --font-display: var(--font-barlow-condensed), "Arial Narrow", sans-serif;
@@ -29,6 +34,40 @@
   --header-h: 76px;
   --linea: color-mix(in srgb, #1c1d1f 13%, transparent);
   --radio: 22px;
+  --acento: var(--color-dorado);
+  --resalte-color: currentColor;
+  --resalte-fondo: linear-gradient(transparent 62%, var(--color-amarillo) 62%, var(--color-amarillo) 92%, transparent 92%);
+  --foco: var(--color-tinta);
+}
+
+/* Fondos oscuros: el amarillo ya se lee como texto. */
+.oscuro,
+[data-hero],
+.bg-grafito,
+.bg-grafito-2,
+.bg-tinta,
+.bg-black {
+  --acento: var(--color-amarillo);
+  --resalte-color: var(--color-amarillo);
+  --resalte-fondo: none;
+  --foco: var(--color-amarillo);
+}
+/* Superficies claras dentro de secciones oscuras. */
+.bg-white,
+.bg-papel,
+.bg-hormigon,
+.gris {
+  --acento: var(--color-dorado);
+  --resalte-color: currentColor;
+  --resalte-fondo: linear-gradient(transparent 62%, var(--color-amarillo) 62%, var(--color-amarillo) 92%, transparent 92%);
+  --foco: var(--color-tinta);
+}
+/* Sobre el relleno amarillo todo va en tinta. */
+.bg-amarillo {
+  --acento: var(--color-tinta);
+  --resalte-color: currentColor;
+  --resalte-fondo: none;
+  --foco: var(--color-tinta);
 }
 
 html {
@@ -49,8 +88,8 @@ body {
 }
 
 ::selection {
-  background: var(--color-rojo);
-  color: #fff;
+  background: var(--color-amarillo);
+  color: var(--color-tinta);
 }
 
 img {
@@ -58,7 +97,7 @@ img {
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-rojo);
+  outline: 2px solid var(--foco);
   outline-offset: 3px;
 }
 
@@ -123,7 +162,7 @@ img {
     letter-spacing: 0.22em;
     text-transform: uppercase;
     line-height: 1.4;
-    color: var(--color-rojo-tinta);
+    color: var(--acento);
   }
   .etiqueta::before {
     content: "";
@@ -131,41 +170,26 @@ img {
     height: 2px;
     background: currentColor;
   }
-  /* Una sección, un acento (pedido del dueño, oct/2026): en lo oscuro el
-     acento es el rojo; el ámbar queda solo para el Resto (clase .ambar). */
-  .oscuro .etiqueta {
-    color: #ff3b4b;
-  }
-  .ambar .etiqueta,
-  .oscuro.ambar .etiqueta {
-    color: var(--color-ambar);
-  }
-  /* Sobre claro el ámbar no se lee como texto (2,2:1): se usa como relleno.
-     Palabra destacada en tinta con un subrayado grueso ámbar. */
-  .ambar-marca {
-    background: linear-gradient(transparent 62%, var(--color-ambar) 62%, var(--color-ambar) 92%, transparent 92%);
+  /* La palabra destacada de un título. Sobre claro el amarillo no se lee
+     como texto (1,7:1): va en tinta con un subrayado grueso de marcador.
+     Sobre oscuro, directamente en amarillo. */
+  .resalte {
+    color: var(--resalte-color);
+    background: var(--resalte-fondo);
     padding: 0 0.06em;
     -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
   }
-  .ambar-pastilla,
-  .ambar .etiqueta.ambar-pastilla {
+  .pastilla {
     display: inline-flex;
     align-items: center;
     border-radius: 999px;
-    background: var(--color-ambar);
+    background: var(--color-amarillo);
     color: var(--color-tinta);
     padding: 0.35em 0.9em;
   }
-  .ambar-pastilla::before,
-  .ambar .etiqueta.ambar-pastilla::before {
+  .pastilla::before {
     display: none;
-  }
-  .rojo-txt {
-    color: var(--color-rojo);
-  }
-  .oscuro .rojo-txt {
-    color: #ff3b4b;
   }
   .num {
     font-variant-numeric: tabular-nums;
@@ -206,8 +230,8 @@ img {
     min-height: 54px;
     padding: 0 10px 0 26px;
     border-radius: 999px;
-    background: var(--color-rojo);
-    color: #fff;
+    background: var(--color-amarillo);
+    color: var(--color-tinta);
     font-size: 15px;
     font-weight: 600;
     letter-spacing: 0.01em;
@@ -230,7 +254,7 @@ img {
     position: absolute;
     inset: 0;
     z-index: -1;
-    background: var(--color-rojo-tinta);
+    background: var(--color-amarillo-hondo);
     transform: translateY(101%);
     border-radius: inherit;
     transition: transform 0.55s var(--ease-pt);
@@ -244,7 +268,7 @@ img {
     width: 36px;
     height: 36px;
     border-radius: 999px;
-    background: rgb(255 255 255 / 0.18);
+    background: rgb(28 29 31 / 0.12);
     transition: transform 0.55s var(--ease-pt);
   }
   .btn:hover .burbuja {
@@ -255,20 +279,16 @@ img {
   }
   .btn-oscuro {
     background: var(--color-grafito);
+    color: #fff;
   }
-  .btn-oscuro::before {
-    background: var(--color-rojo);
-  }
-  /* Ámbar con texto tinta: 9,7:1. */
-  .btn-ambar {
-    background: var(--color-ambar);
+  .btn-oscuro:hover {
     color: var(--color-tinta);
   }
-  .btn-ambar::before {
-    background: #f2b85c;
+  .btn-oscuro::before {
+    background: var(--color-amarillo);
   }
-  .btn-ambar .burbuja {
-    background: rgb(28 29 31 / 0.12);
+  .btn-oscuro .burbuja {
+    background: rgb(255 255 255 / 0.18);
   }
   .btn-claro {
     background: #fff;
@@ -278,11 +298,12 @@ img {
     background: var(--color-hormigon);
   }
   .btn-claro .burbuja {
-    background: var(--color-rojo);
-    color: #fff;
+    background: var(--color-amarillo);
+    color: var(--color-tinta);
   }
   .btn-wpp {
     background: var(--color-wpp);
+    color: #fff;
   }
   .btn-wpp::before {
     background: #178a45;
@@ -353,10 +374,10 @@ img {
 
   /* Neón: titila una vez al entrar y queda encendido. */
   .neon {
-    color: #ff4757;
+    color: #ffd23f;
     text-shadow:
-      0 0 6px rgb(255 71 87 / 0.8),
-      0 0 22px rgb(223 29 46 / 0.55);
+      0 0 6px rgb(255 210 63 / 0.8),
+      0 0 22px rgb(241 187 1 / 0.55);
   }
   .js .neon[data-neon] {
     opacity: 0.25;
@@ -617,8 +638,8 @@ img {
   }
   details.acordeon[open] .mas {
     transform: rotate(45deg);
-    background: var(--color-rojo);
-    color: #fff;
+    background: var(--color-amarillo);
+    color: var(--color-tinta);
   }
   details.acordeon::details-content {
     block-size: 0;
