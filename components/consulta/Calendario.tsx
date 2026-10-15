@@ -15,18 +15,25 @@ export function hoyLocal() {
   return new Date(n.getFullYear(), n.getMonth(), n.getDate());
 }
 
-/** Calendario de rango (entrada → salida), en español, semana desde el lunes. */
+/**
+ * Calendario de rango (entrada → salida), en español, semana desde el lunes.
+ * Con `varios`, en cambio, cada toque marca o desmarca un día suelto (pedido del Resto).
+ */
 export function Calendario({
-  entrada,
-  salida,
+  entrada = null,
+  salida = null,
   onElegir,
+  varios,
+  onAlternar,
 }: {
-  entrada: Date | null;
-  salida: Date | null;
-  onElegir: (entrada: Date | null, salida: Date | null) => void;
+  entrada?: Date | null;
+  salida?: Date | null;
+  onElegir?: (entrada: Date | null, salida: Date | null) => void;
+  varios?: Date[];
+  onAlternar?: (dia: Date) => void;
 }) {
   const hoy = hoyLocal();
-  const base = entrada ?? hoy;
+  const base = entrada ?? varios?.[0] ?? hoy;
   const [cursor, setCursor] = useState({ y: base.getFullYear(), m: base.getMonth() });
 
   const primero = new Date(cursor.y, cursor.m, 1);
@@ -42,6 +49,8 @@ export function Calendario({
   };
 
   const elegir = (dia: Date) => {
+    if (varios) return onAlternar?.(dia);
+    if (!onElegir) return;
     if (!entrada || (entrada && salida)) return onElegir(dia, null);
     if (dia.getTime() <= entrada.getTime()) return onElegir(dia, null);
     onElegir(entrada, dia);
@@ -73,7 +82,7 @@ export function Calendario({
         </button>
       </div>
 
-      <div className="grid grid-cols-7 text-center" role="grid" aria-label="Elegí entrada y salida">
+      <div className="grid grid-cols-7 text-center" role="grid" aria-label={varios ? "Elegí uno o varios días" : "Elegí entrada y salida"}>
         {SEMANA.map((d) => (
           <span key={d} className="pb-2 text-[11px] font-medium tracking-[0.2em] text-acento" role="columnheader">
             {d}
@@ -85,7 +94,7 @@ export function Calendario({
         {Array.from({ length: diasMes }).map((_, i) => {
           const dia = new Date(cursor.y, cursor.m, i + 1);
           const pasado = dia.getTime() < hoy.getTime();
-          const esE = mismoDia(entrada, dia);
+          const esE = varios ? varios.some((v) => mismoDia(v, dia)) : mismoDia(entrada, dia);
           const esS = mismoDia(salida, dia);
           const enRango = !!entrada && !!salida && dia > entrada && dia < salida;
           const esHoy = mismoDia(hoy, dia);
@@ -109,7 +118,7 @@ export function Calendario({
                 className={[
                   "relative mx-auto grid size-10 place-items-center rounded-full text-[15px] transition-colors",
                   pasado ? "text-tinta/25" : "cursor-pointer hover:bg-hormigon",
-                  esE || esS ? "!bg-grafito text-crema" : "",
+                  esE || esS ? "!bg-grafito font-semibold !text-white" : "",
                   esHoy && !esE && !esS ? "ring-1 ring-acento ring-inset" : "",
                 ].join(" ")}
               >

@@ -75,6 +75,7 @@ export function noches(e: Date | null, s: Date | null) {
 }
 
 const FIRMA = "— Consulta desde la web";
+const FIRMA_PEDIDO = "— Pedido desde la web";
 
 export function mensajeEmpresa(c: EstadoEmpresa): string {
   const l = [`Hola! Quería consultar alojamiento para un equipo de trabajo:`];
@@ -120,10 +121,12 @@ export type Curso = (typeof CURSOS)[number];
 
 export type ItemPedido = { plato: string; cantidad: number; curso: Curso };
 
+/** Un día del pedido: almuerzo o cena, y una hora si la quieren precisar. */
+export type DiaPedido = { fecha: Date; momento: "" | "Almuerzo" | "Cena"; hora: string };
+
 export type EstadoPedido = {
   personas: number;
-  dia: Date | null;
-  hora: string;
+  dias: DiaPedido[];
   items: ItemPedido[];
   aclaraciones: string;
   empresa: string;
@@ -133,8 +136,16 @@ export type EstadoPedido = {
 export function mensajePedido(c: EstadoPedido): string {
   const l = [`Hola! Quería hacer un pedido en el Resto:`];
   l.push(`• ${c.personas} ${c.personas === 1 ? "persona" : "personas"}`);
-  const cuando = [c.dia ? `El ${fechaCorta(c.dia)}` : "Día a definir", c.hora ? `a las ${c.hora} h` : ""].filter(Boolean).join(" ");
-  l.push(`• ${cuando}`);
+  const cuando = (d: DiaPedido) => [d.momento.toLowerCase(), d.hora && `a las ${d.hora} h`].filter(Boolean).join(", ");
+  if (c.dias.length === 1) {
+    const d = c.dias[0];
+    l.push(`• El ${fechaCorta(d.fecha)}${cuando(d) ? `, ${cuando(d)}` : ""}`);
+  } else if (c.dias.length > 1) {
+    l.push(`• ${c.dias.length} días (el mismo pedido cada día):`);
+    for (const d of c.dias) l.push(`   – ${fechaCorta(d.fecha)}${cuando(d) ? `: ${cuando(d)}` : ""}`);
+  } else {
+    l.push("• Día a definir");
+  }
   if (c.empresa) l.push(`• Empresa: ${c.empresa}`);
   const titulos: Record<Curso, string> = { Entrada: "Entradas", "Plato principal": "Platos principales", Bebida: "Bebidas", Postre: "Postres" };
   for (const curso of CURSOS) {
@@ -144,7 +155,7 @@ export function mensajePedido(c: EstadoPedido): string {
     for (const i of del) l.push(`• ${i.cantidad} × ${i.plato}`);
   }
   if (c.aclaraciones.trim()) l.push("", `Aclaraciones: ${c.aclaraciones.trim()}`);
-  l.push(...lineasDatos(c), "", "Gracias!", FIRMA);
+  l.push(...lineasDatos(c), "", "Gracias!", FIRMA_PEDIDO);
   return l.join("\n");
 }
 

@@ -578,6 +578,23 @@ img {
       animation-name: hoja-sale;
     }
   }
+  /* El pedido del Resto: en pantallas grandes, centrado y amplio (entra más carta). */
+  @media (min-width: 900px) {
+    dialog.consulta.centro {
+      inset: 0;
+      margin: auto;
+      width: min(1120px, calc(100vw - 48px));
+      height: min(900px, calc(100dvh - 48px));
+    }
+    dialog.consulta.centro[open] {
+      animation-name: hoja-aparece;
+    }
+    dialog.consulta.centro.cerrando {
+      animation-name: hoja-desaparece;
+    }
+  }
+  @keyframes hoja-aparece { from { opacity: 0; transform: translateY(28px) scale(0.97); } }
+  @keyframes hoja-desaparece { to { opacity: 0; transform: translateY(28px) scale(0.97); } }
   @keyframes hoja-sube { from { transform: translateY(100%); } }
   @keyframes hoja-baja { to { transform: translateY(100%); } }
   @keyframes hoja-entra { from { transform: translateX(105%); } }

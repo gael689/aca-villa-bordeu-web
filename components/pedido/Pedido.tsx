@@ -3,7 +3,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { track } from "@vercel/analytics";
 import { CARTA } from "@/lib/carta";
-import { datosCompletos, fechaCorta, linkWhatsApp, mensajePedido, type Curso, type Datos, type ItemPedido } from "@/lib/mensaje";
+import { datosCompletos, fechaCorta, linkWhatsApp, mensajePedido, type Curso, type Datos, type DiaPedido, type ItemPedido } from "@/lib/mensaje";
 import { SITIO } from "@/lib/sitio";
 import { Icono } from "@/components/marca/Icono";
 import { bloquearScroll } from "@/components/motion/scroll";
@@ -43,7 +43,7 @@ const PASOS: Paso[] = [
   { corto: "Principal", titulo: "Plato principal", ayuda: "Sumá cuántos de cada plato. Las variantes las aclarás al final.", curso: "Plato principal" },
   { corto: "Bebida", titulo: "Bebidas y café", ayuda: "Opcional: gaseosas, agua, cerveza, café.", curso: "Bebida", opcional: true },
   { corto: "Postre", titulo: "¿Y de postre?", ayuda: "Es opcional.", curso: "Postre", opcional: true },
-  { corto: "Cuándo", titulo: "¿Qué día y a qué hora?", ayuda: "Te lo confirmamos por WhatsApp o mail." },
+  { corto: "Cuándo", titulo: "¿Qué días y a qué hora?", ayuda: "Podés marcar uno o varios días. Te lo confirmamos por WhatsApp o mail." },
   { corto: "Enviar", titulo: "Tus datos", ayuda: "Revisá el pedido y envialo." },
 ];
 
@@ -191,13 +191,26 @@ function FilaPlato({ p }: { p: Plato }) {
   );
 }
 
-/** La lista de un paso (entrada, principal, bebida o postre), con atajos a cada capítulo. */
+/** La lista de un paso (entrada, principal, bebida o postre), con filtros por capítulo y «Mis elegidos». */
 function ListaCurso({ curso, personas }: { curso: Curso; personas: number }) {
   const { cantidades } = usePedido();
+  const [filtro, setFiltro] = useState("todos");
   const platos = PLATOS.filter((p) => p.curso === curso);
   const secciones = [...new Set(platos.map((p) => p.seccion))];
   const elegidos = platos.reduce((a, p) => a + (cantidades[p.clave] ?? 0), 0);
-  const varias = secciones.length > 1;
+  const conElegidos = platos.filter((p) => cantidades[p.clave]).length;
+  const filtros = [
+    { id: "todos", texto: "Todos" },
+    ...(secciones.length > 1 ? secciones.map((s) => ({ id: s, texto: s })) : []),
+    ...(conElegidos ? [{ id: "elegidos", texto: `Mis elegidos (${elegidos})` }] : []),
+  ];
+  const activo = filtros.some((f) => f.id === filtro) ? filtro : "todos";
+  const grupos =
+    activo === "todos"
+      ? secciones.map((s) => ({ titulo: secciones.length > 1 ? s : "", platos: platos.filter((p) => p.seccion === s) }))
+      : activo === "elegidos"
+        ? [{ titulo: "", platos: platos.filter((p) => cantidades[p.clave]) }]
+        : [{ titulo: "", platos: platos.filter((p) => p.seccion === activo) }];
 
   return (
     <div>
@@ -215,32 +228,130 @@ function ListaCurso({ curso, personas }: { curso: Curso; personas: number }) {
           </span>
         </div>
       )}
-      {varias && (
-        <div className="sin-barra -mx-5 mb-2 flex gap-2 overflow-x-auto px-5 pb-1 md:-mx-8 md:px-8">
-          {secciones.map((s) => (
+      {filtros.length > 1 && (
+        <div role="radiogroup" aria-label="Filtrar" className="sin-barra -mx-5 mb-3 flex gap-2 overflow-x-auto px-5 pb-1 md:-mx-8 md:flex-wrap md:px-8">
+          {filtros.map((f) => (
             <button
-              key={s}
+              key={f.id}
               type="button"
-              onClick={() => document.getElementById(`curso-${s}`)?.scrollIntoView({ behavior: "smooth", block: "start" })}
-              className="shrink-0 rounded-full bg-white px-3.5 py-2 text-[13px] font-semibold shadow-[inset_0_0_0_1px_var(--linea)] hover:bg-hormigon"
+              role="radio"
+              aria-checked={activo === f.id}
+              onClick={() => setFiltro(f.id)}
+              className={`shrink-0 rounded-full px-4 py-2 text-[14px] font-semibold transition-colors ${activo === f.id ? "bg-tinta text-white" : "bg-white shadow-[inset_0_0_0_1px_var(--linea)] hover:bg-hormigon"}`}
             >
-              {s}
+              {f.texto}
             </button>
           ))}
         </div>
       )}
-      {secciones.map((s) => (
-        <section key={s} id={`curso-${s}`} className="scroll-mt-2">
-          {varias && <h4 className="etiqueta mt-5 mb-1 px-3">{s}</h4>}
-          <ul className="-mx-3 space-y-0.5">
-            {platos
-              .filter((p) => p.seccion === s)
-              .map((p) => (
-                <FilaPlato key={p.clave} p={p} />
-              ))}
+      {grupos.map((g) => (
+        <section key={g.titulo || activo}>
+          {g.titulo && <h4 className="etiqueta mt-5 mb-1 px-3">{g.titulo}</h4>}
+          <ul className="-mx-3 grid gap-x-4 gap-y-0.5 lg:grid-cols-2">
+            {g.platos.map((p) => (
+              <FilaPlato key={p.clave} p={p} />
+            ))}
           </ul>
         </section>
       ))}
+    </div>
+  );
+}
+
+const mismoDia = (a: Date, b: Date) => a.getTime() === b.getTime();
+
+/** Horario de un día (o de todos): almuerzo o cena con un toque, y la hora si la quieren precisar. */
+function Horario({ titulo, d, onCambiar, onQuitar }: { titulo: string; d: DiaPedido; onCambiar: (c: Partial<DiaPedido>) => void; onQuitar?: () => void }) {
+  return (
+    <div className="rounded-2xl bg-white p-4 shadow-[inset_0_0_0_1px_var(--linea)]">
+      <div className="flex items-center justify-between gap-3">
+        <p className="text-[16px] font-semibold first-letter:uppercase">{titulo}</p>
+        {onQuitar && (
+          <button type="button" onClick={onQuitar} aria-label={`Quitar ${titulo}`} className="grid size-8 place-items-center rounded-full text-asfalto hover:bg-hormigon">
+            <Icono nombre="cerrar" className="size-4" grosor={2} />
+          </button>
+        )}
+      </div>
+      <div className="mt-3 flex flex-wrap items-end gap-2">
+        {(["Almuerzo", "Cena"] as const).map((m) => (
+          <Opcion key={m} rol="radio" activa={d.momento === m} onClick={() => onCambiar({ momento: d.momento === m ? "" : m })}>
+            <Icono nombre={m === "Almuerzo" ? "sol" : "luna"} className={`size-5 ${d.momento === m ? "text-white" : "text-acento"}`} grosor={1.8} />
+            {m}
+          </Opcion>
+        ))}
+        <label className="ml-auto block">
+          <span className="mb-1 block text-[12px] font-semibold text-asfalto">Hora (opcional)</span>
+          <input
+            type="time"
+            value={d.hora}
+            onChange={(e) => onCambiar({ hora: e.target.value })}
+            className="h-12 w-[132px] rounded-xl bg-papel px-3 text-[16px] shadow-[inset_0_0_0_1px_var(--linea)] outline-none focus:shadow-[inset_0_0_0_2px_var(--color-tinta)]"
+          />
+        </label>
+      </div>
+    </div>
+  );
+}
+
+/** Paso «Cuándo»: uno o varios días, cada uno con su horario o el mismo para todos. */
+function Cuando({ dias, setDias, mismo, setMismo }: { dias: DiaPedido[]; setDias: (f: (v: DiaPedido[]) => DiaPedido[]) => void; mismo: boolean; setMismo: (v: boolean) => void }) {
+  const alternar = (fecha: Date) =>
+    setDias((v) =>
+      v.some((x) => mismoDia(x.fecha, fecha))
+        ? v.filter((x) => !mismoDia(x.fecha, fecha))
+        : [...v, { fecha, momento: mismo && v[0] ? v[0].momento : "", hora: mismo && v[0] ? v[0].hora : "" }].sort((a, b) => a.fecha.getTime() - b.fecha.getTime()),
+    );
+  const cambiar = (i: number, c: Partial<DiaPedido>) => setDias((v) => v.map((x, k) => (mismo || k === i ? { ...x, ...c } : x)));
+  const repetir = (v: boolean) => {
+    setMismo(v);
+    if (v) setDias((ds) => ds.map((x) => ({ ...x, momento: ds[0]?.momento ?? "", hora: ds[0]?.hora ?? "" })));
+  };
+
+  return (
+    <div className="grid gap-8 lg:grid-cols-2 lg:gap-10">
+      <div>
+        <Calendario varios={dias.map((d) => d.fecha)} onAlternar={alternar} />
+        <p className="mt-3 text-sm text-asfalto" aria-live="polite">
+          {dias.length ? `${dias.length} ${dias.length === 1 ? "día marcado" : "días marcados"}. Tocá un día de nuevo para quitarlo.` : "Tocá uno o varios días."}
+        </p>
+      </div>
+      <div className="space-y-3">
+        {dias.length === 0 ? (
+          <p className="rounded-2xl bg-white p-4 text-[15px] text-asfalto shadow-[inset_0_0_0_1px_var(--linea)]">
+            Marcá en el calendario los días del pedido. Después elegís almuerzo o cena para cada uno.
+          </p>
+        ) : (
+          <>
+            {dias.length > 1 && (
+              <div className="grid grid-cols-2 gap-1 rounded-full bg-hormigon p-1" role="radiogroup" aria-label="Horario">
+                {[
+                  { v: true, t: "Mismo horario" },
+                  { v: false, t: "Uno por día" },
+                ].map((o) => (
+                  <button
+                    key={o.t}
+                    type="button"
+                    role="radio"
+                    aria-checked={mismo === o.v}
+                    onClick={() => repetir(o.v)}
+                    className={`h-11 rounded-full text-[14px] font-semibold transition-colors ${mismo === o.v ? "bg-white text-tinta shadow-[0_4px_14px_-6px_rgb(0_0_0/0.35)]" : "text-asfalto"}`}
+                  >
+                    {o.t}
+                  </button>
+                ))}
+              </div>
+            )}
+            {mismo ? (
+              <Horario titulo={dias.length > 1 ? `Los ${dias.length} días` : fechaCorta(dias[0].fecha)} d={dias[0]} onCambiar={(c) => cambiar(0, c)} />
+            ) : (
+              dias.map((d, i) => (
+                <Horario key={d.fecha.getTime()} titulo={fechaCorta(d.fecha)} d={d} onCambiar={(c) => cambiar(i, c)} onQuitar={() => alternar(d.fecha)} />
+              ))
+            )}
+            {dias.length > 1 && <p className="text-[13px] text-asfalto">Es el mismo pedido para cada día. Si cambia, aclaralo en el último paso.</p>}
+          </>
+        )}
+      </div>
     </div>
   );
 }
@@ -256,8 +367,8 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
   const [paso, setPaso] = useState(0);
   const [atras, setAtras] = useState(false);
   const [personas, setPersonas] = useState(10);
-  const [dia, setDia] = useState<Date | null>(null);
-  const [hora, setHora] = useState("");
+  const [dias, setDias] = useState<DiaPedido[]>([]);
+  const [mismo, setMismo] = useState(true);
   const [aclaraciones, setAclaraciones] = useState("");
   const [empresa, setEmpresa] = useState("");
   const [datos, setDatos] = useState<Datos>({ nombre: "", telefono: "", email: "" });
@@ -286,7 +397,7 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
   const items: ItemPedido[] = PLATOS.filter((p) => cantidades[p.clave]).map((p) => ({ plato: p.nombre, cantidad: cantidades[p.clave], curso: p.curso }));
   const deCurso = (c: Curso) => items.filter((i) => i.curso === c).reduce((a, i) => a + i.cantidad, 0);
   const comida = deCurso("Entrada") + deCurso("Plato principal");
-  const mensaje = mensajePedido({ personas, dia, hora, items, aclaraciones, empresa, ...datos });
+  const mensaje = mensajePedido({ personas, dias, items, aclaraciones, empresa, ...datos });
 
   const actual = PASOS[paso];
   const ultimo = paso === PASOS.length - 1;
@@ -304,9 +415,9 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
     textoSeguir = "Elegí al menos un plato";
   } else if (actual.opcional && actual.curso && deCurso(actual.curso) === 0) {
     textoSeguir = actual.curso === "Entrada" ? "Sin entrada, seguir" : actual.curso === "Bebida" ? "Sin bebidas, seguir" : "Sin postre, seguir";
-  } else if (paso === 5 && (!dia || !hora)) {
+  } else if (paso === 5 && (!dias.length || dias.some((d) => !d.momento && !d.hora))) {
     puedeSeguir = false;
-    textoSeguir = !dia ? "Elegí el día" : "Elegí la hora";
+    textoSeguir = !dias.length ? "Elegí al menos un día" : "Elegí almuerzo o cena";
   }
 
   const revisar = () => {
@@ -342,7 +453,7 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
   return (
     <dialog
       ref={dlg}
-      className={`consulta ${cerrando ? "cerrando" : ""}`}
+      className={`consulta centro ${cerrando ? "cerrando" : ""}`}
       aria-labelledby="pedido-titulo"
       onCancel={(e) => {
         e.preventDefault();
@@ -392,7 +503,7 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
         <div ref={cuerpo} data-lenis-prevent className="min-h-0 flex-1 overflow-y-auto overscroll-contain border-t border-[color:var(--linea)] px-5 pt-4 pb-6 md:px-8">
           <div key={paso} className={atras ? "paso-entra-atras" : "paso-entra"}>
             {paso === 0 && (
-              <div>
+              <div className="mx-auto max-w-[620px]">
                 <Contador etiqueta="Personas" ayuda="Las que van a comer" valor={personas} min={1} max={300} onCambiar={setPersonas} grande />
                 <div className="mt-4 flex flex-wrap gap-2" aria-label="Atajos">
                   {[2, 4, 6, 10, 15, 20, 30].map((n) => (
@@ -409,26 +520,10 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
 
             {actual.curso && <ListaCurso curso={actual.curso} personas={personas} />}
 
-            {paso === 5 && (
-              <div>
-                <Calendario entrada={dia} salida={null} onElegir={(e, s) => setDia(s ?? e)} />
-                <p className="mt-3 text-sm text-asfalto" aria-live="polite">
-                  {dia ? (
-                    <>
-                      Día: <strong className="text-tinta">{fechaCorta(dia)}</strong>
-                    </>
-                  ) : (
-                    "Elegí el día en el calendario."
-                  )}
-                </p>
-                <div className="mt-5 max-w-[220px]">
-                  <Campo id="pedido-hora" etiqueta="Hora" tipo="time" valor={hora} onCambiar={setHora} requerido />
-                </div>
-              </div>
-            )}
+            {paso === 5 && <Cuando dias={dias} setDias={setDias} mismo={mismo} setMismo={setMismo} />}
 
             {ultimo && (
-              <div className="space-y-5">
+              <div className="mx-auto max-w-[680px] space-y-5">
                 <DatosPersonales prefijo="pedido" datos={datos} onCambiar={setDatos} mostrarErrores={intentado} />
                 <Campo etiqueta="Empresa (opcional)" valor={empresa} onCambiar={setEmpresa} auto="organization" />
                 <Campo

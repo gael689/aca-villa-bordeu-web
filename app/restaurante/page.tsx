@@ -82,47 +82,45 @@ export default function Restaurante() {
 
       {/* La carta: cada sección es un capítulo con su foto fija al costado */}
       <section id="carta" className="oscuro grano relative">
-        <div className="contenedor relative pt-[clamp(72px,8vw,140px)]">
-          <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
-            <div>
-              <p className="etiqueta" data-reveal>
-                La carta
-              </p>
-              <h2 className="t-h2 mt-4" data-split>
-                Platos de siempre, <span className="resalte">hechos acá</span>
-              </h2>
-              {/* Prepará tu pedido: pedido del cliente (oct/2026), pensado para las empresas que vienen con su equipo. */}
-              <div className="mt-8 max-w-[52ch] rounded-[var(--radio)] p-6 [box-shadow:inset_0_0_0_1px_rgb(255_255_255/0.18)]" data-reveal>
-                <p className="font-display text-[26px] leading-none font-bold text-amarillo uppercase">Prepará tu pedido</p>
-                <p className="mt-2 text-[15px] text-white/60">Ideal para empresas y grupos: te guiamos paso a paso.</p>
-                <ol className="mt-4 space-y-2.5 text-[15px] text-white/80">
-                  {[
-                    <>Decinos <strong className="text-white">cuántos son</strong>.</>,
-                    <>Elegí paso a paso: <strong className="text-white">entrada, plato principal, bebida y postre</strong>.</>,
-                    <>Poné el día y la hora, y envialo por WhatsApp o mail.</>,
-                  ].map((paso, i) => (
-                    <li key={i} className="flex gap-3">
-                      <span className="num grid size-6 shrink-0 place-items-center rounded-full bg-amarillo font-display text-[13px] font-bold text-tinta">{i + 1}</span>
-                      <span>{paso}</span>
-                    </li>
-                  ))}
-                </ol>
-                <BotonAbrirPedido className="btn mt-6">Armar el pedido paso a paso</BotonAbrirPedido>
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-2 lg:justify-self-end" data-reveal>
-              {CARTA.map((s, k) => (
-                <a
-                  key={s.nombre}
-                  href={`#${slug(s.nombre)}`}
-                  className="rounded-full px-4 py-2 text-[14px] font-semibold text-white/75 [box-shadow:inset_0_0_0_1px_rgb(255_255_255/0.18)] transition-colors hover:bg-white hover:text-tinta"
-                >
-                  <span className="num mr-1.5 text-amarillo">{String(k + 1).padStart(2, "0")}</span>
-                  {s.nombre}
-                </a>
+        <div className="contenedor relative flex flex-col items-center pt-[clamp(72px,8vw,140px)] text-center">
+          <p className="etiqueta" data-reveal>
+            La carta
+          </p>
+          <h2 className="t-h2 mt-4" data-split>
+            Platos de siempre, <span className="resalte">hechos acá</span>
+          </h2>
+          {/* Prepará tu pedido: pedido del cliente (oct/2026), pensado para las empresas que vienen con su equipo. */}
+          <div className="mt-10 w-full max-w-[720px] rounded-[var(--radio)] p-7 text-left [box-shadow:inset_0_0_0_1px_rgb(255_255_255/0.18)] md:p-10" data-reveal>
+            <p className="text-center font-display text-[clamp(32px,3.4vw,46px)] leading-none font-bold text-amarillo uppercase">Prepará tu pedido</p>
+            <p className="mt-3 text-center text-[17px] text-white/65">Ideal para empresas y grupos: te guiamos paso a paso.</p>
+            <ol className="mx-auto mt-7 grid max-w-[600px] gap-4 text-[17px] text-white/85 md:grid-cols-3 md:gap-6">
+              {[
+                <>Decinos <strong className="text-white">cuántos son</strong>.</>,
+                <>Elegí <strong className="text-white">entrada, plato principal, bebida y postre</strong>.</>,
+                <>Marcá <strong className="text-white">los días y el horario</strong>, y envialo por WhatsApp o mail.</>,
+              ].map((paso, i) => (
+                <li key={i} className="flex gap-3 md:flex-col md:items-center md:text-center">
+                  <span className="num grid size-8 shrink-0 place-items-center rounded-full bg-amarillo font-display text-[16px] font-bold text-tinta">{i + 1}</span>
+                  <span>{paso}</span>
+                </li>
               ))}
+            </ol>
+            <div className="mt-8 flex justify-center">
+              <BotonAbrirPedido className="btn">Armar el pedido paso a paso</BotonAbrirPedido>
             </div>
           </div>
+          <nav aria-label="Capítulos de la carta" className="mt-10 flex flex-wrap justify-center gap-2" data-reveal>
+            {CARTA.map((s, k) => (
+              <a
+                key={s.nombre}
+                href={`#${slug(s.nombre)}`}
+                className="rounded-full px-4 py-2 text-[14px] font-semibold text-white/75 [box-shadow:inset_0_0_0_1px_rgb(255_255_255/0.18)] transition-colors hover:bg-white hover:text-tinta"
+              >
+                <span className="num mr-1.5 text-amarillo">{String(k + 1).padStart(2, "0")}</span>
+                {s.nombre}
+              </a>
+            ))}
+          </nav>
         </div>
 
         {CARTA.map((s, k) => {
