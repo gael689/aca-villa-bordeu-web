@@ -22,6 +22,7 @@ export function Header() {
   const [arriba, setArriba] = useState(true);
   const [menu, setMenu] = useState(false);
   const [mega, setMega] = useState(false);
+  const [submenu, setSubmenu] = useState(false);
   const cierreMega = useRef<number | undefined>(undefined);
 
   useEffect(() => {
@@ -46,6 +47,7 @@ export function Header() {
     setRutaPrevia(pathname);
     setMenu(false);
     setMega(false);
+    setSubmenu(false);
   }
 
   useEffect(() => {
@@ -182,15 +184,49 @@ export function Header() {
           <div className="flex min-h-full flex-col px-[var(--gutter)] pt-[calc(var(--header-h)+24px)] pb-[max(24px,env(safe-area-inset-bottom))]">
             <nav aria-label="Menú" className="flex-1">
               <ul>
-                {[{ href: "/", texto: "Inicio" }, ...MENU.filter((m) => !m.hijos), ...(MENU.find((m) => m.hijos)?.hijos ?? [])].map((m, i) => (
+                {/* Mismo orden que en escritorio; «Instalaciones» se despliega como en el mega menú. */}
+                {[{ href: "/", texto: "Inicio" }, ...MENU].map((m, i) => (
                   <li key={m.href + m.texto} className="item border-b border-white/10" style={{ ["--i" as string]: i }}>
-                    <Link
-                      href={m.href}
-                      className={`flex items-center justify-between py-3.5 font-display text-[34px] leading-none font-bold uppercase sm:text-[42px] ${activo(m.href) ? "text-acento" : ""}`}
-                    >
-                      {m.texto}
-                      <Icono nombre="flecha" className="size-6 text-white/40" grosor={1.8} />
-                    </Link>
+                    {"hijos" in m && m.hijos ? (
+                      <>
+                        <button
+                          type="button"
+                          onClick={() => setSubmenu((v) => !v)}
+                          aria-expanded={submenu}
+                          aria-controls="submenu-movil"
+                          className={`flex w-full items-center justify-between py-3.5 text-left font-display text-[34px] leading-none font-bold uppercase sm:text-[42px] ${m.hijos.some((h) => activo(h.href)) ? "text-acento" : ""}`}
+                        >
+                          {m.texto}
+                          <Icono nombre="der" className={`size-6 text-white/60 transition-transform duration-300 ${submenu ? "-rotate-90" : "rotate-90"}`} grosor={1.8} />
+                        </button>
+                        <div id="submenu-movil" className={`grid transition-[grid-template-rows] duration-500 ease-[var(--ease-pt)] ${submenu ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
+                          <ul className="overflow-hidden" inert={!submenu}>
+                            {m.hijos.map((h) => (
+                              <li key={h.href}>
+                                <Link href={h.href} className="flex items-center gap-3 rounded-2xl py-2.5 pl-1">
+                                  <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-white/8 text-amarillo">
+                                    {h.icono && <Icono nombre={h.icono} className="size-5" grosor={1.7} />}
+                                  </span>
+                                  <span>
+                                    <span className={`block text-[17px] leading-tight font-semibold ${activo(h.href) ? "text-acento" : ""}`}>{h.texto}</span>
+                                    <span className="block text-[13px] text-white/55">{h.detalle}</span>
+                                  </span>
+                                </Link>
+                              </li>
+                            ))}
+                            <li className="h-3" aria-hidden="true" />
+                          </ul>
+                        </div>
+                      </>
+                    ) : (
+                      <Link
+                        href={m.href}
+                        className={`flex items-center justify-between py-3.5 font-display text-[34px] leading-none font-bold uppercase sm:text-[42px] ${activo(m.href) ? "text-acento" : ""}`}
+                      >
+                        {m.texto}
+                        <Icono nombre="flecha" className="size-6 text-white/40" grosor={1.8} />
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>

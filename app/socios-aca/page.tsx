@@ -6,6 +6,7 @@ import { Icono } from "@/components/marca/Icono";
 import { LogoACA } from "@/components/marca/Logo";
 import { BotonConsultar } from "@/components/consulta/ConsultaContext";
 import { Cierre, Citable, FaqLista, PortadaPagina } from "@/components/secciones/Comunes";
+import { OficinaCortesia } from "@/components/secciones/OficinaCortesia";
 
 export const metadata = meta({
   title: "Socios ACA: hotel en Bahía Blanca · ACA Villa Bordeu",
@@ -115,6 +116,15 @@ export default function Socios() {
           </ol>
         </div>
       </section>
+
+      <OficinaCortesia
+        titulo={
+          <>
+            Si viajás <span className="resalte">trabajando</span>
+          </>
+        }
+        texto="Villa Bordeu tiene una oficina de cortesía con escritorio privado: para una videollamada, mandar unos mails o terminar algo pendiente antes de seguir viaje."
+      />
 
       <FaqLista preguntas={PREGUNTAS} titulo="Para socios" />
       <Cierre titulo="¿Viajás con tu credencial?" modo="viaje" origen="socios-cierre" imagen={foto("restaurante", "05-cafe-logo.jpg", "Café con el logo ACA")} />

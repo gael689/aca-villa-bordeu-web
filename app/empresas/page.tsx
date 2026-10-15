@@ -10,6 +10,7 @@ import { Distancias } from "@/components/secciones/Distancias";
 import { DiaEquipo } from "@/components/secciones/DiaEquipo";
 import { ParaEmpresas } from "@/components/secciones/ParaEmpresas";
 import { Cinta } from "@/components/secciones/Cinta";
+import { OficinaCortesia } from "@/components/secciones/OficinaCortesia";
 
 export const metadata = meta({
   title: "Alojamiento para empresas en Bahía Blanca · ACA Villa Bordeu",
@@ -75,6 +76,15 @@ export default function Empresas() {
           </div>
         </div>
       </section>
+
+      <OficinaCortesia
+        titulo={
+          <>
+            Un escritorio para <span className="resalte">el que coordina</span>
+          </>
+        }
+        texto="Además de la habitación, el equipo tiene una oficina de cortesía con escritorio privado: para cerrar el parte del día, hacer una videollamada o recibir a un proveedor sin salir del predio."
+      />
 
       <section className="seccion">
         <div className="contenedor">

@@ -35,7 +35,7 @@ export default function ComoLlegar() {
               <Icono nombre="pin" className="size-[1.1em] shrink-0 text-amarillo" grosor={2} />
               {SITIO.direccion.calle}
             </span>
-            En el cruce de <span className="resalte">las rutas</span>
+            Antes del <span className="resalte">cruce de rutas</span>
           </>
         }
         bajada={`${SITIO.direccion.acceso}. Al suroeste de Bahía Blanca, sin entrar al centro.`}

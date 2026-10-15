@@ -530,14 +530,6 @@ img {
     display: none;
   }
 
-  /* «+ Agregar» de la carta: aparece de a uno al empezar el pedido. */
-  .plato-mas {
-    animation: plato-mas 0.5s var(--ease-pt) both;
-  }
-  @keyframes plato-mas {
-    from { opacity: 0; transform: scale(0.6); }
-  }
-
   /* ── Panel de consulta (dialog nativo: foco, Esc e inert gratis) ──────── */
   dialog.consulta {
     position: fixed;

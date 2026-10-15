@@ -114,7 +114,11 @@ export function mensajeViaje(c: EstadoViaje): string {
   return l.join("\n");
 }
 
-export type ItemPedido = { plato: string; cantidad: number };
+/** Los pasos del pedido, en el orden de una comida. */
+export const CURSOS = ["Entrada", "Plato principal", "Bebida", "Postre"] as const;
+export type Curso = (typeof CURSOS)[number];
+
+export type ItemPedido = { plato: string; cantidad: number; curso: Curso };
 
 export type EstadoPedido = {
   personas: number;
@@ -132,9 +136,12 @@ export function mensajePedido(c: EstadoPedido): string {
   const cuando = [c.dia ? `El ${fechaCorta(c.dia)}` : "Día a definir", c.hora ? `a las ${c.hora} h` : ""].filter(Boolean).join(" ");
   l.push(`• ${cuando}`);
   if (c.empresa) l.push(`• Empresa: ${c.empresa}`);
-  if (c.items.length) {
-    l.push("", "Platos:");
-    for (const i of c.items) l.push(`• ${i.cantidad} × ${i.plato}`);
+  const titulos: Record<Curso, string> = { Entrada: "Entradas", "Plato principal": "Platos principales", Bebida: "Bebidas", Postre: "Postres" };
+  for (const curso of CURSOS) {
+    const del = c.items.filter((i) => i.curso === curso);
+    if (!del.length) continue;
+    l.push("", `${titulos[curso]}:`);
+    for (const i of del) l.push(`• ${i.cantidad} × ${i.plato}`);
   }
   if (c.aclaraciones.trim()) l.push("", `Aclaraciones: ${c.aclaraciones.trim()}`);
   l.push(...lineasDatos(c), "", "Gracias!", FIRMA);

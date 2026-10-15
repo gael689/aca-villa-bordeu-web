@@ -26,9 +26,9 @@ export function MosaicoDesplegable({ principales, extras, className }: { princip
         >
           <span>
             <span className="block font-display text-[clamp(26px,2.4vw,38px)] leading-none font-bold uppercase">{abierto ? "Ver menos" : "Y más…"}</span>
-            <span className="mt-1.5 block text-[14px] text-white/85">{abierto ? "Volver al resumen" : "Oficina de cortesía, sala, tienda y más"}</span>
+            <span className="mt-1.5 block text-[15px] font-medium text-tinta/80">{abierto ? "Volver al resumen" : "Oficina de cortesía, sala, tienda y más"}</span>
           </span>
-          <span className={`grid size-12 shrink-0 place-items-center rounded-full bg-white/20 transition-transform duration-500 lg:self-end ${abierto ? "" : "group-hover:rotate-90"}`}>
+          <span className={`grid size-12 shrink-0 place-items-center rounded-full bg-tinta text-amarillo transition-transform duration-500 lg:self-end ${abierto ? "" : "group-hover:rotate-90"}`}>
             {abierto ? <Minus className="size-6" aria-hidden="true" /> : <Plus className="size-6" aria-hidden="true" />}
           </span>
         </button>

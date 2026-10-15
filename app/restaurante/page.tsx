@@ -6,7 +6,7 @@ import { MENSAJE_MESA, linkWhatsApp } from "@/lib/mensaje";
 import { JsonLd, restoJsonLd } from "@/lib/schema";
 import { Icono } from "@/components/marca/Icono";
 import { Cierre, Citable, PortadaPagina } from "@/components/secciones/Comunes";
-import { BotonAbrirPedido, BotonPlato, PedidoProvider } from "@/components/pedido/Pedido";
+import { BotonAbrirPedido, PedidoProvider } from "@/components/pedido/Pedido";
 
 export const metadata = meta({
   title: "Restaurante sobre la ruta en Bahía Blanca · Resto ACA",
@@ -61,7 +61,7 @@ export default function Restaurante() {
             <Icono nombre="whatsapp" className="size-4" />
           </span>
         </a>
-        <BotonAbrirPedido className="btn btn-fantasma" />
+        <BotonAbrirPedido className="btn btn-fantasma">Prepará tu pedido</BotonAbrirPedido>
       </PortadaPagina>
 
       <Citable>
@@ -94,11 +94,12 @@ export default function Restaurante() {
               {/* Prepará tu pedido: pedido del cliente (oct/2026), pensado para las empresas que vienen con su equipo. */}
               <div className="mt-8 max-w-[52ch] rounded-[var(--radio)] p-6 [box-shadow:inset_0_0_0_1px_rgb(255_255_255/0.18)]" data-reveal>
                 <p className="font-display text-[26px] leading-none font-bold text-amarillo uppercase">Prepará tu pedido</p>
+                <p className="mt-2 text-[15px] text-white/60">Ideal para empresas y grupos: te guiamos paso a paso.</p>
                 <ol className="mt-4 space-y-2.5 text-[15px] text-white/80">
                   {[
-                    <>Tocá <strong className="text-white">Empezar mi pedido</strong>.</>,
-                    <>Sumá los platos con <strong className="text-white">+ Agregar</strong>.</>,
-                    <>Decinos cuántos son, el día y la hora, y envialo por WhatsApp o mail.</>,
+                    <>Decinos <strong className="text-white">cuántos son</strong>.</>,
+                    <>Elegí paso a paso: <strong className="text-white">entrada, plato principal, bebida y postre</strong>.</>,
+                    <>Poné el día y la hora, y envialo por WhatsApp o mail.</>,
                   ].map((paso, i) => (
                     <li key={i} className="flex gap-3">
                       <span className="num grid size-6 shrink-0 place-items-center rounded-full bg-amarillo font-display text-[13px] font-bold text-tinta">{i + 1}</span>
@@ -106,7 +107,7 @@ export default function Restaurante() {
                     </li>
                   ))}
                 </ol>
-                <BotonAbrirPedido className="btn mt-6" />
+                <BotonAbrirPedido className="btn mt-6">Armar el pedido paso a paso</BotonAbrirPedido>
               </div>
             </div>
             <div className="flex flex-wrap gap-2 lg:justify-self-end" data-reveal>
@@ -140,15 +141,12 @@ export default function Restaurante() {
                 </div>
                 <ol className="gap-x-10 sm:columns-2">
                   {s.platos.map((p, n) => (
-                    <li key={p.nombre} className="group flex break-inside-avoid items-start justify-between gap-3 border-b border-white/10 py-4">
-                      <div>
-                        <p className="flex items-baseline gap-3">
-                          <span className="num shrink-0 font-display text-[13px] font-bold text-amarillo">{String(n + 1).padStart(2, "0")}</span>
-                          <span className="font-display text-[22px] leading-[1.05] font-semibold uppercase transition-colors group-hover:text-amarillo">{p.nombre}</span>
-                        </p>
-                        {p.detalle && <p className="mt-1 pl-8 text-[15px] text-white/55">{p.detalle}</p>}
-                      </div>
-                      <BotonPlato plato={p.nombre} />
+                    <li key={p.nombre} className="group break-inside-avoid border-b border-white/10 py-4">
+                      <p className="flex items-baseline gap-3">
+                        <span className="num shrink-0 font-display text-[13px] font-bold text-amarillo">{String(n + 1).padStart(2, "0")}</span>
+                        <span className="font-display text-[22px] leading-[1.05] font-semibold uppercase transition-colors group-hover:text-amarillo">{p.nombre}</span>
+                      </p>
+                      {p.detalle && <p className="mt-1 pl-8 text-[15px] text-white/55">{p.detalle}</p>}
                     </li>
                   ))}
                 </ol>
@@ -160,7 +158,7 @@ export default function Restaurante() {
         <div className="contenedor flex flex-wrap items-center justify-between gap-6 border-t border-white/10 py-12">
           <p className="max-w-[48ch] text-[15px] text-white/55">La carta puede cambiar. Para saber qué hay hoy o reservar para un grupo, escribinos por WhatsApp.</p>
           <div className="flex flex-wrap gap-2.5">
-            <BotonAbrirPedido />
+            <BotonAbrirPedido>Armar el pedido</BotonAbrirPedido>
             <a href={linkWhatsApp(MENSAJE_MESA)} target="_blank" rel="noopener noreferrer" className="btn btn-wpp sin-burbuja">
               <Icono nombre="whatsapp" className="size-5" /> Reservar mesa
             </a>

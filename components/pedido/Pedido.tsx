@@ -2,28 +2,56 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { track } from "@vercel/analytics";
-import { datosCompletos, fechaCorta, linkWhatsApp, mensajePedido, type Datos, type ItemPedido } from "@/lib/mensaje";
+import { CARTA } from "@/lib/carta";
+import { datosCompletos, fechaCorta, linkWhatsApp, mensajePedido, type Curso, type Datos, type ItemPedido } from "@/lib/mensaje";
 import { SITIO } from "@/lib/sitio";
 import { Icono } from "@/components/marca/Icono";
 import { bloquearScroll } from "@/components/motion/scroll";
 import { conversionAds } from "@/components/layout/GoogleAds";
 import { Calendario } from "@/components/consulta/Calendario";
-import { Burbuja, Campo, Contador, DatosPersonales, revisarDatos } from "@/components/consulta/Campos";
+import { Burbuja, Campo, Contador, DatosPersonales, Opcion, revisarDatos } from "@/components/consulta/Campos";
 
-// «Prepará tu pedido» (pedido del cliente, oct/2026): las empresas que vienen a
-// comer arman el pedido desde la carta —platos, cuántos son, día y hora— y lo
-// mandan por WhatsApp (asistido: la persona aprieta enviar) o por mail.
+// «Prepará tu pedido» (pedido del cliente, oct/2026), pensado para empresas que
+// vienen a comer con su equipo. Un asistente que acompaña paso a paso, como una
+// comida: cuántos son → entrada → plato principal → bebida → postre → día y hora
+// → datos. Sale por WhatsApp (asistido: la persona aprieta enviar) o por mail.
 
-const CLAVE = "vb-pedido-v1";
+const CLAVE = "vb-pedido-v2";
+
+/** A qué paso del pedido va cada capítulo de la carta. */
+const CURSO_DE: Record<string, Curso> = {
+  "Platos fríos y sopas": "Entrada",
+  "Especialidades y sugerencias": "Plato principal",
+  "Parrilla y ensaladas": "Plato principal",
+  Pastas: "Plato principal",
+  "Arroz, legumbres y huevos": "Plato principal",
+  "Bebidas y cafetería": "Bebida",
+  "Postres y helados": "Postre",
+};
+
+type Plato = { clave: string; nombre: string; detalle?: string; seccion: string; curso: Curso };
+
+const PLATOS: Plato[] = CARTA.flatMap((s) =>
+  s.platos.map((p) => ({ clave: `${s.nombre}|${p.nombre}`, nombre: p.nombre, detalle: p.detalle, seccion: s.nombre, curso: CURSO_DE[s.nombre] ?? "Plato principal" })),
+);
+
+type Paso = { corto: string; titulo: string; ayuda: string; curso?: Curso; opcional?: boolean };
+
+const PASOS: Paso[] = [
+  { corto: "Cuántos", titulo: "¿Para cuántas personas?", ayuda: "Así te ayudamos a calcular los platos." },
+  { corto: "Entrada", titulo: "¿Quieren entrada?", ayuda: "Es opcional. Si no, seguí al plato principal.", curso: "Entrada", opcional: true },
+  { corto: "Principal", titulo: "Plato principal", ayuda: "Sumá cuántos de cada plato. Las variantes las aclarás al final.", curso: "Plato principal" },
+  { corto: "Bebida", titulo: "Bebidas y café", ayuda: "Opcional: gaseosas, agua, cerveza, café.", curso: "Bebida", opcional: true },
+  { corto: "Postre", titulo: "¿Y de postre?", ayuda: "Es opcional.", curso: "Postre", opcional: true },
+  { corto: "Cuándo", titulo: "¿Qué día y a qué hora?", ayuda: "Te lo confirmamos por WhatsApp o mail." },
+  { corto: "Enviar", titulo: "Tus datos", ayuda: "Revisá el pedido y envialo." },
+];
 
 type Ctx = {
   cantidades: Record<string, number>;
-  sumar: (plato: string, delta: number) => void;
+  sumar: (clave: string, delta: number) => void;
+  vaciar: () => void;
   total: number;
-  /** modo pedido: recién ahí aparecen los «+ Agregar» de la carta */
-  armando: boolean;
-  empezar: () => void;
-  salir: () => void;
   abrir: () => void;
 };
 
@@ -35,24 +63,16 @@ function usePedido() {
   return c;
 }
 
-/** Lleva la carta a la vista, al primer capítulo. */
-const irALaCarta = () => document.querySelector("#carta > section")?.scrollIntoView({ behavior: "smooth", block: "start" });
-
 export function PedidoProvider({ children }: { children: ReactNode }) {
   const [cantidades, setCantidades] = useState<Record<string, number>>({});
-  const [armando, setArmando] = useState(false);
   const [abierta, setAbierta] = useState(false);
 
-  // Si recarga la página, el pedido sigue ahí (y sigue en modo pedido).
+  // Si recarga la página, el pedido sigue ahí.
   useEffect(() => {
     try {
       const g = JSON.parse(sessionStorage.getItem(CLAVE) ?? "null");
-      if (g && typeof g === "object" && Object.keys(g).length) {
-        /* eslint-disable react-hooks/set-state-in-effect */
-        setCantidades(g);
-        setArmando(true);
-        /* eslint-enable react-hooks/set-state-in-effect */
-      }
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      if (g && typeof g === "object") setCantidades(g);
     } catch {}
   }, []);
   useEffect(() => {
@@ -61,127 +81,166 @@ export function PedidoProvider({ children }: { children: ReactNode }) {
     } catch {}
   }, [cantidades]);
 
-  const sumar = useCallback((plato: string, delta: number) => {
+  const sumar = useCallback((clave: string, delta: number) => {
     setCantidades((c) => {
-      const n = Math.max(0, Math.min(99, (c[plato] ?? 0) + delta));
+      const n = Math.max(0, Math.min(999, (c[clave] ?? 0) + delta));
       const sig = { ...c };
-      if (n) sig[plato] = n;
-      else delete sig[plato];
+      if (n) sig[clave] = n;
+      else delete sig[clave];
       return sig;
     });
   }, []);
+  const vaciar = useCallback(() => setCantidades({}), []);
 
   const total = Object.values(cantidades).reduce((a, b) => a + b, 0);
-  const empezar = useCallback(() => {
-    setArmando(true);
-    irALaCarta();
-    track("pedido_empieza");
-  }, []);
-  const salir = useCallback(() => {
-    setArmando(false);
-    setCantidades({});
-  }, []);
   const abrir = useCallback(() => {
     setAbierta(true);
     track("pedido_abre");
   }, []);
-  const valor = useMemo(() => ({ cantidades, sumar, total, armando, empezar, salir, abrir }), [cantidades, sumar, total, armando, empezar, salir, abrir]);
+  const valor = useMemo(() => ({ cantidades, sumar, vaciar, total, abrir }), [cantidades, sumar, vaciar, total, abrir]);
 
   return (
     <PedidoCtx.Provider value={valor}>
-      <div data-armando={armando || undefined}>{children}</div>
+      {children}
       <BarraPedido oculta={abierta} />
       <PanelPedido abierta={abierta} cerrar={() => setAbierta(false)} />
     </PedidoCtx.Provider>
   );
 }
 
-/** Al lado de cada plato: nada hasta empezar el pedido; después «+ Agregar»; con cantidad, un − n +. */
-export function BotonPlato({ plato }: { plato: string }) {
-  const { cantidades, sumar, armando } = usePedido();
-  const n = cantidades[plato] ?? 0;
-  if (!armando) return null;
-  const base = "grid place-items-center rounded-full transition-colors";
-  if (!n)
-    return (
-      <button
-        type="button"
-        onClick={() => sumar(plato, 1)}
-        aria-label={`Agregar ${plato} al pedido`}
-        className="plato-mas flex h-10 shrink-0 items-center gap-1.5 rounded-full bg-white/10 pr-4 pl-3 text-[14px] font-semibold text-white [box-shadow:inset_0_0_0_1px_rgb(255_255_255/0.3)] transition-colors hover:bg-amarillo hover:text-tinta"
-      >
-        <Icono nombre="mas" className="size-4" grosor={2.4} />
-        Agregar
-      </button>
-    );
+/** Abre el asistente del pedido. Si ya hay platos elegidos, invita a seguir. */
+export function BotonAbrirPedido({ className = "btn", children }: { className?: string; children?: ReactNode }) {
+  const { abrir, total } = usePedido();
   return (
-    <div className="flex shrink-0 items-center gap-1 rounded-full bg-amarillo p-1 text-tinta">
-      <button type="button" onClick={() => sumar(plato, -1)} aria-label={`Quitar un ${plato}`} className={`${base} size-8 hover:bg-tinta/10`}>
-        <Icono nombre="menos" className="size-4" grosor={2.2} />
-      </button>
-      <span className="num w-5 text-center font-display text-[18px] font-bold" aria-live="polite">
-        {n}
-      </span>
-      <button type="button" onClick={() => sumar(plato, 1)} aria-label={`Sumar un ${plato}`} className={`${base} size-8 hover:bg-tinta/10`}>
-        <Icono nombre="mas" className="size-4" grosor={2.2} />
-      </button>
-    </div>
-  );
-}
-
-/**
- * El botón del pedido cambia según el momento: «Empezar mi pedido» (muestra los
- * «+ Agregar»), «Elegí los platos» (lleva a la carta) o «Siguiente» (abre el panel).
- */
-export function BotonAbrirPedido({ className = "btn" }: { className?: string }) {
-  const { armando, total, empezar, abrir } = usePedido();
-  const texto = !armando ? "Empezar mi pedido" : total ? `Siguiente: día y hora (${total})` : "Elegí los platos en la carta";
-  return (
-    <button type="button" onClick={!armando ? empezar : total ? abrir : irALaCarta} className={className}>
-      <span>{texto}</span>
+    <button type="button" onClick={abrir} className={className}>
+      <span>{total ? `Seguir con mi pedido (${total})` : (children ?? "Armar el pedido")}</span>
       <span className="burbuja" aria-hidden="true">
-        <Icono nombre={armando && !total ? "abajo" : "cubiertos"} className="size-4" grosor={2} />
+        <Icono nombre="cubiertos" className="size-4" grosor={2} />
       </span>
     </button>
   );
 }
 
-/** Barra fija mientras se arma el pedido: paso 1 (elegir platos) → «Siguiente». */
+/** Píldora flotante para retomar el pedido si se cerró el panel a mitad de camino. */
 function BarraPedido({ oculta }: { oculta: boolean }) {
-  const { total, armando, abrir, salir } = usePedido();
-  const visible = armando && !oculta;
+  const { total, abrir } = usePedido();
+  const visible = total > 0 && !oculta;
   return (
     <div
-      // En modo pedido, la barra fija del celular se esconde (ver globals.css).
-      data-pedido-activo={armando || undefined}
+      // Con un pedido en curso, la barra fija del celular se esconde (ver globals.css).
+      data-pedido-activo={total > 0 || undefined}
       inert={!visible}
       className={[
-        "fixed inset-x-2 bottom-[max(8px,env(safe-area-inset-bottom))] z-[101] mx-auto max-w-[480px] md:bottom-5",
+        "fixed inset-x-2 bottom-[max(8px,env(safe-area-inset-bottom))] z-[101] mx-auto max-w-[460px] md:bottom-5",
         "transition-[transform,opacity] duration-500 ease-[var(--ease-pt)]",
         visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-[130%] opacity-0",
       ].join(" ")}
     >
-      <div className="flex h-[64px] w-full items-center gap-2 rounded-full bg-amarillo pr-2 pl-2 text-tinta shadow-[0_20px_40px_-16px_rgb(0_0_0/0.6)]">
-        <button type="button" onClick={salir} aria-label="Cancelar el pedido" className="grid size-11 shrink-0 place-items-center rounded-full hover:bg-tinta/10">
-          <Icono nombre="cerrar" className="size-5" grosor={2} />
-        </button>
-        {total ? (
-          <>
-            <span className="flex-1 text-[15px] leading-tight font-semibold">
-              {total} {total === 1 ? "plato" : "platos"}
-              <span className="block text-[12px] font-medium text-tinta/70">Paso 1 de 2 · listo</span>
-            </span>
-            <button type="button" onClick={abrir} className="flex h-12 items-center gap-1.5 rounded-full bg-tinta px-5 text-[15px] font-semibold text-white">
-              Siguiente <Icono nombre="der" className="size-4" grosor={2} />
-            </button>
-          </>
-        ) : (
-          <span className="flex-1 pr-3 text-[15px] leading-tight font-semibold">
-            Tocá <span className="whitespace-nowrap">«+ Agregar»</span> en los platos que quieran
-            <span className="block text-[12px] font-medium text-tinta/70">Paso 1 de 2 · elegí los platos</span>
-          </span>
-        )}
+      <button
+        type="button"
+        onClick={abrir}
+        className="flex h-[60px] w-full items-center gap-3 rounded-full bg-amarillo pr-2 pl-5 text-tinta shadow-[0_20px_40px_-16px_rgb(0_0_0/0.6)]"
+      >
+        <Icono nombre="cubiertos" className="size-5 shrink-0" grosor={2} />
+        <span className="flex-1 text-left text-[15px] font-semibold">
+          Tu pedido · {total} {total === 1 ? "plato" : "platos"}
+        </span>
+        <span className="flex h-11 items-center gap-1.5 rounded-full bg-tinta px-4 text-[14px] font-semibold text-white">
+          Seguir <Icono nombre="der" className="size-4" grosor={2} />
+        </span>
+      </button>
+    </div>
+  );
+}
+
+/** Un plato de la lista: «Agregar» y, con cantidad, un − n +. */
+function FilaPlato({ p }: { p: Plato }) {
+  const { cantidades, sumar } = usePedido();
+  const n = cantidades[p.clave] ?? 0;
+  const redondo = "grid size-9 place-items-center rounded-full transition-colors";
+  return (
+    <li className={`flex items-center justify-between gap-3 rounded-2xl px-3 py-2.5 transition-colors ${n ? "bg-white shadow-[inset_0_0_0_1.5px_var(--color-amarillo)]" : ""}`}>
+      <div className="min-w-0">
+        <p className="text-[16px] leading-tight font-semibold">{p.nombre}</p>
+        {p.detalle && <p className="mt-0.5 text-[13px] leading-snug text-asfalto">{p.detalle}</p>}
       </div>
+      {n ? (
+        <div className="flex shrink-0 items-center gap-0.5 rounded-full bg-amarillo p-1">
+          <button type="button" onClick={() => sumar(p.clave, -1)} aria-label={`Quitar un ${p.nombre}`} className={`${redondo} size-8 hover:bg-tinta/10`}>
+            <Icono nombre="menos" className="size-4" grosor={2.2} />
+          </button>
+          <span className="num w-7 text-center font-display text-[19px] font-bold" aria-live="polite">
+            {n}
+          </span>
+          <button type="button" onClick={() => sumar(p.clave, 1)} aria-label={`Sumar un ${p.nombre}`} className={`${redondo} size-8 hover:bg-tinta/10`}>
+            <Icono nombre="mas" className="size-4" grosor={2.2} />
+          </button>
+        </div>
+      ) : (
+        <button
+          type="button"
+          onClick={() => sumar(p.clave, 1)}
+          aria-label={`Agregar ${p.nombre}`}
+          className="flex h-10 shrink-0 items-center gap-1.5 rounded-full bg-white pr-4 pl-3 text-[14px] font-semibold shadow-[inset_0_0_0_1px_var(--linea)] transition-colors hover:bg-amarillo"
+        >
+          <Icono nombre="mas" className="size-4" grosor={2.4} />
+          Agregar
+        </button>
+      )}
+    </li>
+  );
+}
+
+/** La lista de un paso (entrada, principal, bebida o postre), con atajos a cada capítulo. */
+function ListaCurso({ curso, personas }: { curso: Curso; personas: number }) {
+  const { cantidades } = usePedido();
+  const platos = PLATOS.filter((p) => p.curso === curso);
+  const secciones = [...new Set(platos.map((p) => p.seccion))];
+  const elegidos = platos.reduce((a, p) => a + (cantidades[p.clave] ?? 0), 0);
+  const varias = secciones.length > 1;
+
+  return (
+    <div>
+      {curso === "Plato principal" && (
+        <div className="mb-4 rounded-2xl bg-white p-4 shadow-[inset_0_0_0_1px_var(--linea)]" aria-live="polite">
+          <p className="flex items-baseline justify-between gap-3 text-[15px]">
+            <span>
+              Llevás <strong className="num">{elegidos}</strong> {elegidos === 1 ? "plato" : "platos"} para <strong className="num">{personas}</strong>{" "}
+              {personas === 1 ? "persona" : "personas"}
+            </span>
+            {elegidos >= personas && <Icono nombre="check" className="size-5 shrink-0 text-acento" grosor={2.4} />}
+          </p>
+          <span className="mt-2.5 block h-1.5 overflow-hidden rounded-full bg-hormigon">
+            <span className="block h-full rounded-full bg-amarillo transition-[width] duration-500" style={{ width: `${Math.min(100, (elegidos / personas) * 100)}%` }} />
+          </span>
+        </div>
+      )}
+      {varias && (
+        <div className="sin-barra -mx-5 mb-2 flex gap-2 overflow-x-auto px-5 pb-1 md:-mx-8 md:px-8">
+          {secciones.map((s) => (
+            <button
+              key={s}
+              type="button"
+              onClick={() => document.getElementById(`curso-${s}`)?.scrollIntoView({ behavior: "smooth", block: "start" })}
+              className="shrink-0 rounded-full bg-white px-3.5 py-2 text-[13px] font-semibold shadow-[inset_0_0_0_1px_var(--linea)] hover:bg-hormigon"
+            >
+              {s}
+            </button>
+          ))}
+        </div>
+      )}
+      {secciones.map((s) => (
+        <section key={s} id={`curso-${s}`} className="scroll-mt-2">
+          {varias && <h4 className="etiqueta mt-5 mb-1 px-3">{s}</h4>}
+          <ul className="-mx-3 space-y-0.5">
+            {platos
+              .filter((p) => p.seccion === s)
+              .map((p) => (
+                <FilaPlato key={p.clave} p={p} />
+              ))}
+          </ul>
+        </section>
+      ))}
     </div>
   );
 }
@@ -189,11 +248,14 @@ function BarraPedido({ oculta }: { oculta: boolean }) {
 type EstadoEnvio = "nada" | "enviando" | "ok" | "error";
 
 function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void }) {
-  const { cantidades, sumar, total } = usePedido();
+  const { cantidades, total, vaciar } = usePedido();
   const dlg = useRef<HTMLDialogElement>(null);
+  const cuerpo = useRef<HTMLDivElement>(null);
   const trampa = useRef<HTMLInputElement>(null);
   const [cerrando, setCerrando] = useState(false);
-  const [personas, setPersonas] = useState(2);
+  const [paso, setPaso] = useState(0);
+  const [atras, setAtras] = useState(false);
+  const [personas, setPersonas] = useState(10);
   const [dia, setDia] = useState<Date | null>(null);
   const [hora, setHora] = useState("");
   const [aclaraciones, setAclaraciones] = useState("");
@@ -208,7 +270,6 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
     let t: number | undefined;
     if (abierta && !d.open) {
       setCerrando(false);
-      setEnvio((e) => (e === "ok" ? "nada" : e));
       d.showModal();
       bloquearScroll(true);
     } else if (!abierta && d.open) {
@@ -222,20 +283,34 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
     return () => window.clearTimeout(t);
   }, [abierta]);
 
-  const items: ItemPedido[] = Object.entries(cantidades).map(([plato, cantidad]) => ({ plato, cantidad }));
+  const items: ItemPedido[] = PLATOS.filter((p) => cantidades[p.clave]).map((p) => ({ plato: p.nombre, cantidad: cantidades[p.clave], curso: p.curso }));
+  const deCurso = (c: Curso) => items.filter((i) => i.curso === c).reduce((a, i) => a + i.cantidad, 0);
+  const comida = deCurso("Entrada") + deCurso("Plato principal");
   const mensaje = mensajePedido({ personas, dia, hora, items, aclaraciones, empresa, ...datos });
 
-  // Para enviar: al menos un plato (o una aclaración), día, hora y los datos.
-  const faltaPlatos = total === 0 && !aclaraciones.trim();
-  const faltaCuando = !dia || !hora;
-  const listo = !faltaPlatos && !faltaCuando && datosCompletos(datos);
+  const actual = PASOS[paso];
+  const ultimo = paso === PASOS.length - 1;
+  const ir = (n: number) => {
+    setAtras(n < paso);
+    setPaso(n);
+    cuerpo.current?.scrollTo({ top: 0 });
+  };
+
+  // Qué hace falta para avanzar en cada paso, y qué dice el botón.
+  let puedeSeguir = true;
+  let textoSeguir = "Siguiente";
+  if (actual.curso === "Plato principal" && comida === 0) {
+    puedeSeguir = false;
+    textoSeguir = "Elegí al menos un plato";
+  } else if (actual.opcional && actual.curso && deCurso(actual.curso) === 0) {
+    textoSeguir = actual.curso === "Entrada" ? "Sin entrada, seguir" : actual.curso === "Bebida" ? "Sin bebidas, seguir" : "Sin postre, seguir";
+  } else if (paso === 5 && (!dia || !hora)) {
+    puedeSeguir = false;
+    textoSeguir = !dia ? "Elegí el día" : "Elegí la hora";
+  }
 
   const revisar = () => {
     setIntentado(true);
-    if (faltaPlatos || faltaCuando) {
-      document.getElementById(faltaPlatos ? "pedido-platos" : "pedido-cuando")?.scrollIntoView({ behavior: "smooth", block: "start" });
-      return false;
-    }
     return revisarDatos("pedido", datos);
   };
 
@@ -257,6 +332,13 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
     }
   }
 
+  const terminar = () => {
+    vaciar();
+    setPaso(0);
+    setEnvio("nada");
+    cerrar();
+  };
+
   return (
     <dialog
       ref={dlg}
@@ -271,14 +353,17 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
       }}
     >
       <div className="flex h-full max-h-[94dvh] flex-col md:max-h-none">
-        <header className="relative shrink-0 border-b border-[color:var(--linea)] px-5 pt-3 pb-4 md:px-8 md:pt-7">
+        <header className="relative shrink-0 px-5 pt-3 pb-4 md:px-8 md:pt-7">
           <span className="mx-auto mb-3 block h-1 w-10 rounded-full bg-tinta/15 md:hidden" aria-hidden="true" />
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="etiqueta">Paso 2 de 2 · cuándo y tus datos</p>
+              <p className="etiqueta">
+                Paso {paso + 1} de {PASOS.length} · {actual.corto}
+              </p>
               <h2 id="pedido-titulo" className="mt-1.5 font-display text-[30px] leading-none font-bold uppercase md:text-[36px]">
-                Prepará tu pedido
+                {actual.titulo}
               </h2>
+              <p className="mt-2 text-[14px] text-asfalto">{actual.ayuda}</p>
             </div>
             <button
               type="button"
@@ -289,125 +374,149 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
               <Icono nombre="cerrar" className="size-5" grosor={2} />
             </button>
           </div>
+          <ol className="mt-4 flex gap-1" aria-label="Pasos">
+            {PASOS.map((p, i) => (
+              <li key={p.corto} className="flex-1" aria-current={i === paso ? "step" : undefined}>
+                <button
+                  type="button"
+                  onClick={() => i < paso && ir(i)}
+                  disabled={i >= paso}
+                  aria-label={`Volver a ${p.corto}`}
+                  className={`block h-[3px] w-full rounded-full transition-colors duration-500 disabled:cursor-default ${i <= paso ? "bg-amarillo" : "bg-tinta/12"}`}
+                />
+              </li>
+            ))}
+          </ol>
         </header>
 
-        <div data-lenis-prevent className="min-h-0 flex-1 space-y-8 overflow-y-auto overscroll-contain px-5 py-6 md:px-8">
-          {/* Platos */}
-          <section id="pedido-platos" className="scroll-mt-4">
-            <h3 className="text-[15px] font-semibold">Platos</h3>
-            {items.length ? (
-              <ul className="mt-2">
-                {items.map((i) => (
-                  <li key={i.plato} className="flex items-center justify-between gap-3 border-b border-[color:var(--linea)] py-3">
-                    <span className="text-[16px] font-semibold">{i.plato}</span>
-                    <span className="flex shrink-0 items-center gap-1">
-                      <button type="button" onClick={() => sumar(i.plato, -1)} aria-label={`Quitar un ${i.plato}`} className="grid size-9 place-items-center rounded-full bg-white shadow-[inset_0_0_0_1px_var(--linea)]">
-                        <Icono nombre="menos" className="size-4" grosor={2} />
-                      </button>
-                      <span className="num w-7 text-center font-display text-xl font-bold">{i.cantidad}</span>
-                      <button type="button" onClick={() => sumar(i.plato, 1)} aria-label={`Sumar un ${i.plato}`} className="grid size-9 place-items-center rounded-full bg-white shadow-[inset_0_0_0_1px_var(--linea)]">
-                        <Icono nombre="mas" className="size-4" grosor={2} />
-                      </button>
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className={`mt-2 rounded-2xl bg-white p-4 text-[15px] shadow-[inset_0_0_0_1px_var(--linea)] ${intentado && faltaPlatos ? "text-error" : "text-asfalto"}`}>
-                Todavía no elegiste platos. Cerrá este panel y tocá <strong>«+ Agregar»</strong> en los platos de la carta.
-              </p>
+        <div ref={cuerpo} data-lenis-prevent className="min-h-0 flex-1 overflow-y-auto overscroll-contain border-t border-[color:var(--linea)] px-5 pt-4 pb-6 md:px-8">
+          <div key={paso} className={atras ? "paso-entra-atras" : "paso-entra"}>
+            {paso === 0 && (
+              <div>
+                <Contador etiqueta="Personas" ayuda="Las que van a comer" valor={personas} min={1} max={300} onCambiar={setPersonas} grande />
+                <div className="mt-4 flex flex-wrap gap-2" aria-label="Atajos">
+                  {[2, 4, 6, 10, 15, 20, 30].map((n) => (
+                    <Opcion key={n} rol="radio" activa={personas === n} onClick={() => setPersonas(n)}>
+                      {n}
+                    </Opcion>
+                  ))}
+                </div>
+                <p className="mt-6 rounded-2xl bg-white p-4 text-[15px] text-asfalto shadow-[inset_0_0_0_1px_var(--linea)]">
+                  Ideal para equipos de trabajo: en los próximos pasos elegís la entrada, el plato principal, la bebida y el postre, cuántos de cada uno.
+                </p>
+              </div>
             )}
-            <div className="mt-4">
-              <Campo
-                etiqueta="Variantes o aclaraciones (opcional)"
-                valor={aclaraciones}
-                onCambiar={setAclaraciones}
-                placeholder="Ej.: 2 ravioles a la bolognesa y 1 sin sal"
-                largo
-              />
-            </div>
-          </section>
 
-          {/* Cuántos y cuándo */}
-          <section id="pedido-cuando" className="scroll-mt-4">
-            <Contador etiqueta="¿Cuántos son?" valor={personas} min={1} max={200} onCambiar={setPersonas} grande />
-            <h3 className="mt-6 mb-3 text-[15px] font-semibold">¿Qué día?</h3>
-            <Calendario entrada={dia} salida={null} onElegir={(e, s) => setDia(s ?? e)} />
-            <p className={`mt-3 text-sm ${intentado && !dia ? "text-error" : "text-asfalto"}`} aria-live="polite">
-              {dia ? (
-                <>
-                  Día: <strong className="text-tinta">{fechaCorta(dia)}</strong>
-                </>
-              ) : (
-                "Elegí el día en el calendario."
-              )}
-            </p>
-            <div className="mt-5 max-w-[220px]">
-              <Campo id="pedido-hora" etiqueta="¿A qué hora?" tipo="time" valor={hora} onCambiar={setHora} requerido error={intentado && !hora ? "Elegí la hora." : undefined} />
-            </div>
-          </section>
+            {actual.curso && <ListaCurso curso={actual.curso} personas={personas} />}
 
-          {/* Datos */}
-          <section className="space-y-3">
-            <DatosPersonales prefijo="pedido" datos={datos} onCambiar={setDatos} mostrarErrores={intentado} />
-            <div className="pt-2">
-              <Campo etiqueta="Empresa (opcional)" valor={empresa} onCambiar={setEmpresa} auto="organization" />
-            </div>
-          </section>
+            {paso === 5 && (
+              <div>
+                <Calendario entrada={dia} salida={null} onElegir={(e, s) => setDia(s ?? e)} />
+                <p className="mt-3 text-sm text-asfalto" aria-live="polite">
+                  {dia ? (
+                    <>
+                      Día: <strong className="text-tinta">{fechaCorta(dia)}</strong>
+                    </>
+                  ) : (
+                    "Elegí el día en el calendario."
+                  )}
+                </p>
+                <div className="mt-5 max-w-[220px]">
+                  <Campo id="pedido-hora" etiqueta="Hora" tipo="time" valor={hora} onCambiar={setHora} requerido />
+                </div>
+              </div>
+            )}
 
-          {items.length > 0 && <Burbuja texto={mensaje} titulo="Así nos llega tu pedido" />}
-
-          {/* Trampa para robots: invisible para las personas. */}
-          <input ref={trampa} type="text" name="sitio" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
-
-          {envio === "error" && (
-            <p className="text-sm text-error" role="alert">
-              No se pudo enviar. Probá por WhatsApp o escribinos a {SITIO.mail}.
-            </p>
-          )}
-          {envio === "ok" && (
-            <div className="flex items-start gap-3 rounded-2xl bg-tinta p-5 text-white" role="status">
-              <span className="grid size-9 shrink-0 place-items-center rounded-full bg-wpp">
-                <Icono nombre="check" className="size-5" grosor={2.4} />
-              </span>
-              <p>
-                <strong className="block font-display text-2xl uppercase">Recibimos tu pedido</strong>
-                Te lo confirmamos a {datos.email.trim()} lo antes posible.
-              </p>
-            </div>
-          )}
+            {ultimo && (
+              <div className="space-y-5">
+                <DatosPersonales prefijo="pedido" datos={datos} onCambiar={setDatos} mostrarErrores={intentado} />
+                <Campo etiqueta="Empresa (opcional)" valor={empresa} onCambiar={setEmpresa} auto="organization" />
+                <Campo
+                  etiqueta="Variantes o aclaraciones (opcional)"
+                  valor={aclaraciones}
+                  onCambiar={setAclaraciones}
+                  placeholder="Ej.: 3 milanesas napolitanas y 2 suizas, una sin sal"
+                  largo
+                />
+                <Burbuja texto={mensaje} titulo="Así nos llega tu pedido" />
+                <button type="button" onClick={() => ir(1)} className="enlace text-sm">
+                  Cambiar platos
+                </button>
+                {/* Trampa para robots: invisible para las personas. */}
+                <input ref={trampa} type="text" name="sitio" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
+                {envio === "error" && (
+                  <p className="text-sm text-error" role="alert">
+                    No se pudo enviar. Probá por WhatsApp o escribinos a {SITIO.mail}.
+                  </p>
+                )}
+                {envio === "ok" && (
+                  <div className="flex items-start gap-3 rounded-2xl bg-tinta p-5 text-white" role="status">
+                    <span className="grid size-9 shrink-0 place-items-center rounded-full bg-wpp">
+                      <Icono nombre="check" className="size-5" grosor={2.4} />
+                    </span>
+                    <p>
+                      <strong className="block font-display text-2xl uppercase">Recibimos tu pedido</strong>
+                      Te lo confirmamos a {datos.email.trim()} lo antes posible.
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
 
         <footer className="shrink-0 border-t border-[color:var(--linea)] bg-papel px-5 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] md:px-8">
-          {!listo && <p className="mb-2.5 text-[13px] text-asfalto">Para enviar: platos, día, hora y tus datos.</p>}
-          <div className="grid gap-2.5 sm:grid-cols-[1.4fr_1fr]">
-            <a
-              href={linkWhatsApp(mensaje)}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => {
-                if (!revisar()) {
-                  e.preventDefault();
-                  return;
-                }
-                track("pedido_whatsapp", { platos: total, personas });
-                conversionAds("pedido_whatsapp");
-              }}
-              className="btn btn-wpp sin-burbuja w-full"
-            >
-              <Icono nombre="whatsapp" className="size-5" />
-              Enviar por WhatsApp
-            </a>
-            <button
-              type="button"
-              onClick={() => void enviarMail()}
-              disabled={envio === "enviando" || envio === "ok"}
-              className="btn btn-fantasma sin-burbuja w-full disabled:opacity-50"
-            >
-              <Icono nombre="sobre" className="size-5" />
-              {envio === "enviando" ? "Enviando…" : envio === "ok" ? "Enviado" : "Por mail"}
+          {!ultimo ? (
+            <div className="flex items-center gap-2.5">
+              {paso > 0 && (
+                <button type="button" onClick={() => ir(paso - 1)} className="btn btn-fantasma sin-burbuja px-6">
+                  Atrás
+                </button>
+              )}
+              <button type="button" onClick={() => ir(paso + 1)} disabled={!puedeSeguir} className="btn btn-oscuro flex-1 disabled:cursor-not-allowed disabled:opacity-40">
+                <span>{textoSeguir}</span>
+                <span className="burbuja" aria-hidden="true">
+                  <Icono nombre="der" className="size-4" grosor={2} />
+                </span>
+              </button>
+            </div>
+          ) : envio === "ok" ? (
+            <button type="button" onClick={terminar} className="btn btn-oscuro sin-burbuja w-full">
+              Listo, cerrar
             </button>
-          </div>
+          ) : (
+            <>
+              {!datosCompletos(datos) && <p className="mb-2.5 text-[13px] text-asfalto">Completá nombre y apellido, teléfono y e-mail para enviar.</p>}
+              <div className="grid gap-2.5 sm:grid-cols-[1.4fr_1fr]">
+                <a
+                  href={linkWhatsApp(mensaje)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => {
+                    if (!revisar()) {
+                      e.preventDefault();
+                      return;
+                    }
+                    track("pedido_whatsapp", { platos: total, personas });
+                    conversionAds("pedido_whatsapp");
+                  }}
+                  className="btn btn-wpp sin-burbuja w-full"
+                >
+                  <Icono nombre="whatsapp" className="size-5" />
+                  Enviar por WhatsApp
+                </a>
+                <button
+                  type="button"
+                  onClick={() => void enviarMail()}
+                  disabled={envio === "enviando"}
+                  className="btn btn-fantasma sin-burbuja w-full disabled:opacity-50"
+                >
+                  <Icono nombre="sobre" className="size-5" />
+                  {envio === "enviando" ? "Enviando…" : "Por mail"}
+                </button>
+              </div>
+            </>
+          )}
         </footer>
       </div>
     </dialog>

@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import { foto } from "@/lib/fotos";
 import { meta } from "@/lib/meta";
@@ -9,6 +8,7 @@ import { Icono } from "@/components/marca/Icono";
 import { BotonConsultar } from "@/components/consulta/ConsultaContext";
 import { Cierre, Citable, FaqLista, PortadaPagina, TarjetaEnlace } from "@/components/secciones/Comunes";
 import { Distancias } from "@/components/secciones/Distancias";
+import { OficinaCortesia } from "@/components/secciones/OficinaCortesia";
 
 export const dynamicParams = false;
 
@@ -29,7 +29,6 @@ export default async function PaginaRubro({ params }: PageProps<"/empresas/[rubr
   if (!r) notFound();
   const [c, a] = r.foto.split("/");
   const portada = foto(c, a, r.h1);
-  const oficina = foto("oficina-cortesia", "01-oficina.jpg", "Oficina de cortesía de Villa Bordeu, con escritorio de madera, sillón y paredes de listones");
   const otros = RUBROS.filter((x) => x.slug !== r.slug);
   const cerca = r.cerca ? LUGARES.find((l) => l.slug === r.cerca) : undefined;
 
@@ -82,24 +81,14 @@ export default async function PaginaRubro({ params }: PageProps<"/empresas/[rubr
       </section>
 
       {/* Oficina de cortesía: el texto cambia según el rubro */}
-      <section className="seccion-chica gris">
-        <div className="contenedor grid items-center gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
-          <div className="tarjeta relative aspect-[16/10]" data-clip>
-            <Image src={oficina.src} alt={oficina.alt} fill sizes="(min-width: 1024px) 50vw, 100vw" placeholder="blur" blurDataURL={oficina.blurDataURL} className="object-cover" />
-          </div>
-          <div>
-            <p className="etiqueta" data-reveal>
-              Oficina de cortesía
-            </p>
-            <h2 className="t-h2 mt-4 max-w-[14ch]" data-split>
-              Un escritorio para <span className="resalte">el que coordina</span>
-            </h2>
-            <p className="lead mt-5 text-asfalto" data-reveal>
-              {r.oficina}
-            </p>
-          </div>
-        </div>
-      </section>
+      <OficinaCortesia
+        titulo={
+          <>
+            Un escritorio para <span className="resalte">el que coordina</span>
+          </>
+        }
+        texto={r.oficina}
+      />
 
       {/* Contexto con fuente */}
       <section className="oscuro grano relative overflow-hidden seccion-chica">
