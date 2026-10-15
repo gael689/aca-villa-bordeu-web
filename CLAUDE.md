@@ -19,7 +19,7 @@ Preview: https://aca-villa-bordeu-web.vercel.app (noindex). Dominio a mantener: 
 - El rojo `#DF1D2E` queda **solo en el logo ACA** (`text-marca-aca`, favicon), como en aca.org.ar. El logo está vectorizado desde el favicon (`lib/logo.ts`): reemplazar si el ACA pasa el vector.
 - Menú: Socios (`/socios-aca`) va primero, antes de Empresas.
 - **Datos obligatorios** en la reserva y en el pedido (pedido del cliente, oct/2026): nombre y apellido, teléfono y e-mail (`DatosPersonales` en `components/consulta/Campos.tsx`, validación en `lib/mensaje.ts`). Sin ellos no sale ni por WhatsApp ni por mail. El botón del encabezado dice «Reservas»; el WhatsApp del encabezado es verde.
-- **Prepará tu pedido** (`components/pedido/Pedido.tsx`): en `/restaurante` cada plato tiene su «+»; el panel pide cuántos son, día, hora y datos, y manda por WhatsApp o mail (`modo: "pedido"` en `/api/consulta`). La carta va **sin vinos**. QR impreso en `../qr-restaurante/` (apunta a `www.acavillabordeu.com.ar/restaurante#carta`).
+- **Prepará tu pedido** (`components/pedido/Pedido.tsx`): en `/restaurante` cada plato tiene su «+»; el panel pide cuántos son, día, hora y datos, y manda por WhatsApp o mail (`modo: "pedido"` en `/api/consulta`). La carta va **sin vinos**. QR impreso en `../qr-restaurante/`: apunta a la web nueva que sale de `main` (`aca-villa-bordeu-web.vercel.app/restaurante#carta`), nunca al sitio viejo.
 - og:image: `scripts/og-inicio.mjs` regenera `public/og/inicio.jpg`.
 
 ## Técnico
