@@ -20,6 +20,10 @@ type Ctx = {
   cantidades: Record<string, number>;
   sumar: (plato: string, delta: number) => void;
   total: number;
+  /** modo pedido: recién ahí aparecen los «+ Agregar» de la carta */
+  armando: boolean;
+  empezar: () => void;
+  salir: () => void;
   abrir: () => void;
 };
 
@@ -31,16 +35,24 @@ function usePedido() {
   return c;
 }
 
+/** Lleva la carta a la vista, al primer capítulo. */
+const irALaCarta = () => document.querySelector("#carta > section")?.scrollIntoView({ behavior: "smooth", block: "start" });
+
 export function PedidoProvider({ children }: { children: ReactNode }) {
   const [cantidades, setCantidades] = useState<Record<string, number>>({});
+  const [armando, setArmando] = useState(false);
   const [abierta, setAbierta] = useState(false);
 
-  // Si recarga la página, el pedido sigue ahí.
+  // Si recarga la página, el pedido sigue ahí (y sigue en modo pedido).
   useEffect(() => {
     try {
       const g = JSON.parse(sessionStorage.getItem(CLAVE) ?? "null");
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      if (g && typeof g === "object") setCantidades(g);
+      if (g && typeof g === "object" && Object.keys(g).length) {
+        /* eslint-disable react-hooks/set-state-in-effect */
+        setCantidades(g);
+        setArmando(true);
+        /* eslint-enable react-hooks/set-state-in-effect */
+      }
     } catch {}
   }, []);
   useEffect(() => {
@@ -60,39 +72,50 @@ export function PedidoProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const total = Object.values(cantidades).reduce((a, b) => a + b, 0);
+  const empezar = useCallback(() => {
+    setArmando(true);
+    irALaCarta();
+    track("pedido_empieza");
+  }, []);
+  const salir = useCallback(() => {
+    setArmando(false);
+    setCantidades({});
+  }, []);
   const abrir = useCallback(() => {
     setAbierta(true);
     track("pedido_abre");
   }, []);
-  const valor = useMemo(() => ({ cantidades, sumar, total, abrir }), [cantidades, sumar, total, abrir]);
+  const valor = useMemo(() => ({ cantidades, sumar, total, armando, empezar, salir, abrir }), [cantidades, sumar, total, armando, empezar, salir, abrir]);
 
   return (
     <PedidoCtx.Provider value={valor}>
-      {children}
+      <div data-armando={armando || undefined}>{children}</div>
       <BarraPedido oculta={abierta} />
       <PanelPedido abierta={abierta} cerrar={() => setAbierta(false)} />
     </PedidoCtx.Provider>
   );
 }
 
-/** El «+» al lado de cada plato de la carta; con cantidad, un − n +. */
+/** Al lado de cada plato: nada hasta empezar el pedido; después «+ Agregar»; con cantidad, un − n +. */
 export function BotonPlato({ plato }: { plato: string }) {
-  const { cantidades, sumar } = usePedido();
+  const { cantidades, sumar, armando } = usePedido();
   const n = cantidades[plato] ?? 0;
-  const base = "grid size-9 place-items-center rounded-full transition-colors";
+  if (!armando) return null;
+  const base = "grid place-items-center rounded-full transition-colors";
   if (!n)
     return (
       <button
         type="button"
         onClick={() => sumar(plato, 1)}
         aria-label={`Agregar ${plato} al pedido`}
-        className={`${base} shrink-0 text-white/80 [box-shadow:inset_0_0_0_1px_rgb(255_255_255/0.25)] hover:bg-amarillo hover:text-tinta`}
+        className="plato-mas flex h-10 shrink-0 items-center gap-1.5 rounded-full bg-white/10 pr-4 pl-3 text-[14px] font-semibold text-white [box-shadow:inset_0_0_0_1px_rgb(255_255_255/0.3)] transition-colors hover:bg-amarillo hover:text-tinta"
       >
-        <Icono nombre="mas" className="size-4" grosor={2.2} />
+        <Icono nombre="mas" className="size-4" grosor={2.4} />
+        Agregar
       </button>
     );
   return (
-    <div className="flex shrink-0 items-center gap-1 rounded-full bg-amarillo p-0.5 text-tinta">
+    <div className="flex shrink-0 items-center gap-1 rounded-full bg-amarillo p-1 text-tinta">
       <button type="button" onClick={() => sumar(plato, -1)} aria-label={`Quitar un ${plato}`} className={`${base} size-8 hover:bg-tinta/10`}>
         <Icono nombre="menos" className="size-4" grosor={2.2} />
       </button>
@@ -106,47 +129,59 @@ export function BotonPlato({ plato }: { plato: string }) {
   );
 }
 
-/** Abre el panel del pedido aunque todavía no haya platos elegidos. */
-export function BotonAbrirPedido({ className = "btn", children }: { className?: string; children: ReactNode }) {
-  const { abrir } = usePedido();
+/**
+ * El botón del pedido cambia según el momento: «Empezar mi pedido» (muestra los
+ * «+ Agregar»), «Elegí los platos» (lleva a la carta) o «Siguiente» (abre el panel).
+ */
+export function BotonAbrirPedido({ className = "btn" }: { className?: string }) {
+  const { armando, total, empezar, abrir } = usePedido();
+  const texto = !armando ? "Empezar mi pedido" : total ? `Siguiente: día y hora (${total})` : "Elegí los platos en la carta";
   return (
-    <button type="button" onClick={abrir} className={className}>
-      <span>{children}</span>
+    <button type="button" onClick={!armando ? empezar : total ? abrir : irALaCarta} className={className}>
+      <span>{texto}</span>
       <span className="burbuja" aria-hidden="true">
-        <Icono nombre="cubiertos" className="size-4" grosor={2} />
+        <Icono nombre={armando && !total ? "abajo" : "cubiertos"} className="size-4" grosor={2} />
       </span>
     </button>
   );
 }
 
-/** Píldora flotante con el total, visible apenas hay un plato elegido. */
+/** Barra fija mientras se arma el pedido: paso 1 (elegir platos) → «Siguiente». */
 function BarraPedido({ oculta }: { oculta: boolean }) {
-  const { total, abrir } = usePedido();
-  const visible = total > 0 && !oculta;
+  const { total, armando, abrir, salir } = usePedido();
+  const visible = armando && !oculta;
   return (
     <div
-      // Con el pedido a la vista, la barra fija del celular se esconde (ver globals.css).
-      data-pedido-activo={total > 0 || undefined}
+      // En modo pedido, la barra fija del celular se esconde (ver globals.css).
+      data-pedido-activo={armando || undefined}
       inert={!visible}
       className={[
-        "fixed inset-x-2 bottom-[max(8px,env(safe-area-inset-bottom))] z-[101] mx-auto max-w-[460px] md:bottom-5",
+        "fixed inset-x-2 bottom-[max(8px,env(safe-area-inset-bottom))] z-[101] mx-auto max-w-[480px] md:bottom-5",
         "transition-[transform,opacity] duration-500 ease-[var(--ease-pt)]",
         visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-[130%] opacity-0",
       ].join(" ")}
     >
-      <button
-        type="button"
-        onClick={abrir}
-        className="flex h-[60px] w-full items-center gap-3 rounded-full bg-amarillo pr-2 pl-5 text-tinta shadow-[0_20px_40px_-16px_rgb(0_0_0/0.6)]"
-      >
-        <Icono nombre="cubiertos" className="size-5 shrink-0" grosor={2} />
-        <span className="flex-1 text-left text-[15px] font-semibold">
-          Tu pedido · {total} {total === 1 ? "plato" : "platos"}
-        </span>
-        <span className="flex h-11 items-center gap-1.5 rounded-full bg-tinta px-4 text-[14px] font-semibold text-white">
-          Ver pedido <Icono nombre="der" className="size-4" grosor={2} />
-        </span>
-      </button>
+      <div className="flex h-[64px] w-full items-center gap-2 rounded-full bg-amarillo pr-2 pl-2 text-tinta shadow-[0_20px_40px_-16px_rgb(0_0_0/0.6)]">
+        <button type="button" onClick={salir} aria-label="Cancelar el pedido" className="grid size-11 shrink-0 place-items-center rounded-full hover:bg-tinta/10">
+          <Icono nombre="cerrar" className="size-5" grosor={2} />
+        </button>
+        {total ? (
+          <>
+            <span className="flex-1 text-[15px] leading-tight font-semibold">
+              {total} {total === 1 ? "plato" : "platos"}
+              <span className="block text-[12px] font-medium text-tinta/70">Paso 1 de 2 · listo</span>
+            </span>
+            <button type="button" onClick={abrir} className="flex h-12 items-center gap-1.5 rounded-full bg-tinta px-5 text-[15px] font-semibold text-white">
+              Siguiente <Icono nombre="der" className="size-4" grosor={2} />
+            </button>
+          </>
+        ) : (
+          <span className="flex-1 pr-3 text-[15px] leading-tight font-semibold">
+            Tocá <span className="whitespace-nowrap">«+ Agregar»</span> en los platos que quieran
+            <span className="block text-[12px] font-medium text-tinta/70">Paso 1 de 2 · elegí los platos</span>
+          </span>
+        )}
+      </div>
     </div>
   );
 }
@@ -240,7 +275,7 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
           <span className="mx-auto mb-3 block h-1 w-10 rounded-full bg-tinta/15 md:hidden" aria-hidden="true" />
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="etiqueta">Resto · desde 1984</p>
+              <p className="etiqueta">Paso 2 de 2 · cuándo y tus datos</p>
               <h2 id="pedido-titulo" className="mt-1.5 font-display text-[30px] leading-none font-bold uppercase md:text-[36px]">
                 Prepará tu pedido
               </h2>
@@ -279,7 +314,7 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
               </ul>
             ) : (
               <p className={`mt-2 rounded-2xl bg-white p-4 text-[15px] shadow-[inset_0_0_0_1px_var(--linea)] ${intentado && faltaPlatos ? "text-error" : "text-asfalto"}`}>
-                Todavía no elegiste platos. Cerrá este panel y tocá el <strong>+</strong> al lado de cada plato de la carta.
+                Todavía no elegiste platos. Cerrá este panel y tocá <strong>«+ Agregar»</strong> en los platos de la carta.
               </p>
             )}
             <div className="mt-4">

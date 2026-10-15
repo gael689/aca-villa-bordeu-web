@@ -61,12 +61,7 @@ export default function Restaurante() {
             <Icono nombre="whatsapp" className="size-4" />
           </span>
         </a>
-        <a href="#carta" className="btn btn-fantasma">
-          <span>Prepará tu pedido</span>
-          <span className="burbuja" aria-hidden="true">
-            <Icono nombre="abajo" className="size-4" grosor={2} />
-          </span>
-        </a>
+        <BotonAbrirPedido className="btn btn-fantasma" />
       </PortadaPagina>
 
       <Citable>
@@ -99,11 +94,19 @@ export default function Restaurante() {
               {/* Prepará tu pedido: pedido del cliente (oct/2026), pensado para las empresas que vienen con su equipo. */}
               <div className="mt-8 max-w-[52ch] rounded-[var(--radio)] p-6 [box-shadow:inset_0_0_0_1px_rgb(255_255_255/0.18)]" data-reveal>
                 <p className="font-display text-[26px] leading-none font-bold text-amarillo uppercase">Prepará tu pedido</p>
-                <p className="mt-3 text-[15px] text-white/75">
-                  Tocá el <strong className="text-white">+</strong> en los platos que quieran, decinos cuántos son, el día y la hora, y te lo confirmamos por
-                  WhatsApp o mail.
-                </p>
-                <BotonAbrirPedido className="btn mt-5">Armar el pedido</BotonAbrirPedido>
+                <ol className="mt-4 space-y-2.5 text-[15px] text-white/80">
+                  {[
+                    <>Tocá <strong className="text-white">Empezar mi pedido</strong>.</>,
+                    <>Sumá los platos con <strong className="text-white">+ Agregar</strong>.</>,
+                    <>Decinos cuántos son, el día y la hora, y envialo por WhatsApp o mail.</>,
+                  ].map((paso, i) => (
+                    <li key={i} className="flex gap-3">
+                      <span className="num grid size-6 shrink-0 place-items-center rounded-full bg-amarillo font-display text-[13px] font-bold text-tinta">{i + 1}</span>
+                      <span>{paso}</span>
+                    </li>
+                  ))}
+                </ol>
+                <BotonAbrirPedido className="btn mt-6" />
               </div>
             </div>
             <div className="flex flex-wrap gap-2 lg:justify-self-end" data-reveal>
@@ -157,7 +160,7 @@ export default function Restaurante() {
         <div className="contenedor flex flex-wrap items-center justify-between gap-6 border-t border-white/10 py-12">
           <p className="max-w-[48ch] text-[15px] text-white/55">La carta puede cambiar. Para saber qué hay hoy o reservar para un grupo, escribinos por WhatsApp.</p>
           <div className="flex flex-wrap gap-2.5">
-            <BotonAbrirPedido>Ver mi pedido</BotonAbrirPedido>
+            <BotonAbrirPedido />
             <a href={linkWhatsApp(MENSAJE_MESA)} target="_blank" rel="noopener noreferrer" className="btn btn-wpp sin-burbuja">
               <Icono nombre="whatsapp" className="size-5" /> Reservar mesa
             </a>
