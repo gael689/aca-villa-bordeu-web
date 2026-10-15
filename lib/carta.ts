@@ -2,6 +2,7 @@ import type { SeccionCarta } from "./tipos";
 
 // La carta del sitio viejo (resto.php, 2014), con los errores de tipeo corregidos, agrupada y ordenada. Sin importes.
 // Las variantes de un mismo plato van juntas en `detalle`.
+// Sin vinos (pedido del cliente, oct/2026).
 // Pendiente: que el cliente confirme qué sigue vigente o pase la carta actual.
 
 export const CARTA: SeccionCarta[] = [
@@ -112,7 +113,6 @@ export const CARTA: SeccionCarta[] = [
   {
     nombre: "Bebidas y cafetería",
     platos: [
-      { nombre: "Vino de la casa", detalle: "3/8 o 3/4" },
       { nombre: "Cerveza" },
       { nombre: "Gaseosa" },
       { nombre: "Agua mineral" },
@@ -120,28 +120,6 @@ export const CARTA: SeccionCarta[] = [
       { nombre: "Jugo exprimido" },
       { nombre: "Café" },
       { nombre: "Té", detalle: "Común, saborizado o digestivo" },
-    ],
-  },
-  {
-    nombre: "Vinos y espumantes",
-    platos: [
-      {
-        nombre: "Santa Julia",
-        detalle: "Malbec, Cabernet Sauvignon, Tempranillo, Sauvignon Blanc, Chardonnay, Syrah Rosé y Chenin Dulce",
-      },
-      { nombre: "Bianchi", detalle: "Don Valentín Lacrado, Don Malbec, Don Cabernet, Don Chardonnay, Borgoña y Chablis" },
-      { nombre: "Luigi Bosca", detalle: "Malbec, Cabernet Sauvignon y Sauvignon Blanc" },
-      { nombre: "Finca La Linda", detalle: "Malbec, Cabernet, Chardonnay y Viognier" },
-      { nombre: "Terrazas Alto", detalle: "Malbec, Cabernet y Chardonnay" },
-      { nombre: "Carmelo Patti", detalle: "Malbec y Cabernet Sauvignon" },
-      { nombre: "López", detalle: "Château Vieux, Rincón Famoso y Selección, blanco y tinto" },
-      { nombre: "Etchart", detalle: "Privado y Torrontés" },
-      { nombre: "Colón", detalle: "Cabernet Sauvignon, Borgoña y Chablis" },
-      { nombre: "Graffigna Syrah Cabernet" },
-      { nombre: "Valmont" },
-      { nombre: "Castel Chandon" },
-      { nombre: "Chandon Extra Brut" },
-      { nombre: "Champagne" },
     ],
   },
 ];

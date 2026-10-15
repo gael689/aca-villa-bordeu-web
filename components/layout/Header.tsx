@@ -154,12 +154,12 @@ export function Header() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Escribir por WhatsApp"
-                className={`hidden size-11 place-items-center rounded-full transition-colors sm:grid ${claro || menu ? "bg-white/12 hover:bg-white/20" : "bg-tinta/6 hover:bg-tinta/10"}`}
+                className="hidden size-11 place-items-center rounded-full bg-wpp text-white transition-[filter] hover:brightness-110 sm:grid"
               >
                 <Icono nombre="whatsapp" className="size-5" />
               </a>
               <BotonConsultar origen="encabezado" className="btn hidden !min-h-11 !text-[14px] md:inline-flex">
-                Consultar
+                Reservas
               </BotonConsultar>
               <button
                 type="button"
@@ -197,7 +197,7 @@ export function Header() {
             </nav>
             <div className="item mt-8 grid gap-2.5" style={{ ["--i" as string]: 11 }}>
               <BotonConsultar origen="menu" className="btn w-full">
-                Consultar disponibilidad
+                Reservas
               </BotonConsultar>
               <div className="grid grid-cols-2 gap-2.5">
                 <a href={linkGenerico()} target="_blank" rel="noopener noreferrer" className="btn btn-wpp sin-burbuja">

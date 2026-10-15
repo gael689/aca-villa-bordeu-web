@@ -32,7 +32,7 @@ const html = `<!doctype html><html><head><meta charset="utf-8">
 </style></head><body>
   <div class="foto"></div><div class="velo"></div>
   <div class="marca"><svg viewBox="${viewBox}"><path d="${trazo}" fill="currentColor"/></svg><span>Villa<br>Bordeu</span></div>
-  <h1>Alojamiento para<br>empresas y viajeros<br><em>en Bahía Blanca</em></h1>
+  <h1>Hotelería<br>estratégica<br><em>en Bahía Blanca</em></h1>
   <p>Habitaciones, restaurante y servicios sobre el cruce de las rutas 3, 33 y 35</p>
 </body></html>`;
 

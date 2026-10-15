@@ -5,6 +5,29 @@ import { SITIO } from "./sitio";
 
 export type Modo = "empresa" | "viaje";
 
+/** Datos de quien escribe: obligatorios en la reserva y en el pedido del Resto (pedido del cliente, oct/2026). */
+export type Datos = { nombre: string; telefono: string; email: string };
+export type CampoDato = keyof Datos;
+
+export const esMail = (s: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.trim());
+
+export function erroresDatos(d: Datos): Partial<Record<CampoDato, string>> {
+  const e: Partial<Record<CampoDato, string>> = {};
+  if (d.nombre.trim().length < 3) e.nombre = "Escribí tu nombre y apellido.";
+  if (d.telefono.replace(/\D/g, "").length < 8) e.telefono = "Falta un teléfono con característica.";
+  if (!esMail(d.email)) e.email = "Falta un e-mail válido.";
+  return e;
+}
+
+export const datosCompletos = (d: Datos) => Object.keys(erroresDatos(d)).length === 0;
+
+function lineasDatos(d: Datos): string[] {
+  const l = [d.nombre.trim() && `• ${d.nombre.trim()}`, d.telefono.trim() && `• Tel.: ${d.telefono.trim()}`, d.email.trim() && `• Mail: ${d.email.trim()}`].filter(
+    Boolean,
+  ) as string[];
+  return l.length ? ["", "Mis datos:", ...l] : [];
+}
+
 export const ESTADIAS = ["Unos días", "1 o 2 semanas", "Un mes", "Más de un mes", "Todavía no sé"] as const;
 export type Estadia = (typeof ESTADIAS)[number];
 
@@ -24,9 +47,8 @@ export type EstadoEmpresa = {
   estadia: Estadia | null;
   necesidades: Necesidad[];
   empresa: string;
-  nombre: string;
   rubro: string;
-};
+} & Datos;
 
 export type EstadoViaje = {
   entrada: Date | null;
@@ -36,8 +58,7 @@ export type EstadoViaje = {
   socio: boolean;
   mascota: boolean;
   adaptado: boolean;
-  nombre: string;
-};
+} & Datos;
 
 const fmtSemana = new Intl.DateTimeFormat("es-AR", { weekday: "long" });
 
@@ -62,10 +83,9 @@ export function mensajeEmpresa(c: EstadoEmpresa): string {
   const cuanto = c.estadia && c.estadia !== "Todavía no sé" ? `, por ${c.estadia.toLowerCase()}` : "";
   l.push(`• ${cuando}${cuanto}`);
   if (c.necesidades.length) l.push(`• Necesitamos: ${c.necesidades.join(", ").toLowerCase()}`);
-  const quien = [c.empresa && `Empresa: ${c.empresa}`, c.nombre && `(${c.nombre})`].filter(Boolean).join(" ");
-  if (quien) l.push(`• ${quien}`);
+  if (c.empresa) l.push(`• Empresa: ${c.empresa}`);
   if (c.rubro) l.push(`• Trabajo en: ${c.rubro}`);
-  l.push("Gracias!", FIRMA);
+  l.push(...lineasDatos(c), "", "Gracias!", FIRMA);
   return l.join("\n");
 }
 
@@ -90,8 +110,34 @@ export function mensajeViaje(c: EstadoViaje): string {
   if (c.socio) l.push("• Soy socio ACA");
   if (c.mascota) l.push("• Viajo con mascota");
   if (c.adaptado) l.push("• Necesito una habitación adaptada");
-  if (c.nombre) l.push(`• Mi nombre: ${c.nombre}`);
-  l.push("Gracias!", FIRMA);
+  l.push(...lineasDatos(c), "", "Gracias!", FIRMA);
+  return l.join("\n");
+}
+
+export type ItemPedido = { plato: string; cantidad: number };
+
+export type EstadoPedido = {
+  personas: number;
+  dia: Date | null;
+  hora: string;
+  items: ItemPedido[];
+  aclaraciones: string;
+  empresa: string;
+} & Datos;
+
+/** Pedido armado desde la carta del Resto (p. ej. una empresa que viene a comer con su equipo). */
+export function mensajePedido(c: EstadoPedido): string {
+  const l = [`Hola! Quería hacer un pedido en el Resto:`];
+  l.push(`• ${c.personas} ${c.personas === 1 ? "persona" : "personas"}`);
+  const cuando = [c.dia ? `El ${fechaCorta(c.dia)}` : "Día a definir", c.hora ? `a las ${c.hora} h` : ""].filter(Boolean).join(" ");
+  l.push(`• ${cuando}`);
+  if (c.empresa) l.push(`• Empresa: ${c.empresa}`);
+  if (c.items.length) {
+    l.push("", "Platos:");
+    for (const i of c.items) l.push(`• ${i.cantidad} × ${i.plato}`);
+  }
+  if (c.aclaraciones.trim()) l.push("", `Aclaraciones: ${c.aclaraciones.trim()}`);
+  l.push(...lineasDatos(c), "", "Gracias!", FIRMA);
   return l.join("\n");
 }
 

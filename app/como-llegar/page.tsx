@@ -30,10 +30,15 @@ export default function ComoLlegar() {
         etiqueta="Cómo llegar"
         titulo={
           <>
+            {/* Pedido del cliente: la dirección va antes del «cruce de rutas». */}
+            <span className="mb-4 flex items-center gap-2 font-sans text-[clamp(17px,1.7vw,24px)] leading-tight font-semibold tracking-normal normal-case">
+              <Icono nombre="pin" className="size-[1.1em] shrink-0 text-amarillo" grosor={2} />
+              {SITIO.direccion.calle}
+            </span>
             En el cruce de <span className="resalte">las rutas</span>
           </>
         }
-        bajada={`${SITIO.direccion.calle}, ${SITIO.direccion.acceso}. Al suroeste de Bahía Blanca, sin entrar al centro.`}
+        bajada={`${SITIO.direccion.acceso}. Al suroeste de Bahía Blanca, sin entrar al centro.`}
         alto="media"
         migas={[{ nombre: "Cómo llegar", ruta: "/como-llegar" }]}
       >

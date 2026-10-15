@@ -6,11 +6,12 @@ import { MENSAJE_MESA, linkWhatsApp } from "@/lib/mensaje";
 import { JsonLd, restoJsonLd } from "@/lib/schema";
 import { Icono } from "@/components/marca/Icono";
 import { Cierre, Citable, PortadaPagina } from "@/components/secciones/Comunes";
+import { BotonAbrirPedido, BotonPlato, PedidoProvider } from "@/components/pedido/Pedido";
 
 export const metadata = meta({
   title: "Restaurante sobre la ruta en Bahía Blanca · Resto ACA",
   description:
-    "El Resto de ACA Villa Bordeu cocina desde 1984: parrilla, pastas y platos de siempre, con cava de vinos y barra. Sobre las rutas 3 y 33. Reservá por WhatsApp.",
+    "El Resto de ACA Villa Bordeu cocina desde 1984: parrilla, pastas y platos de siempre, con barra y cafetería. Sobre las rutas 3 y 33. Prepará tu pedido o reservá por WhatsApp.",
   ruta: "/restaurante",
 });
 
@@ -42,7 +43,7 @@ export default function Restaurante() {
     foto("restaurante", "05-cafe-logo.jpg", "Café con el logo ACA en la espuma"),
   ];
   return (
-    <>
+    <PedidoProvider>
       <PortadaPagina
         foto={foto("restaurante", "01-salon-noche.jpg", "Salón del Resto de noche, con luces cálidas en el techo y mesas de madera")}
         etiqueta="Resto · desde 1984"
@@ -61,7 +62,7 @@ export default function Restaurante() {
           </span>
         </a>
         <a href="#carta" className="btn btn-fantasma">
-          <span>Ver la carta</span>
+          <span>Prepará tu pedido</span>
           <span className="burbuja" aria-hidden="true">
             <Icono nombre="abajo" className="size-4" grosor={2} />
           </span>
@@ -95,6 +96,15 @@ export default function Restaurante() {
               <h2 className="t-h2 mt-4" data-split>
                 Platos de siempre, <span className="resalte">hechos acá</span>
               </h2>
+              {/* Prepará tu pedido: pedido del cliente (oct/2026), pensado para las empresas que vienen con su equipo. */}
+              <div className="mt-8 max-w-[52ch] rounded-[var(--radio)] p-6 [box-shadow:inset_0_0_0_1px_rgb(255_255_255/0.18)]" data-reveal>
+                <p className="font-display text-[26px] leading-none font-bold text-amarillo uppercase">Prepará tu pedido</p>
+                <p className="mt-3 text-[15px] text-white/75">
+                  Tocá el <strong className="text-white">+</strong> en los platos que quieran, decinos cuántos son, el día y la hora, y te lo confirmamos por
+                  WhatsApp o mail.
+                </p>
+                <BotonAbrirPedido className="btn mt-5">Armar el pedido</BotonAbrirPedido>
+              </div>
             </div>
             <div className="flex flex-wrap gap-2 lg:justify-self-end" data-reveal>
               {CARTA.map((s, k) => (
@@ -127,12 +137,15 @@ export default function Restaurante() {
                 </div>
                 <ol className="gap-x-10 sm:columns-2">
                   {s.platos.map((p, n) => (
-                    <li key={p.nombre} className="group break-inside-avoid border-b border-white/10 py-4">
-                      <p className="flex items-baseline gap-3">
-                        <span className="num shrink-0 font-display text-[13px] font-bold text-amarillo">{String(n + 1).padStart(2, "0")}</span>
-                        <span className="font-display text-[22px] leading-[1.05] font-semibold uppercase transition-colors group-hover:text-amarillo">{p.nombre}</span>
-                      </p>
-                      {p.detalle && <p className="mt-1 pl-8 text-[15px] text-white/55">{p.detalle}</p>}
+                    <li key={p.nombre} className="group flex break-inside-avoid items-start justify-between gap-3 border-b border-white/10 py-4">
+                      <div>
+                        <p className="flex items-baseline gap-3">
+                          <span className="num shrink-0 font-display text-[13px] font-bold text-amarillo">{String(n + 1).padStart(2, "0")}</span>
+                          <span className="font-display text-[22px] leading-[1.05] font-semibold uppercase transition-colors group-hover:text-amarillo">{p.nombre}</span>
+                        </p>
+                        {p.detalle && <p className="mt-1 pl-8 text-[15px] text-white/55">{p.detalle}</p>}
+                      </div>
+                      <BotonPlato plato={p.nombre} />
                     </li>
                   ))}
                 </ol>
@@ -143,14 +156,17 @@ export default function Restaurante() {
 
         <div className="contenedor flex flex-wrap items-center justify-between gap-6 border-t border-white/10 py-12">
           <p className="max-w-[48ch] text-[15px] text-white/55">La carta puede cambiar. Para saber qué hay hoy o reservar para un grupo, escribinos por WhatsApp.</p>
-          <a href={linkWhatsApp(MENSAJE_MESA)} target="_blank" rel="noopener noreferrer" className="btn btn-wpp sin-burbuja">
-            <Icono nombre="whatsapp" className="size-5" /> Reservar mesa
-          </a>
+          <div className="flex flex-wrap gap-2.5">
+            <BotonAbrirPedido>Ver mi pedido</BotonAbrirPedido>
+            <a href={linkWhatsApp(MENSAJE_MESA)} target="_blank" rel="noopener noreferrer" className="btn btn-wpp sin-burbuja">
+              <Icono nombre="whatsapp" className="size-5" /> Reservar mesa
+            </a>
+          </div>
         </div>
       </section>
 
       <Cierre titulo="¿Mesa para cuántos?" origen="resto-cierre" imagen={foto("restaurante", "04-vitrina-botellas.jpg", "Vitrina de botellas")} />
       <JsonLd data={restoJsonLd()} />
-    </>
+    </PedidoProvider>
   );
 }

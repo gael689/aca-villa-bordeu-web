@@ -38,7 +38,7 @@ export function BarraFija() {
     <>
       <div
         className={[
-          "fixed inset-x-2 bottom-[max(8px,env(safe-area-inset-bottom))] z-[100] md:hidden",
+          "barra-fija fixed inset-x-2 bottom-[max(8px,env(safe-area-inset-bottom))] z-[100] md:hidden",
           "transition-[transform,opacity] duration-600 ease-[var(--ease-pt)]",
           visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-[130%] opacity-0",
         ].join(" ")}
@@ -69,7 +69,7 @@ export function BarraFija() {
         rel="noopener noreferrer"
         aria-label="Escribir por WhatsApp"
         className={[
-          "group fixed right-5 bottom-5 z-[100] hidden h-14 items-center gap-0 rounded-full bg-wpp pr-4 pl-4 text-white shadow-[0_18px_40px_-14px_rgb(31_168_85/0.7)] md:flex",
+          "barra-fija group fixed right-5 bottom-5 z-[100] hidden h-14 items-center gap-0 rounded-full bg-wpp pr-4 pl-4 text-white shadow-[0_18px_40px_-14px_rgb(31_168_85/0.7)] md:flex",
           "transition-all duration-500 ease-[var(--ease-pt)] hover:gap-2.5 hover:pr-5",
           visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-8 opacity-0",
         ].join(" ")}

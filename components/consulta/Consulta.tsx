@@ -1,15 +1,17 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { track } from "@vercel/analytics";
 import {
   ESTADIAS,
   NECESIDADES,
+  datosCompletos,
   fechaCorta,
   linkWhatsApp,
   mensajeEmpresa,
   mensajeViaje,
   noches,
+  type Datos,
   type Estadia,
   type Modo,
   type Necesidad,
@@ -19,12 +21,13 @@ import { Icono, type IconoNombre } from "@/components/marca/Icono";
 import { bloquearScroll } from "@/components/motion/scroll";
 import { conversionAds } from "@/components/layout/GoogleAds";
 import { Calendario } from "./Calendario";
+import { Burbuja, Campo, Contador, DatosPersonales, Opcion, revisarDatos } from "./Campos";
 import { useConsulta } from "./ConsultaContext";
 
 const CLAVE = "vb-consulta-v1";
 const PASOS: Record<Modo, string[]> = {
-  empresa: ["Equipo", "Cuándo", "Qué necesitan", "Enviar"],
-  viaje: ["Cuándo", "Quiénes", "Enviar"],
+  empresa: ["Equipo", "Cuándo", "Qué necesitan", "Tus datos"],
+  viaje: ["Cuándo", "Quiénes", "Tus datos"],
 };
 const ICONO_NECESIDAD: Record<Necesidad, IconoNombre> = {
   Desayuno: "taza",
@@ -46,126 +49,6 @@ const hoy0 = () => {
   return d;
 };
 
-/** Escribe el mensaje como si se estuviera tipeando; solo la primera vez que aparece. */
-function Burbuja({ texto }: { texto: string }) {
-  const [n, setN] = useState<number>(() =>
-    typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches ? Infinity : 0,
-  );
-  useEffect(() => {
-    if (n === Infinity) return;
-    const paso = Math.max(1, Math.ceil(texto.length / 40));
-    const id = window.setInterval(() => {
-      setN((v) => {
-        const sig = v + paso;
-        if (sig >= texto.length) {
-          window.clearInterval(id);
-          return Infinity;
-        }
-        return sig;
-      });
-    }, 16);
-    return () => window.clearInterval(id);
-    // Solo al montar: los cambios posteriores del texto se muestran de golpe.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  return (
-    <figure className="relative">
-      <figcaption className="mb-2 text-[13px] font-semibold text-asfalto">Así nos llega tu consulta</figcaption>
-      <div className="relative rounded-[18px] rounded-tl-[4px] bg-[#e2f4e8] px-4 py-3.5 text-[15px] leading-relaxed whitespace-pre-line text-tinta shadow-[0_1px_0_rgb(0_0_0/0.05)]">
-        <span aria-hidden="true" className="invisible block">
-          {texto}
-        </span>
-        <span className="absolute inset-0 px-4 py-3.5" aria-label={texto}>
-          {texto.slice(0, n)}
-          {n !== Infinity && (
-            <span className="ml-px inline-block h-[1em] w-px translate-y-[2px] animate-pulse bg-tinta align-baseline" aria-hidden="true" />
-          )}
-        </span>
-      </div>
-    </figure>
-  );
-}
-
-function Contador({
-  etiqueta,
-  ayuda,
-  valor,
-  min,
-  max,
-  onCambiar,
-  grande = false,
-}: {
-  etiqueta: string;
-  ayuda?: string;
-  valor: number;
-  min: number;
-  max: number;
-  onCambiar: (v: number) => void;
-  grande?: boolean;
-}) {
-  return (
-    <div className="flex items-center justify-between gap-4 border-b border-[color:var(--linea)] py-4">
-      <div>
-        <p className="text-[17px] font-semibold">{etiqueta}</p>
-        {ayuda && <p className="text-sm text-asfalto">{ayuda}</p>}
-      </div>
-      <div className="flex items-center gap-1.5">
-        <button
-          type="button"
-          onClick={() => onCambiar(Math.max(min, valor - 1))}
-          disabled={valor <= min}
-          aria-label={`Menos ${etiqueta.toLowerCase()}`}
-          className="grid size-11 place-items-center rounded-full bg-white shadow-[inset_0_0_0_1px_var(--linea)] transition hover:shadow-[inset_0_0_0_1.5px_var(--color-amarillo-hondo)] disabled:opacity-30"
-        >
-          <Icono nombre="menos" className="size-4" grosor={2} />
-        </button>
-        <span className={`num text-center font-display font-bold ${grande ? "w-14 text-4xl" : "w-10 text-2xl"}`} aria-live="polite">
-          {valor}
-        </span>
-        <button
-          type="button"
-          onClick={() => onCambiar(Math.min(max, valor + 1))}
-          disabled={valor >= max}
-          aria-label={`Más ${etiqueta.toLowerCase()}`}
-          className="grid size-11 place-items-center rounded-full bg-white shadow-[inset_0_0_0_1px_var(--linea)] transition hover:shadow-[inset_0_0_0_1.5px_var(--color-amarillo-hondo)] disabled:opacity-30"
-        >
-          <Icono nombre="mas" className="size-4" grosor={2} />
-        </button>
-      </div>
-    </div>
-  );
-}
-
-function Opcion({
-  activa,
-  onClick,
-  children,
-  rol = "checkbox",
-}: {
-  activa: boolean;
-  onClick: () => void;
-  children: ReactNode;
-  rol?: "checkbox" | "radio";
-}) {
-  return (
-    <button
-      type="button"
-      role={rol}
-      aria-checked={activa}
-      onClick={onClick}
-      className={[
-        "flex min-h-12 items-center gap-2.5 rounded-2xl px-4 py-2.5 text-left text-[15px] font-semibold transition-all duration-300",
-        activa
-          ? "bg-tinta text-white shadow-[0_10px_24px_-14px_rgb(0_0_0/0.6)]"
-          : "bg-white text-tinta shadow-[inset_0_0_0_1px_var(--linea)] hover:shadow-[inset_0_0_0_1.5px_var(--color-amarillo-hondo)]",
-      ].join(" ")}
-    >
-      {children}
-    </button>
-  );
-}
-
 function Interruptor({ etiqueta, ayuda, icono, valor, onCambiar }: { etiqueta: string; ayuda?: string; icono: IconoNombre; valor: boolean; onCambiar: (v: boolean) => void }) {
   return (
     <label className="flex cursor-pointer items-center justify-between gap-4 border-b border-[color:var(--linea)] py-4">
@@ -184,7 +67,7 @@ function Interruptor({ etiqueta, ayuda, icono, valor, onCambiar }: { etiqueta: s
   );
 }
 
-type EstadoEnvio = "nada" | "form" | "enviando" | "ok" | "error";
+type EstadoEnvio = "nada" | "enviando" | "ok" | "error";
 
 export function Consulta() {
   const { abierta, apertura, cerrar } = useConsulta();
@@ -212,11 +95,10 @@ export function Consulta() {
   const [mascota, setMascota] = useState(false);
   const [adaptado, setAdaptado] = useState(false);
   // Común
-  const [nombre, setNombre] = useState("");
-  const [contacto, setContacto] = useState("");
+  const [datos, setDatos] = useState<Datos>({ nombre: "", telefono: "", email: "" });
+  const [intentado, setIntentado] = useState(false);
   const [envio, setEnvio] = useState<EstadoEnvio>("nada");
   const trampa = useRef<HTMLInputElement>(null);
-  const formMail = useRef<HTMLFormElement>(null);
 
   // Abrir / cerrar el <dialog> nativo según el contexto.
   useEffect(() => {
@@ -249,8 +131,7 @@ export function Consulta() {
           setSocio(!!g.socio);
           setMascota(!!g.mascota);
           setAdaptado(!!g.adaptado);
-          setNombre(g.nombre ?? "");
-          setContacto(g.contacto ?? "");
+          setDatos({ nombre: g.nombre ?? "", telefono: g.telefono ?? "", email: g.email ?? "" });
         }
       } catch {}
       if (apertura.modo) setModo(apertura.modo);
@@ -267,6 +148,7 @@ export function Consulta() {
       setAtras(false);
       setPaso(0);
       setEnvio("nada");
+      setIntentado(false);
       setCerrando(false);
       /* eslint-enable react-hooks/set-state-in-effect */
       d.showModal();
@@ -291,11 +173,11 @@ export function Consulta() {
         CLAVE,
         JSON.stringify({
           modo, personas, ingreso, estadia, necesidades, empresa, rubro,
-          entrada, salida, sinFechas, adultos, ninos, socio, mascota, adaptado, nombre, contacto,
+          entrada, salida, sinFechas, adultos, ninos, socio, mascota, adaptado, ...datos,
         }),
       );
     } catch {}
-  }, [abierta, modo, personas, ingreso, estadia, necesidades, empresa, rubro, entrada, salida, sinFechas, adultos, ninos, socio, mascota, adaptado, nombre, contacto]);
+  }, [abierta, modo, personas, ingreso, estadia, necesidades, empresa, rubro, entrada, salida, sinFechas, adultos, ninos, socio, mascota, adaptado, datos]);
 
   useEffect(() => {
     if (abierta) titulo.current?.focus({ preventScroll: true });
@@ -328,9 +210,9 @@ export function Consulta() {
   const mensaje = useMemo(
     () =>
       modo === "empresa"
-        ? mensajeEmpresa({ personas, ingreso, estadia, necesidades, empresa, nombre, rubro })
-        : mensajeViaje({ entrada: sinFechas ? null : entrada, salida: sinFechas ? null : salida, adultos, ninos, socio, mascota, adaptado, nombre }),
-    [modo, personas, ingreso, estadia, necesidades, empresa, nombre, rubro, entrada, salida, sinFechas, adultos, ninos, socio, mascota, adaptado],
+        ? mensajeEmpresa({ personas, ingreso, estadia, necesidades, empresa, rubro, ...datos })
+        : mensajeViaje({ entrada: sinFechas ? null : entrada, salida: sinFechas ? null : salida, adultos, ninos, socio, mascota, adaptado, ...datos }),
+    [modo, personas, ingreso, estadia, necesidades, empresa, rubro, entrada, salida, sinFechas, adultos, ninos, socio, mascota, adaptado, datos],
   );
 
   const datosMedicion = () => ({
@@ -339,14 +221,21 @@ export function Consulta() {
     origen: apertura.origen ?? "panel",
   });
 
+  // Sin nombre, teléfono y e-mail no sale ni por WhatsApp ni por mail.
+  const datosOk = datosCompletos(datos);
+  const exigirDatos = () => {
+    setIntentado(true);
+    return revisarDatos("consulta", datos);
+  };
+
   async function enviarMail() {
-    if (contacto.trim().length < 6) return;
+    if (!exigirDatos()) return;
     setEnvio("enviando");
     try {
       const r = await fetch("/api/consulta", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ modo, mensaje, nombre, contacto, empresa, sitio: trampa.current?.value ?? "" }),
+        body: JSON.stringify({ modo, mensaje, ...datos, empresa, sitio: trampa.current?.value ?? "" }),
       });
       if (!r.ok) throw new Error(String(r.status));
       setEnvio("ok");
@@ -356,11 +245,6 @@ export function Consulta() {
       setEnvio("error");
     }
   }
-
-  // Al elegir «Por mail», el formulario aparece debajo de la vista previa: lo traemos a la vista.
-  useEffect(() => {
-    if (envio === "form") formMail.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-  }, [envio]);
 
   const claseEntra = atras ? "paso-entra-atras" : "paso-entra";
   const nNoches = noches(entrada, salida);
@@ -461,7 +345,7 @@ export function Consulta() {
                 <Calendario
                   entrada={ingreso}
                   salida={null}
-                  onElegir={(e) => setIngreso(e)}
+                  onElegir={(e, s) => setIngreso(s ?? e)}
                 />
                 <p className="mt-3 text-sm text-asfalto" aria-live="polite">
                   {ingreso ? <>Ingreso: <strong className="text-tinta">{fechaCorta(ingreso)}</strong></> : "Si todavía no tienen fecha, salteala."}
@@ -497,11 +381,11 @@ export function Consulta() {
 
             {modo === "empresa" && paso === 3 && (
               <div className="space-y-3 pt-2">
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <Campo etiqueta="Empresa" valor={empresa} onCambiar={setEmpresa} auto="organization" />
-                  <Campo etiqueta="Tu nombre" valor={nombre} onCambiar={setNombre} auto="name" />
+                <DatosPersonales prefijo="consulta" datos={datos} onCambiar={setDatos} mostrarErrores={intentado} />
+                <div className="grid gap-3 pt-2 sm:grid-cols-2">
+                  <Campo etiqueta="Empresa (opcional)" valor={empresa} onCambiar={setEmpresa} auto="organization" />
+                  <Campo etiqueta="Rubro o lugar de trabajo (opcional)" valor={rubro} onCambiar={setRubro} placeholder="Ej.: obra en el Polo" />
                 </div>
-                <Campo etiqueta="Rubro o lugar de trabajo (opcional)" valor={rubro} onCambiar={setRubro} placeholder="Ej.: obra en el Polo Petroquímico" />
                 <div className="pt-3">
                   <Burbuja texto={mensaje} />
                 </div>
@@ -564,41 +448,19 @@ export function Consulta() {
 
             {modo === "viaje" && paso === 2 && (
               <div className="space-y-3 pt-2">
-                <Campo etiqueta="Tu nombre (opcional)" valor={nombre} onCambiar={setNombre} auto="name" />
+                <DatosPersonales prefijo="consulta" datos={datos} onCambiar={setDatos} mostrarErrores={intentado} />
                 <div className="pt-3">
                   <Burbuja texto={mensaje} />
                 </div>
               </div>
             )}
 
-            {/* Envío por mail: aparece debajo de la vista previa */}
-            {ultimo && (envio === "form" || envio === "enviando" || envio === "error") && (
-              <form
-                ref={formMail}
-                className="paso-entra mt-5 space-y-3 rounded-2xl bg-white p-4 shadow-[inset_0_0_0_1px_var(--linea)]"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  void enviarMail();
-                }}
-              >
-                <Campo
-                  etiqueta="Tu mail o teléfono, para responderte"
-                  valor={contacto}
-                  onCambiar={setContacto}
-                  auto="email"
-                  requerido
-                />
-                {/* Trampa para robots: invisible para las personas. */}
-                <input ref={trampa} type="text" name="sitio" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
-                <button type="submit" disabled={envio === "enviando" || contacto.trim().length < 6} className="btn btn-oscuro sin-burbuja w-full disabled:opacity-40">
-                  {envio === "enviando" ? "Enviando…" : "Enviar por mail"}
-                </button>
-                {envio === "error" && (
-                  <p className="text-sm text-error" role="alert">
-                    No se pudo enviar. Probá por WhatsApp o escribinos a {SITIO.mail}.
-                  </p>
-                )}
-              </form>
+            {/* Trampa para robots: invisible para las personas. */}
+            {ultimo && <input ref={trampa} type="text" name="sitio" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />}
+            {ultimo && envio === "error" && (
+              <p className="paso-entra mt-5 text-sm text-error" role="alert">
+                No se pudo enviar. Probá por WhatsApp o escribinos a {SITIO.mail}.
+              </p>
             )}
             {ultimo && envio === "ok" && (
               <div className="paso-entra mt-5 flex items-start gap-3 rounded-2xl bg-tinta p-5 text-white" role="status">
@@ -607,7 +469,7 @@ export function Consulta() {
                 </span>
                 <p>
                   <strong className="block font-display text-2xl uppercase">Recibimos tu consulta</strong>
-                  Te respondemos a {contacto} lo antes posible. Recepción abierta las 24 horas.
+                  Te respondemos a {datos.email.trim()} lo antes posible. Recepción abierta las 24 horas.
                 </p>
               </div>
             )}
@@ -631,11 +493,16 @@ export function Consulta() {
             </div>
           ) : (
             <div className="grid gap-2.5 sm:grid-cols-[1.4fr_1fr]">
+              {!datosOk && <p className="text-[13px] text-asfalto sm:col-span-2">Completá nombre y apellido, teléfono y e-mail para enviar.</p>}
               <a
                 href={linkWhatsApp(mensaje)}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => {
+                onClick={(e) => {
+                  if (!exigirDatos()) {
+                    e.preventDefault();
+                    return;
+                  }
                   track("consulta_whatsapp", datosMedicion());
                   conversionAds("consulta_whatsapp");
                 }}
@@ -646,12 +513,12 @@ export function Consulta() {
               </a>
               <button
                 type="button"
-                onClick={() => setEnvio((e) => (e === "ok" ? e : "form"))}
-                className="btn btn-fantasma sin-burbuja w-full"
-                aria-expanded={envio !== "nada"}
+                onClick={() => void enviarMail()}
+                disabled={envio === "enviando" || envio === "ok"}
+                className="btn btn-fantasma sin-burbuja w-full disabled:opacity-50"
               >
                 <Icono nombre="sobre" className="size-5" />
-                Por mail
+                {envio === "enviando" ? "Enviando…" : envio === "ok" ? "Enviado" : "Por mail"}
               </button>
             </div>
           )}
@@ -661,33 +528,3 @@ export function Consulta() {
   );
 }
 
-function Campo({
-  etiqueta,
-  valor,
-  onCambiar,
-  auto,
-  placeholder,
-  requerido = false,
-}: {
-  etiqueta: string;
-  valor: string;
-  onCambiar: (v: string) => void;
-  auto?: string;
-  placeholder?: string;
-  requerido?: boolean;
-}) {
-  return (
-    <label className="block">
-      <span className="mb-1.5 block text-[13px] font-semibold text-asfalto">{etiqueta}</span>
-      <input
-        value={valor}
-        onChange={(e) => onCambiar(e.target.value)}
-        autoComplete={auto}
-        placeholder={placeholder}
-        required={requerido}
-        maxLength={120}
-        className="h-12 w-full rounded-xl bg-white px-4 text-[16px] shadow-[inset_0_0_0_1px_var(--linea)] outline-none transition-shadow placeholder:text-asfalto/60 focus:shadow-[inset_0_0_0_2px_var(--color-tinta)]"
-      />
-    </label>
-  );
-}

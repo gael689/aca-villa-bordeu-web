@@ -1,17 +1,23 @@
 import { Resend } from "resend";
 import { z } from "zod";
 import { SITIO } from "@/lib/sitio";
+import { esMail } from "@/lib/mensaje";
 
-// Recibe la consulta del panel y la manda al mail del hotel con Resend.
-// El hotel contesta con «Responder»: el reply-to es el contacto de quien consultó
-// (si dejó un mail). Si dejó un teléfono, va en el asunto y en el cuerpo.
+// Recibe la consulta del panel (o el pedido del Resto) y la manda al mail del
+// hotel con Resend. Nombre, teléfono y e-mail son obligatorios: el hotel contesta
+// con «Responder» (reply-to) o llama al teléfono, que va en el asunto.
 
 const Esquema = z.object({
-  modo: z.enum(["empresa", "viaje"]),
-  mensaje: z.string().min(10).max(2000),
-  nombre: z.string().max(120).optional().default(""),
+  modo: z.enum(["empresa", "viaje", "pedido"]),
+  mensaje: z.string().min(10).max(4000),
+  nombre: z.string().trim().min(3).max(120),
+  telefono: z
+    .string()
+    .trim()
+    .max(40)
+    .refine((s) => s.replace(/\D/g, "").length >= 8),
+  email: z.string().trim().max(120).refine(esMail),
   empresa: z.string().max(120).optional().default(""),
-  contacto: z.string().min(6).max(120),
   // Trampa para robots: el campo es invisible, una persona nunca lo completa.
   sitio: z.string().max(0).optional().default(""),
 });
@@ -26,7 +32,6 @@ function demasiados(ip: string) {
   return lista.length > 5;
 }
 
-const esMail = (s: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.trim());
 const escapar = (s: string) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
 
 export async function POST(req: Request) {
@@ -48,17 +53,19 @@ export async function POST(req: Request) {
 
   const destino = process.env.CONSULTA_DESTINO ?? SITIO.mail;
   const remitente = process.env.CONSULTA_REMITENTE ?? "Villa Bordeu <consultas@envios.acavillabordeu.com.ar>";
-  const quien = datos.empresa || datos.nombre || "Sin nombre";
-  const tipo = datos.modo === "empresa" ? "Equipo de trabajo" : "Viaje";
-  const contacto = datos.contacto.trim();
+  const quien = datos.empresa ? `${datos.empresa} (${datos.nombre})` : datos.nombre;
+  const pedido = datos.modo === "pedido";
+  const tipo = datos.modo === "empresa" ? "Equipo de trabajo" : datos.modo === "viaje" ? "Viaje" : "Pedido del Resto";
+  const que = pedido ? "pedido" : "consulta";
+  const { email, telefono } = datos;
 
   const html = `
   <div style="font-family:Arial,sans-serif;font-size:15px;line-height:1.55;color:#1c1d1f;max-width:560px">
-    <p style="margin:0 0 4px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#846400">Consulta desde la web · ${tipo}</p>
+    <p style="margin:0 0 4px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#846400">${pedido ? "Pedido" : "Consulta"} desde la web · ${tipo}</p>
     <h1 style="margin:0 0 16px;font-size:22px">${escapar(quien)}</h1>
     <div style="background:#f6f5f2;border-radius:12px;padding:16px;white-space:pre-line">${escapar(datos.mensaje)}</div>
-    <p style="margin:16px 0 0"><strong>Contacto:</strong> ${escapar(contacto)}</p>
-    <p style="margin:4px 0 0;color:#55585a;font-size:13px">${esMail(contacto) ? "Respondé este mail y le llega directo." : "Dejó un teléfono: escribile por WhatsApp o llamalo."}</p>
+    <p style="margin:16px 0 0"><strong>Teléfono:</strong> ${escapar(telefono)} · <strong>Mail:</strong> ${escapar(email)}</p>
+    <p style="margin:4px 0 0;color:#55585a;font-size:13px">Respondé este mail y le llega directo.</p>
   </div>`;
 
   try {
@@ -66,28 +73,26 @@ export async function POST(req: Request) {
     const { error } = await resend.emails.send({
       from: remitente,
       to: destino,
-      replyTo: esMail(contacto) ? contacto : undefined,
-      subject: `Consulta web · ${tipo} · ${quien}${esMail(contacto) ? "" : ` · ${contacto}`}`,
+      replyTo: email,
+      subject: `${pedido ? "Pedido web" : "Consulta web"} · ${tipo} · ${quien} · ${telefono}`,
       html,
-      text: `${datos.mensaje}\n\nContacto: ${contacto}`,
+      text: `${datos.mensaje}\n\nTeléfono: ${telefono} · Mail: ${email}`,
     });
     if (error) throw new Error(error.message);
 
-    // Copia para quien consultó (solo si dejó un mail).
-    if (esMail(contacto)) {
-      await resend.emails.send({
-        from: remitente,
-        to: contacto,
-        replyTo: destino,
-        subject: "Recibimos tu consulta · ACA Villa Bordeu",
-        html: `<div style="font-family:Arial,sans-serif;font-size:15px;line-height:1.55;color:#1c1d1f;max-width:560px">
-          <p>¡Hola${datos.nombre ? ` ${escapar(datos.nombre)}` : ""}! Recibimos tu consulta y te respondemos lo antes posible.</p>
-          <div style="background:#f6f5f2;border-radius:12px;padding:16px;white-space:pre-line">${escapar(datos.mensaje)}</div>
-          <p>Si preferís, escribinos por WhatsApp al ${SITIO.celular} o llamá al ${SITIO.telefono}. Recepción abierta las 24 horas.</p>
-          <p style="color:#55585a;font-size:13px">ACA Villa Bordeu · ${SITIO.direccion.calle}, ${SITIO.direccion.ciudad}</p>
-        </div>`,
-      });
-    }
+    // Copia para quien escribió.
+    await resend.emails.send({
+      from: remitente,
+      to: email,
+      replyTo: destino,
+      subject: `Recibimos tu ${que} · ACA Villa Bordeu`,
+      html: `<div style="font-family:Arial,sans-serif;font-size:15px;line-height:1.55;color:#1c1d1f;max-width:560px">
+        <p>¡Hola ${escapar(datos.nombre)}! Recibimos tu ${que} y te respondemos lo antes posible.</p>
+        <div style="background:#f6f5f2;border-radius:12px;padding:16px;white-space:pre-line">${escapar(datos.mensaje)}</div>
+        <p>Si preferís, escribinos por WhatsApp al ${SITIO.celular} o llamá al ${SITIO.telefono}. Recepción abierta las 24 horas.</p>
+        <p style="color:#55585a;font-size:13px">ACA Villa Bordeu · ${SITIO.direccion.calle}, ${SITIO.direccion.ciudad}</p>
+      </div>`,
+    });
     return Response.json({ ok: true });
   } catch (e) {
     console.error("Resend:", e);

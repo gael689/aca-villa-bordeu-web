@@ -48,7 +48,7 @@ export function Hero() {
       <div data-hero-contenido className="contenedor relative z-10 flex w-full flex-col items-center pt-[calc(var(--header-h)+28px)] pb-[clamp(40px,9svh,104px)] text-center">
         <h1 className="hero-in w-full max-w-5xl [text-shadow:0_2px_28px_rgb(0_0_0/0.45)]" style={vars(0)}>
           <span className="t-display block">
-            Alojamiento para empresas y viajeros <span className="resalte">en Bahía Blanca</span>
+            Hotelería estratégica <span className="resalte">en Bahía Blanca</span>
           </span>
         </h1>
 

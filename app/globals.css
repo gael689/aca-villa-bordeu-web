@@ -525,6 +525,11 @@ img {
     100% { transform: scaleY(0); transform-origin: bottom; }
   }
 
+  /* Con un pedido del Resto en curso, su píldora reemplaza a la barra fija. */
+  body:has([data-pedido-activo]) .barra-fija {
+    display: none;
+  }
+
   /* ── Panel de consulta (dialog nativo: foco, Esc e inert gratis) ──────── */
   dialog.consulta {
     position: fixed;
