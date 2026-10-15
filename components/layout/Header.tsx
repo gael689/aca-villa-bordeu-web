@@ -11,7 +11,7 @@ import { linkGenerico } from "@/lib/mensaje";
 import { Lockup } from "@/components/marca/Logo";
 import { Icono } from "@/components/marca/Icono";
 import { BotonConsultar } from "@/components/consulta/ConsultaContext";
-import { bloquearScroll } from "@/components/motion/scroll";
+import { bloquearScroll, lenisRef } from "@/components/motion/scroll";
 
 /**
  * Encabezado flotante. Sobre la portada es transparente y claro; al bajar se
@@ -73,7 +73,19 @@ export function Header() {
                   : "vidrio h-[64px] rounded-[22px] px-4 text-tinta shadow-[0_18px_40px_-24px_rgb(0_0_0/0.45),inset_0_0_0_1px_rgb(255_255_255/0.6)] md:px-6",
             ].join(" ")}
           >
-            <Link href="/" aria-label="ACA Villa Bordeu, inicio" className="shrink-0">
+            <Link
+              href="/"
+              aria-label="ACA Villa Bordeu, inicio"
+              className="shrink-0"
+              onClick={(e) => {
+                // Ya en el inicio, el logo cierra el menú y vuelve arriba de todo.
+                if (pathname !== "/") return;
+                e.preventDefault();
+                setMenu(false);
+                if (lenisRef.current) lenisRef.current.scrollTo(0);
+                else window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            >
               <Lockup tono={claro || menu ? "claro" : "oscuro"} />
             </Link>
 

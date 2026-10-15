@@ -27,7 +27,9 @@ export function Footer() {
       <div className="contenedor relative">
         <div className="grid gap-12 pb-14 sm:grid-cols-2 lg:grid-cols-[1.25fr_1fr_1fr_1fr]">
           <div>
-            <LogoACA className="h-10 w-auto text-marca-aca" titulo="Automóvil Club Argentino" />
+            <Link href="/" aria-label="ACA Villa Bordeu, inicio" className="inline-block">
+              <LogoACA className="h-10 w-auto text-marca-aca" titulo="Automóvil Club Argentino" />
+            </Link>
             <p className="mt-5 max-w-[30ch] text-white/70">
               Alojamiento del Automóvil Club Argentino sobre el cruce de las rutas 3, 33 y 35, en Bahía Blanca.
             </p>
