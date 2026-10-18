@@ -17,9 +17,9 @@ declare global {
 
 export function GoogleTagManager() {
   const [decision, setDecision] = useState<"si" | "no" | null | undefined>(undefined);
-  // Solo en producción y con el dominio real (NEXT_PUBLIC_INDEXABLE=1): en la URL de prueba
-  // de Vercel no se cargan ni el tag ni el aviso, así no ensucian las métricas de las campañas.
-  const activo = process.env.NEXT_PUBLIC_VERCEL_ENV === "production" && process.env.NEXT_PUBLIC_INDEXABLE === "1";
+  // Solo con el dominio real (NEXT_PUBLIC_INDEXABLE=1, lo pone scripts/exportar.mjs): en la URL
+  // de prueba de Vercel no se cargan ni el tag ni el aviso, así no ensucian las métricas de las campañas.
+  const activo = process.env.NEXT_PUBLIC_INDEXABLE === "1";
 
   useEffect(() => {
     let d: string | null = null;

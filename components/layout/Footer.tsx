@@ -93,7 +93,7 @@ export function Footer() {
               {LUGARES.map((l) => (
                 <li key={l.slug}>
                   <Link href={`/cerca-de/${l.slug}`} className="text-white/80 hover:text-white">
-                    Cerca de {l.nombre}
+                    Cerca {l.nombreCon}
                   </Link>
                 </li>
               ))}

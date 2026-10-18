@@ -9,7 +9,7 @@ import { Cierre, Citable, FaqLista, PortadaPagina } from "@/components/secciones
 export const metadata = meta({
   title: "Sala de reuniones en Bahía Blanca · ACA Villa Bordeu",
   description:
-    "Sala de reuniones con mesa para el equipo y pantalla, dentro de ACA Villa Bordeu, sobre la ruta en Bahía Blanca. Para capacitaciones, inducciones y reuniones de obra.",
+    "Sala de reuniones con mesa y pantalla en ACA Villa Bordeu, sobre la ruta en Bahía Blanca. Para capacitaciones, inducciones y reuniones de obra.",
   ruta: "/sala-de-reuniones",
 });
 

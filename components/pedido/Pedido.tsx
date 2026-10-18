@@ -9,7 +9,7 @@ import { Icono } from "@/components/marca/Icono";
 import { bloquearScroll } from "@/components/motion/scroll";
 import { conversionAds } from "@/components/layout/GoogleAds";
 import { Calendario } from "@/components/consulta/Calendario";
-import { Burbuja, Campo, Contador, DatosPersonales, Opcion, revisarDatos } from "@/components/consulta/Campos";
+import { Burbuja, Campo, Contador, DatosPersonales, Enviado, Opcion, revisarDatos } from "@/components/consulta/Campos";
 
 // «Prepará tu pedido» (pedido del cliente, oct/2026), pensado para empresas que
 // vienen a comer con su equipo. Un asistente que acompaña paso a paso, como una
@@ -246,7 +246,7 @@ function ListaCurso({ curso, personas }: { curso: Curso; personas: number }) {
       )}
       {grupos.map((g) => (
         <section key={g.titulo || activo}>
-          {g.titulo && <h4 className="etiqueta mt-5 mb-1 px-3">{g.titulo}</h4>}
+          {g.titulo && <h3 className="etiqueta mt-5 mb-1 px-3">{g.titulo}</h3>}
           <ul className="-mx-3 grid gap-x-4 gap-y-0.5 lg:grid-cols-2">
             {g.platos.map((p) => (
               <FilaPlato key={p.clave} p={p} />
@@ -356,7 +356,7 @@ function Cuando({ dias, setDias, mismo, setMismo }: { dias: DiaPedido[]; setDias
   );
 }
 
-type EstadoEnvio = "nada" | "enviando" | "ok" | "error";
+type EstadoEnvio = "nada" | "enviando" | "ok" | "whatsapp" | "error";
 
 function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void }) {
   const { cantidades, total, vaciar } = usePedido();
@@ -374,6 +374,9 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
   const [datos, setDatos] = useState<Datos>({ nombre: "", telefono: "", email: "" });
   const [intentado, setIntentado] = useState(false);
   const [envio, setEnvio] = useState<EstadoEnvio>("nada");
+  // Después de enviar (WhatsApp o mail) el pedido no se guarda: al cerrar, todo vuelve a cero.
+  const olvidar = useRef(false);
+  const enviado = envio === "ok" || envio === "whatsapp";
 
   useEffect(() => {
     const d = dlg.current;
@@ -389,6 +392,18 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
         d.close();
         setCerrando(false);
         bloquearScroll(false);
+        if (olvidar.current) {
+          olvidar.current = false;
+          setPaso(0);
+          setPersonas(10);
+          setDias([]);
+          setMismo(true);
+          setAclaraciones("");
+          setEmpresa("");
+          setDatos({ nombre: "", telefono: "", email: "" });
+          setIntentado(false);
+          setEnvio("nada");
+        }
       }, 340);
     }
     return () => window.clearTimeout(t);
@@ -429,13 +444,13 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
     if (!revisar()) return;
     setEnvio("enviando");
     try {
-      const r = await fetch("/api/consulta", {
+      const r = await fetch(SITIO.consultaApi, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ modo: "pedido", mensaje, ...datos, empresa, sitio: trampa.current?.value ?? "" }),
       });
       if (!r.ok) throw new Error(String(r.status));
-      setEnvio("ok");
+      marcarEnviado("ok");
       track("pedido_mail", { platos: total, personas });
       conversionAds("pedido_mail");
     } catch {
@@ -443,10 +458,17 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
     }
   }
 
-  const terminar = () => {
-    vaciar();
-    setPaso(0);
-    setEnvio("nada");
+  const marcarEnviado = (canal: "ok" | "whatsapp") => {
+    olvidar.current = true;
+    try {
+      sessionStorage.removeItem(CLAVE);
+    } catch {}
+    setEnvio(canal);
+  };
+
+  // Cerrar el panel: si el pedido ya salió, se vacía (lo demás se limpia cuando termina de cerrarse).
+  const salir = () => {
+    if (olvidar.current) vaciar();
     cerrar();
   };
 
@@ -457,10 +479,10 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
       aria-labelledby="pedido-titulo"
       onCancel={(e) => {
         e.preventDefault();
-        cerrar();
+        salir();
       }}
       onClick={(e) => {
-        if (e.target === dlg.current) cerrar();
+        if (e.target === dlg.current) salir();
       }}
     >
       <div className="flex h-full max-h-[94dvh] flex-col md:max-h-none">
@@ -478,7 +500,7 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
             </div>
             <button
               type="button"
-              onClick={cerrar}
+              onClick={salir}
               aria-label="Cerrar"
               className="-mr-1 grid size-11 shrink-0 place-items-center rounded-full bg-white shadow-[inset_0_0_0_1px_var(--linea)] transition-transform duration-500 hover:rotate-90"
             >
@@ -522,7 +544,9 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
 
             {paso === 5 && <Cuando dias={dias} setDias={setDias} mismo={mismo} setMismo={setMismo} />}
 
-            {ultimo && (
+            {ultimo && enviado && <Enviado canal={envio === "whatsapp" ? "whatsapp" : "mail"} que="pedido" email={datos.email} />}
+
+            {ultimo && !enviado && (
               <div className="mx-auto max-w-[680px] space-y-5">
                 <DatosPersonales prefijo="pedido" datos={datos} onCambiar={setDatos} mostrarErrores={intentado} />
                 <Campo etiqueta="Empresa (opcional)" valor={empresa} onCambiar={setEmpresa} auto="organization" />
@@ -544,17 +568,6 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
                     No se pudo enviar. Probá por WhatsApp o escribinos a {SITIO.mail}.
                   </p>
                 )}
-                {envio === "ok" && (
-                  <div className="flex items-start gap-3 rounded-2xl bg-tinta p-5 text-white" role="status">
-                    <span className="grid size-9 shrink-0 place-items-center rounded-full bg-wpp">
-                      <Icono nombre="check" className="size-5" grosor={2.4} />
-                    </span>
-                    <p>
-                      <strong className="block font-display text-2xl uppercase">Recibimos tu pedido</strong>
-                      Te lo confirmamos a {datos.email.trim()} lo antes posible.
-                    </p>
-                  </div>
-                )}
               </div>
             )}
           </div>
@@ -575,10 +588,18 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
                 </span>
               </button>
             </div>
-          ) : envio === "ok" ? (
-            <button type="button" onClick={terminar} className="btn btn-oscuro sin-burbuja w-full">
-              Listo, cerrar
-            </button>
+          ) : enviado ? (
+            <div className="grid gap-2.5 sm:grid-cols-2">
+              <button type="button" onClick={salir} className="btn btn-oscuro sin-burbuja w-full">
+                Listo, cerrar
+              </button>
+              {envio === "whatsapp" && (
+                <a href={linkWhatsApp(mensaje)} target="_blank" rel="noopener noreferrer" className="btn btn-fantasma sin-burbuja w-full">
+                  <Icono nombre="whatsapp" className="size-5" />
+                  Abrir WhatsApp de nuevo
+                </a>
+              )}
+            </div>
           ) : (
             <>
               {!datosCompletos(datos) && <p className="mb-2.5 text-[13px] text-asfalto">Completá nombre y apellido, teléfono y e-mail para enviar.</p>}
@@ -594,6 +615,8 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
                     }
                     track("pedido_whatsapp", { platos: total, personas });
                     conversionAds("pedido_whatsapp");
+                    // Después del clic: el link tiene que abrirse antes de que el botón se reemplace.
+                    window.setTimeout(() => marcarEnviado("whatsapp"));
                   }}
                   className="btn btn-wpp sin-burbuja w-full"
                 >

@@ -11,7 +11,7 @@ export type ClaveFoto = string;
 export type Rubro = {
   slug: string; // /empresas/<slug>
   nombre: string; // «Petroquímica y puerto»
-  title: string; // <title> ≤ 60 caracteres
+  title: string; // <title> ≤ 65 caracteres, terminado en « · ACA Villa Bordeu»
   description: string; // meta description 140–160
   h1: string; // con la búsqueda principal
   bajada: string; // una frase debajo del H1
@@ -22,6 +22,7 @@ export type Rubro = {
   contexto: { texto: string; fuente: string; url: string }; // dato público con fuente (sin nombrar clientes)
   preguntas: Pregunta[]; // 4–5 propias
   foto: ClaveFoto;
+  fotoAlt: string; // qué se ve en la foto (no el H1 ni el rubro)
   cerca?: string; // slug de /cerca-de relacionado
 };
 
@@ -46,6 +47,7 @@ export type Ruta = {
 export type LugarCerca = {
   slug: string; // /cerca-de/<slug>
   nombre: string;
+  nombreCon: string; // con el artículo, para «Cerca de…»: «del Polo Petroquímico», «de General Cerri»
   title: string;
   description: string;
   h1: string;

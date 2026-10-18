@@ -37,11 +37,11 @@ export default async function PaginaLugar({ params }: PageProps<"/cerca-de/[luga
             {l.distancia.km}km
           </p>
         }
-        etiqueta={`Cerca de ${l.nombre}`}
+        etiqueta={`Cerca ${l.nombreCon}`}
         titulo={l.h1}
         bajada={l.bajada}
         alto="media"
-        migas={[{ nombre: `Cerca de ${l.nombre}`, ruta: `/cerca-de/${l.slug}` }]}
+        migas={[{ nombre: `Cerca ${l.nombreCon}`, ruta: `/cerca-de/${l.slug}` }]}
       >
         <BotonConsultar modo={empresa ? "empresa" : undefined} rubro={empresa ? l.nombre : undefined} origen={`cerca-${l.slug}`}>
           Consultar disponibilidad
@@ -102,7 +102,7 @@ export default async function PaginaLugar({ params }: PageProps<"/cerca-de/[luga
         </div>
       </section>
 
-      <FaqLista preguntas={l.preguntas} titulo={`Cerca de ${l.nombre}`} />
+      <FaqLista preguntas={l.preguntas} titulo={`Cerca ${l.nombreCon}`} />
 
       <section className="seccion-chica gris">
         <div className="contenedor">

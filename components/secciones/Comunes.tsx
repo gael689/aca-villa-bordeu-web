@@ -15,6 +15,7 @@ export function PortadaPagina({
   foto: f,
   fondo,
   etiqueta,
+  antetitulo,
   titulo,
   bajada,
   migas,
@@ -25,6 +26,8 @@ export function PortadaPagina({
   /** fondo gráfico cuando no hay foto (p. ej. el escudo de ruta gigante) */
   fondo?: ReactNode;
   etiqueta: string;
+  /** línea chica arriba del H1, fuera de él (p. ej. la dirección en /como-llegar) */
+  antetitulo?: ReactNode;
   titulo: ReactNode;
   bajada?: ReactNode;
   migas: { nombre: string; ruta: string }[];
@@ -52,7 +55,15 @@ export function PortadaPagina({
       <div data-hero-contenido className="contenedor relative flex w-full flex-col justify-end pt-[calc(var(--header-h)+40px)] pb-10 md:pb-16">
         <Migas items={migas} />
         {/* `etiqueta` queda como dato (no se muestra): la portada va sin pre-título. */}
-        <h1 className="t-h1 hero-in mt-5 max-w-[18ch] [text-shadow:0_2px_24px_rgb(0_0_0/0.5)]" data-etiqueta={etiqueta} style={{ ["--i" as string]: 1 }}>
+        {antetitulo && (
+          <p
+            className="hero-in mt-5 flex items-center gap-2 text-[clamp(17px,1.7vw,24px)] leading-tight font-semibold [text-shadow:0_2px_24px_rgb(0_0_0/0.5)]"
+            style={{ ["--i" as string]: 1 }}
+          >
+            {antetitulo}
+          </p>
+        )}
+        <h1 className={`t-h1 hero-in ${antetitulo ? "mt-4" : "mt-5"} max-w-[18ch] [text-shadow:0_2px_24px_rgb(0_0_0/0.5)]`} data-etiqueta={etiqueta} style={{ ["--i" as string]: 1 }}>
           {titulo}
         </h1>
         {bajada && (
@@ -119,7 +130,18 @@ export function Citable({ children }: { children: ReactNode }) {
   );
 }
 
-export function FaqLista({ preguntas, titulo = "Preguntas frecuentes", etiqueta = "Antes de escribirnos" }: { preguntas: Pregunta[]; titulo?: string; etiqueta?: string }) {
+/** `jsonLd={false}` cuando el mismo set de preguntas ya tiene su FAQPage en otra página (la principal es /preguntas-frecuentes). */
+export function FaqLista({
+  preguntas,
+  titulo = "Preguntas frecuentes",
+  etiqueta = "Antes de escribirnos",
+  jsonLd = true,
+}: {
+  preguntas: Pregunta[];
+  titulo?: string;
+  etiqueta?: string;
+  jsonLd?: boolean;
+}) {
   return (
     <section className="seccion">
       <div className="contenedor grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
@@ -141,7 +163,7 @@ export function FaqLista({ preguntas, titulo = "Preguntas frecuentes", etiqueta 
           {preguntas.map((q) => (
             <details key={q.p} className="acordeon group">
               <summary className="flex items-center justify-between gap-6 py-5 md:py-6">
-                <span className="text-[18px] leading-snug font-semibold md:text-[20px]">{q.p}</span>
+                <h3 className="text-[18px] leading-snug font-semibold md:text-[20px]">{q.p}</h3>
                 <span className="mas grid size-10 shrink-0 place-items-center rounded-full bg-white shadow-[inset_0_0_0_1px_var(--linea)]">
                   <Icono nombre="mas" className="size-4" grosor={2.2} />
                 </span>
@@ -151,7 +173,7 @@ export function FaqLista({ preguntas, titulo = "Preguntas frecuentes", etiqueta 
           ))}
         </div>
       </div>
-      <JsonLd data={faqJsonLd(preguntas)} />
+      {jsonLd && <JsonLd data={faqJsonLd(preguntas)} />}
     </section>
   );
 }

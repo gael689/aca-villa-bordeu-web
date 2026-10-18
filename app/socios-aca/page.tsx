@@ -11,7 +11,7 @@ import { OficinaCortesia } from "@/components/secciones/OficinaCortesia";
 export const metadata = meta({
   title: "Socios ACA: hotel en Bahía Blanca · ACA Villa Bordeu",
   description:
-    "Villa Bordeu es el alojamiento de la Red Hotelera del Automóvil Club Argentino en Bahía Blanca, primera parada del corredor patagónico. Beneficios para socios.",
+    "Villa Bordeu es el alojamiento de la Red Hotelera ACA en Bahía Blanca, primera parada del corredor patagónico. Beneficios para socios.",
   ruta: "/socios-aca",
 });
 

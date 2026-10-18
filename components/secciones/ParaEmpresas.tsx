@@ -7,7 +7,7 @@ import { foto } from "@/lib/fotos";
 const RAZONES = [
   {
     titulo: "Todo el equipo en un mismo predio",
-    texto: "26 habitaciones single, doble y triple, una al lado de la otra. Nadie queda repartido por la ciudad.",
+    texto: "Habitaciones single, doble y triple, una al lado de la otra. Nadie queda repartido por la ciudad.",
     f: foto("habitaciones", "02-doble-escritorio.jpg", "Habitación con escritorio, TV y dos camas"),
   },
   {

@@ -1,6 +1,5 @@
 import { foto } from "@/lib/fotos";
 import { meta } from "@/lib/meta";
-import { SITIO } from "@/lib/sitio";
 import { FAQ_GENERAL } from "@/lib/faq";
 import { JsonLd, habitacionesJsonLd } from "@/lib/schema";
 import { BotonConsultar } from "@/components/consulta/ConsultaContext";
@@ -10,7 +9,7 @@ import { TiposHabitacion } from "@/components/secciones/TiposHabitacion";
 export const metadata = meta({
   title: "Habitaciones en Bahía Blanca sobre la ruta · ACA Villa Bordeu",
   description:
-    "26 habitaciones single, doble y triple con baño privado, wifi y cochera cubierta en la puerta, sobre las rutas 3 y 33 en Bahía Blanca. Pet friendly.",
+    "Habitaciones single, doble y triple con baño privado, wifi y cochera cubierta en la puerta, sobre las rutas 3 y 33 en Bahía Blanca. Pet friendly.",
   ruta: "/habitaciones",
 });
 
@@ -25,7 +24,7 @@ export default function Habitaciones() {
             Habitaciones en Bahía Blanca, <span className="resalte">sobre la ruta</span>
           </>
         }
-        bajada="26 habitaciones con baño privado y la cochera cubierta en la puerta. Para quedarse una noche o varias semanas."
+        bajada="Habitaciones con baño privado y la cochera cubierta en la puerta. Para quedarse una noche o varias semanas."
         migas={[{ nombre: "Habitaciones", ruta: "/habitaciones" }]}
       >
         <BotonConsultar modo="viaje" origen="habitaciones-portada">
@@ -34,7 +33,7 @@ export default function Habitaciones() {
       </PortadaPagina>
 
       <Citable>
-        ACA Villa Bordeu tiene {SITIO.habitaciones} habitaciones single, doble y triple en Bahía Blanca, todas con baño privado, wifi, calefacción y aire,
+        ACA Villa Bordeu tiene habitaciones single, doble y triple en Bahía Blanca, todas con baño privado, wifi, calefacción y aire,
         y una cochera cubierta frente a cada puerta.
       </Citable>
 
@@ -54,7 +53,7 @@ export default function Habitaciones() {
         </div>
       </section>
 
-      <FaqLista preguntas={FAQ_GENERAL.filter((q) => /cochera|noche|mascota|adaptado|desayuno|reservo|Cuánto/.test(q.p))} />
+      <FaqLista preguntas={FAQ_GENERAL.filter((q) => /cochera|noche|mascota|adaptado|desayuno|reservo|Cuánto/.test(q.p))} jsonLd={false} />
       <Cierre modo="viaje" origen="habitaciones-cierre" imagen={foto("habitaciones", "03-doble-vista-larga.jpg", "Habitación doble")} />
       <JsonLd data={habitacionesJsonLd()} />
     </>

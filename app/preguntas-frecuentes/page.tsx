@@ -2,6 +2,7 @@ import { meta } from "@/lib/meta";
 import { FAQ_EMPRESAS, FAQ_GENERAL } from "@/lib/faq";
 import { Cierre, FaqLista, PortadaPagina } from "@/components/secciones/Comunes";
 import { Icono } from "@/components/marca/Icono";
+import { JsonLd, faqJsonLd } from "@/lib/schema";
 
 export const metadata = meta({
   title: "Preguntas frecuentes · ACA Villa Bordeu, Bahía Blanca",
@@ -29,8 +30,10 @@ export default function Preguntas() {
         alto="media"
         migas={[{ nombre: "Preguntas frecuentes", ruta: "/preguntas-frecuentes" }]}
       />
-      <FaqLista preguntas={FAQ_GENERAL} titulo="Estadía" etiqueta="Para todos" />
-      <FaqLista preguntas={FAQ_EMPRESAS} titulo="Empresas" etiqueta="Equipos de trabajo" />
+      {/* Un solo FAQPage con las dos listas: esta es la casa de estas preguntas (el inicio, /habitaciones y /empresas las repiten sin JSON-LD). */}
+      <FaqLista preguntas={FAQ_GENERAL} titulo="Estadía" etiqueta="Para todos" jsonLd={false} />
+      <FaqLista preguntas={FAQ_EMPRESAS} titulo="Empresas" etiqueta="Equipos de trabajo" jsonLd={false} />
+      <JsonLd data={faqJsonLd([...FAQ_GENERAL, ...FAQ_EMPRESAS])} />
       <Cierre origen="faq-cierre" />
     </>
   );

@@ -49,3 +49,6 @@ Thumbs.db
 desktop.ini
 
 .vercel
+
+# fotos pre-generadas por scripts/exportar.mjs
+public/fotos/_w/

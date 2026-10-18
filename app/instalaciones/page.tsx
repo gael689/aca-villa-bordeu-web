@@ -9,7 +9,7 @@ import { Predio } from "@/components/secciones/Predio";
 export const metadata = meta({
   title: "Instalaciones: gimnasio, cocheras y más · ACA Villa Bordeu",
   description:
-    "Habitaciones, restaurante, gimnasio, sala de reuniones, oficina de cortesía, lavandería, tienda y estación YPF en un mismo predio sobre la ruta, en Bahía Blanca. Recepción 24 h.",
+    "Habitaciones, restaurante, gimnasio, sala de reuniones, oficina de cortesía, lavandería y estación YPF en un mismo predio sobre la ruta, en Bahía Blanca.",
   ruta: "/instalaciones",
 });
 
@@ -78,7 +78,7 @@ export default function Instalaciones() {
       </PortadaPagina>
 
       <Citable>
-        En el predio de ACA Villa Bordeu hay 26 habitaciones con cochera, restaurante, cafetería, gimnasio, sala de reuniones, oficina de cortesía, lavandería, juegos para
+        En el predio de ACA Villa Bordeu hay habitaciones con cochera, restaurante, cafetería, gimnasio, sala de reuniones, oficina de cortesía, lavandería, juegos para
         chicos, una tienda y la estación de servicio YPF.
       </Citable>
 

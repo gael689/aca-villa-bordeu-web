@@ -2,7 +2,7 @@ import { Hero } from "@/components/secciones/Hero";
 import { Cinta } from "@/components/secciones/Cinta";
 import { HabitacionesApiladas } from "@/components/secciones/HabitacionesApiladas";
 import { RestoBloque } from "@/components/secciones/RestoBloque";
-import { FaqLista } from "@/components/secciones/Comunes";
+import { Citable, FaqLista } from "@/components/secciones/Comunes";
 import { Instalaciones } from "@/components/v2/Instalaciones";
 import { Ubicacion } from "@/components/v2/Ubicacion";
 import { Trabajo } from "@/components/v2/Trabajo";
@@ -19,7 +19,7 @@ import { JsonLd, motelJsonLd } from "@/lib/schema";
 export const metadata = meta({
   title: "ACA Villa Bordeu · Alojamiento en Bahía Blanca sobre la Ruta 3",
   description:
-    "Una parada estratégica en Bahía Blanca: habitaciones con cochera, restaurante, Wi-Fi y recepción 24 h sobre el cruce de las rutas 3, 33 y 35. Red Hotelera ACA.",
+    "Parada estratégica en Bahía Blanca: habitaciones con cochera, restaurante, Wi-Fi y recepción 24 h sobre el cruce de las rutas 3, 33 y 35. Red Hotelera ACA.",
   ruta: "/",
 });
 
@@ -28,6 +28,11 @@ export default function Inicio() {
     <>
       <Hero />
       <Cinta />
+      {/* Qué es Villa Bordeu, en una frase que se entiende sola (la que citan los buscadores con IA). */}
+      <Citable>
+        ACA Villa Bordeu es el alojamiento del Automóvil Club Argentino en Bahía Blanca, sobre el cruce de las rutas 3, 33 y 35, abierto desde
+        1984: habitaciones con cochera cubierta, restaurante, estación YPF y recepción las 24 horas.
+      </Citable>
       <Instalaciones />
       <Ubicacion />
       <HabitacionesApiladas />
@@ -35,7 +40,7 @@ export default function Inicio() {
       <RestoBloque />
       <ServiciosLinea />
       <ViajeSocios />
-      <FaqLista preguntas={FAQ_GENERAL.slice(0, 6)} />
+      <FaqLista preguntas={FAQ_GENERAL.slice(0, 6)} jsonLd={false} />
       <CierreParada />
       <JsonLd data={motelJsonLd()} />
     </>

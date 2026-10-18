@@ -1,6 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Escudo } from "@/components/marca/Escudo";
 import { BotonConsultar } from "@/components/consulta/ConsultaContext";
+
+export const metadata: Metadata = {
+  title: "Página no encontrada · ACA Villa Bordeu",
+  robots: { index: false, follow: true },
+};
 
 export default function NoEncontrada() {
   return (

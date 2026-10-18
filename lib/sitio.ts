@@ -22,6 +22,8 @@ export const SITIO = {
   telefono: "0291 488-6855",
   telefonoE164: "+542914886855",
   mail: "info@acavillabordeu.com.ar",
+  // Adónde va el formulario de mail: la ruta de Next en Vercel, el PHP en el hosting del cliente.
+  consultaApi: process.env.NEXT_PUBLIC_CONSULTA_URL || "/api/consulta",
   direccion: {
     calle: "Camino Parque Sesquicentenario 1699",
     acceso: "Ruta Nacional 3 y 33, Villa Bordeu",
@@ -33,7 +35,6 @@ export const SITIO = {
     lat: -38.700554,
     lng: -62.333004,
   },
-  habitaciones: 26,
   fundacionACA: 1904,
   aliancaYPF: 1936,
   // Villa Bordeu entero (alojamiento y Resto) abrió en 1984, no solo el restaurante.
@@ -46,6 +47,10 @@ export const SITIO = {
     ficha: "https://www.aca.org.ar/red-hotelera/buenos-aires/villa-bordeu/",
   },
 } as const;
+
+// Última vez que cambió el contenido: va al sitemap (lastModified) y al llms.txt.
+// Subirla a mano cuando se toquen textos, fotos o páginas; si no, Google deja de creerle.
+export const actualizado = "2026-10-18";
 
 export const MAPAS = {
   google: `https://www.google.com/maps/dir/?api=1&destination=${SITIO.direccion.lat},${SITIO.direccion.lng}`,

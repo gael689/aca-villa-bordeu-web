@@ -1,11 +1,12 @@
 import type { MetadataRoute } from "next";
-import { urlAbs } from "@/lib/sitio";
+import { actualizado, urlAbs } from "@/lib/sitio";
 import { RUBROS } from "@/lib/rubros";
 import { RUTAS } from "@/lib/rutas";
 import { LUGARES } from "@/lib/cerca";
 
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const hoy = new Date();
   const fijas: [string, number][] = [
     ["/", 1],
     ["/empresas", 0.9],
@@ -22,9 +23,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ["/contacto", 0.7],
   ];
   return [
-    ...fijas.map(([r, p]) => ({ url: urlAbs(r), lastModified: hoy, priority: p })),
-    ...RUBROS.map((r) => ({ url: urlAbs(`/empresas/${r.slug}`), lastModified: hoy, priority: 0.7 })),
-    ...RUTAS.map((r) => ({ url: urlAbs(`/como-llegar/${r.slug}`), lastModified: hoy, priority: 0.6 })),
-    ...LUGARES.map((l) => ({ url: urlAbs(`/cerca-de/${l.slug}`), lastModified: hoy, priority: 0.6 })),
+    ...fijas.map(([r, p]) => ({ url: urlAbs(r), lastModified: actualizado, priority: p })),
+    ...RUBROS.map((r) => ({ url: urlAbs(`/empresas/${r.slug}`), lastModified: actualizado, priority: 0.7 })),
+    ...RUTAS.map((r) => ({ url: urlAbs(`/como-llegar/${r.slug}`), lastModified: actualizado, priority: 0.6 })),
+    ...LUGARES.map((l) => ({ url: urlAbs(`/cerca-de/${l.slug}`), lastModified: actualizado, priority: 0.6 })),
   ];
 }

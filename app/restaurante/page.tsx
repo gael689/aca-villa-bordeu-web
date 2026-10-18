@@ -9,9 +9,9 @@ import { Cierre, Citable, PortadaPagina } from "@/components/secciones/Comunes";
 import { BotonAbrirPedido, PedidoProvider } from "@/components/pedido/Pedido";
 
 export const metadata = meta({
-  title: "Restaurante sobre la ruta en Bahía Blanca · Resto ACA",
+  title: "Restaurante sobre la ruta en Bahía Blanca · ACA Villa Bordeu",
   description:
-    "El Resto de ACA Villa Bordeu cocina desde 1984: parrilla, pastas y platos de siempre, con barra y cafetería. Sobre las rutas 3 y 33. Prepará tu pedido o reservá por WhatsApp.",
+    "El Resto de ACA Villa Bordeu cocina desde 1984: parrilla, pastas y platos de siempre, con barra y cafetería, sobre las rutas 3 y 33. Pedí por WhatsApp.",
   ruta: "/restaurante",
 });
 

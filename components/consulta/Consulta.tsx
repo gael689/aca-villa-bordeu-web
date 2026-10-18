@@ -21,7 +21,7 @@ import { Icono, type IconoNombre } from "@/components/marca/Icono";
 import { bloquearScroll } from "@/components/motion/scroll";
 import { conversionAds } from "@/components/layout/GoogleAds";
 import { Calendario } from "./Calendario";
-import { Burbuja, Campo, Contador, DatosPersonales, Opcion, revisarDatos } from "./Campos";
+import { Burbuja, Campo, Contador, DatosPersonales, Enviado, Opcion, revisarDatos } from "./Campos";
 import { useConsulta } from "./ConsultaContext";
 
 const CLAVE = "vb-consulta-v1";
@@ -67,7 +67,7 @@ function Interruptor({ etiqueta, ayuda, icono, valor, onCambiar }: { etiqueta: s
   );
 }
 
-type EstadoEnvio = "nada" | "enviando" | "ok" | "error";
+type EstadoEnvio = "nada" | "enviando" | "ok" | "whatsapp" | "error";
 
 export function Consulta() {
   const { abierta, apertura, cerrar } = useConsulta();
@@ -99,6 +99,38 @@ export function Consulta() {
   const [intentado, setIntentado] = useState(false);
   const [envio, setEnvio] = useState<EstadoEnvio>("nada");
   const trampa = useRef<HTMLInputElement>(null);
+  // Después de enviar (WhatsApp o mail) no se guarda nada: al cerrar, todo vuelve a cero.
+  const olvidar = useRef(false);
+
+  const reiniciar = () => {
+    setModo("empresa");
+    setPersonas(10);
+    setIngreso(null);
+    setEstadia(null);
+    setNecesidades(["Desayuno", "Cochera para vehículos"]);
+    setEmpresa("");
+    setRubro("");
+    setEntrada(null);
+    setSalida(null);
+    setSinFechas(false);
+    setAdultos(2);
+    setNinos(0);
+    setSocio(false);
+    setMascota(false);
+    setAdaptado(false);
+    setDatos({ nombre: "", telefono: "", email: "" });
+    setIntentado(false);
+    setEnvio("nada");
+    setPaso(0);
+  };
+
+  const marcarEnviado = (canal: "ok" | "whatsapp") => {
+    olvidar.current = true;
+    try {
+      sessionStorage.removeItem(CLAVE);
+    } catch {}
+    setEnvio(canal);
+  };
 
   // Abrir / cerrar el <dialog> nativo según el contexto.
   useEffect(() => {
@@ -160,6 +192,10 @@ export function Consulta() {
         d.close();
         setCerrando(false);
         bloquearScroll(false);
+        if (olvidar.current) {
+          olvidar.current = false;
+          reiniciar();
+        }
       }, 340);
     }
     return () => window.clearTimeout(t);
@@ -167,7 +203,7 @@ export function Consulta() {
 
   // Guardar el estado: si cierra el panel y lo vuelve a abrir, sigue ahí.
   useEffect(() => {
-    if (!abierta) return;
+    if (!abierta || olvidar.current) return;
     try {
       sessionStorage.setItem(
         CLAVE,
@@ -232,13 +268,13 @@ export function Consulta() {
     if (!exigirDatos()) return;
     setEnvio("enviando");
     try {
-      const r = await fetch("/api/consulta", {
+      const r = await fetch(SITIO.consultaApi, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ modo, mensaje, ...datos, empresa, sitio: trampa.current?.value ?? "" }),
       });
       if (!r.ok) throw new Error(String(r.status));
-      setEnvio("ok");
+      marcarEnviado("ok");
       track("consulta_mail", datosMedicion());
       conversionAds("consulta_mail");
     } catch {
@@ -246,6 +282,7 @@ export function Consulta() {
     }
   }
 
+  const enviado = envio === "ok" || envio === "whatsapp";
   const claseEntra = atras ? "paso-entra-atras" : "paso-entra";
   const nNoches = noches(entrada, salida);
 
@@ -321,6 +358,9 @@ export function Consulta() {
         </header>
 
         <div data-lenis-prevent className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pb-6 md:px-8">
+          {ultimo && enviado ? (
+            <Enviado canal={envio === "whatsapp" ? "whatsapp" : "mail"} que="consulta" email={datos.email} />
+          ) : (
           <div key={`${modo}-${paso}`} className={claseEntra}>
             {/* ── EMPRESA ─────────────────────────────────────────── */}
             {modo === "empresa" && paso === 0 && (
@@ -334,7 +374,7 @@ export function Consulta() {
                   ))}
                 </div>
                 <p className="mt-6 rounded-2xl bg-white p-4 text-[15px] text-asfalto shadow-[inset_0_0_0_1px_var(--linea)]">
-                  {SITIO.habitaciones} habitaciones con cochera cubierta en la puerta, restaurante, gimnasio y estación de servicio en el mismo predio.
+                  Habitaciones con cochera cubierta en la puerta, restaurante, gimnasio y estación de servicio en el mismo predio.
                 </p>
               </div>
             )}
@@ -462,18 +502,8 @@ export function Consulta() {
                 No se pudo enviar. Probá por WhatsApp o escribinos a {SITIO.mail}.
               </p>
             )}
-            {ultimo && envio === "ok" && (
-              <div className="paso-entra mt-5 flex items-start gap-3 rounded-2xl bg-tinta p-5 text-white" role="status">
-                <span className="grid size-9 shrink-0 place-items-center rounded-full bg-wpp">
-                  <Icono nombre="check" className="size-5" grosor={2.4} />
-                </span>
-                <p>
-                  <strong className="block font-display text-2xl uppercase">Recibimos tu consulta</strong>
-                  Te respondemos a {datos.email.trim()} lo antes posible. Recepción abierta las 24 horas.
-                </p>
-              </div>
-            )}
           </div>
+          )}
         </div>
 
         <footer className="shrink-0 border-t border-[color:var(--linea)] bg-papel px-5 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] md:px-8">
@@ -491,6 +521,18 @@ export function Consulta() {
                 </span>
               </button>
             </div>
+          ) : enviado ? (
+            <div className="grid gap-2.5 sm:grid-cols-2">
+              <button type="button" onClick={cerrar} className="btn btn-oscuro sin-burbuja w-full">
+                Listo, cerrar
+              </button>
+              {envio === "whatsapp" && (
+                <a href={linkWhatsApp(mensaje)} target="_blank" rel="noopener noreferrer" className="btn btn-fantasma sin-burbuja w-full">
+                  <Icono nombre="whatsapp" className="size-5" />
+                  Abrir WhatsApp de nuevo
+                </a>
+              )}
+            </div>
           ) : (
             <div className="grid gap-2.5 sm:grid-cols-[1.4fr_1fr]">
               {!datosOk && <p className="text-[13px] text-asfalto sm:col-span-2">Completá nombre y apellido, teléfono y e-mail para enviar.</p>}
@@ -505,6 +547,8 @@ export function Consulta() {
                   }
                   track("consulta_whatsapp", datosMedicion());
                   conversionAds("consulta_whatsapp");
+                  // Después del clic: el link tiene que abrirse antes de que el botón se reemplace.
+                  window.setTimeout(() => marcarEnviado("whatsapp"));
                 }}
                 className="btn btn-wpp sin-burbuja w-full"
               >
@@ -514,11 +558,11 @@ export function Consulta() {
               <button
                 type="button"
                 onClick={() => void enviarMail()}
-                disabled={envio === "enviando" || envio === "ok"}
+                disabled={envio === "enviando"}
                 className="btn btn-fantasma sin-burbuja w-full disabled:opacity-50"
               >
                 <Icono nombre="sobre" className="size-5" />
-                {envio === "enviando" ? "Enviando…" : envio === "ok" ? "Enviado" : "Por mail"}
+                {envio === "enviando" ? "Enviando…" : "Por mail"}
               </button>
             </div>
           )}

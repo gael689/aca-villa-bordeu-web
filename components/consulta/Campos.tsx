@@ -260,3 +260,28 @@ export function revisarDatos(prefijo: string, datos: Datos): boolean {
   el?.focus({ preventScroll: true });
   return false;
 }
+
+/**
+ * Lo que queda a la vista después de enviar. Al cerrar el panel se borra todo
+ * (pedido del cliente, oct/2026): la próxima consulta o pedido arranca en blanco.
+ */
+export function Enviado({ canal, que, email }: { canal: "whatsapp" | "mail"; que: "consulta" | "pedido"; email: string }) {
+  const titulo = canal === "whatsapp" ? "Se abrió WhatsApp" : que === "pedido" ? "Recibimos tu pedido" : "Recibimos tu consulta";
+  const texto =
+    canal === "whatsapp"
+      ? `Tu ${que} ya está escrito en WhatsApp: solo falta tocar enviar. Si no se abrió, probá con el botón de abajo.`
+      : que === "pedido"
+        ? `Te lo confirmamos a ${email.trim()} lo antes posible.`
+        : `Te respondemos a ${email.trim()} lo antes posible. Recepción abierta las 24 horas.`;
+  return (
+    <div className="paso-entra mx-auto mt-2 flex max-w-[620px] items-start gap-3 rounded-2xl bg-tinta p-5 text-white" role="status">
+      <span className="grid size-9 shrink-0 place-items-center rounded-full bg-wpp">
+        <Icono nombre={canal === "whatsapp" ? "whatsapp" : "check"} className="size-5" grosor={2.4} />
+      </span>
+      <p>
+        <strong className="block font-display text-2xl uppercase">{titulo}</strong>
+        {texto}
+      </p>
+    </div>
+  );
+}

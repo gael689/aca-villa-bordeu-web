@@ -28,13 +28,15 @@ export default function ComoLlegar() {
           </div>
         }
         etiqueta="Cómo llegar"
+        // Pedido del cliente: la dirección va antes del «cruce de rutas» (fuera del H1).
+        antetitulo={
+          <>
+            <Icono nombre="pin" className="size-[1.1em] shrink-0 text-amarillo" grosor={2} />
+            {SITIO.direccion.calle}
+          </>
+        }
         titulo={
           <>
-            {/* Pedido del cliente: la dirección va antes del «cruce de rutas». */}
-            <span className="mb-4 flex items-center gap-2 font-sans text-[clamp(17px,1.7vw,24px)] leading-tight font-semibold tracking-normal normal-case">
-              <Icono nombre="pin" className="size-[1.1em] shrink-0 text-amarillo" grosor={2} />
-              {SITIO.direccion.calle}
-            </span>
             Antes del <span className="resalte">cruce de rutas</span>
           </>
         }

@@ -10,9 +10,9 @@ export const RUTAS: Ruta[] = [
     slug: "desde-buenos-aires",
     origen: "Buenos Aires",
     rutaNacional: "3",
-    title: "Desde Buenos Aires por la Ruta 3 | ACA Villa Bordeu",
+    title: "Desde Buenos Aires por la Ruta 3 · ACA Villa Bordeu",
     description:
-      "Unos 700 km por la RN 3, por Azul y Tres Arroyos. El último tramo hasta ACA Villa Bordeu, en Bahía Blanca, y por qué conviene parar ahí antes de seguir al sur.",
+      "Unos 700 km por la RN 3, por Azul y Tres Arroyos. El último tramo hasta ACA Villa Bordeu, en Bahía Blanca, y por qué conviene parar antes de seguir al sur.",
     h1: "Cómo llegar desde Buenos Aires por la Ruta 3",
     bajada: "Unos 700 km de ruta hasta el acceso de Bahía Blanca, con el auto en la puerta al llegar.",
     citable:
@@ -56,7 +56,7 @@ export const RUTAS: Ruta[] = [
     slug: "desde-neuquen",
     origen: "Neuquén",
     rutaNacional: "22",
-    title: "Desde Neuquén por la Ruta 22 | ACA Villa Bordeu",
+    title: "Desde Neuquén por la Ruta 22 · ACA Villa Bordeu",
     description:
       "Unos 527 km por la RN 22, por el Alto Valle, Choele Choel y Río Colorado. Llegás a ACA Villa Bordeu, en Bahía Blanca, por la RN 3 sin entrar a la ciudad.",
     h1: "Cómo llegar desde Neuquén por la Ruta 22",
@@ -102,9 +102,9 @@ export const RUTAS: Ruta[] = [
     slug: "desde-rosario",
     origen: "Rosario",
     rutaNacional: "33",
-    title: "Desde Rosario por la Ruta 33 | ACA Villa Bordeu",
+    title: "Desde Rosario por la Ruta 33 · ACA Villa Bordeu",
     description:
-      "Unos 814 km por la RN 33, por Venado Tuerto, Trenque Lauquen y Pigüé. La ruta termina en el cruce donde está ACA Villa Bordeu, en Bahía Blanca. Mirá el recorrido.",
+      "Unos 814 km por la RN 33, por Venado Tuerto, Trenque Lauquen y Pigüé, hasta el cruce donde está ACA Villa Bordeu, en Bahía Blanca. Mirá el recorrido.",
     h1: "Cómo llegar desde Rosario por la Ruta 33",
     bajada: "La RN 33 termina en el mismo cruce donde está Villa Bordeu.",
     citable:
@@ -148,9 +148,9 @@ export const RUTAS: Ruta[] = [
     slug: "desde-santa-rosa",
     origen: "Santa Rosa",
     rutaNacional: "35",
-    title: "Desde Santa Rosa por la Ruta 35 | ACA Villa Bordeu",
+    title: "Desde Santa Rosa por la Ruta 35 · ACA Villa Bordeu",
     description:
-      "Unos 322 km por la RN 35 desde La Pampa, unas 4 horas de manejo. La ruta llega a Bahía Blanca justo en Villa Bordeu, donde está ACA Villa Bordeu. Mirá el recorrido.",
+      "Unos 322 km por la RN 35 desde La Pampa, unas 4 horas de manejo. La ruta entra a Bahía Blanca justo donde está ACA Villa Bordeu. Mirá el recorrido.",
     h1: "Cómo llegar desde Santa Rosa por la Ruta 35",
     bajada: "De La Pampa a Bahía Blanca: la RN 35 llega justo a Villa Bordeu.",
     citable:
@@ -194,14 +194,14 @@ export const RUTAS: Ruta[] = [
     slug: "desde-la-patagonia",
     origen: "la Patagonia",
     rutaNacional: "3",
-    title: "Desde la Patagonia por la Ruta 3 | ACA Villa Bordeu",
+    title: "Desde la Patagonia por la Ruta 3 · ACA Villa Bordeu",
     description:
-      "Desde Viedma son unos 271 km por la RN 3, por Pedro Luro y Mayor Buratovich. Llegás a ACA Villa Bordeu, en Bahía Blanca, sin entrar a la ciudad. Mirá el recorrido.",
+      "Desde Viedma son unos 270 km por la RN 3, por Pedro Luro y Mayor Buratovich. Llegás a ACA Villa Bordeu, en Bahía Blanca, sin entrar a la ciudad.",
     h1: "Cómo llegar desde la Patagonia por la Ruta 3",
     bajada: "De Viedma hacia el norte por la RN 3: la primera parada ACA de la provincia de Buenos Aires.",
     citable:
-      "Desde Viedma, ACA Villa Bordeu queda a unos 271 km por la Ruta Nacional 3, que pasa por Carmen de Patagones, Pedro Luro y Mayor Buratovich. Son alrededor de 3 horas 40 minutos de manejo sin paradas. El alojamiento del Automóvil Club Argentino está en Villa Bordeu, en el acceso suroeste de Bahía Blanca, y se llega desde el sur sin cruzar la ciudad.",
-    km: 271,
+      "Desde Viedma, ACA Villa Bordeu queda a unos 270 km por la Ruta Nacional 3, que pasa por Carmen de Patagones, Pedro Luro y Mayor Buratovich. Son alrededor de 3 horas 40 minutos de manejo sin paradas. El alojamiento del Automóvil Club Argentino está en Villa Bordeu, en el acceso suroeste de Bahía Blanca, y se llega desde el sur sin cruzar la ciudad.",
+    km: 270,
     horas: "3 h 40 min",
     pasaPor: ["Viedma", "Carmen de Patagones", "Stroeder", "Villalonga", "Pedro Luro", "Hilario Ascasubi", "Mayor Buratovich"],
     recorrido: [
@@ -220,7 +220,7 @@ export const RUTAS: Ruta[] = [
     preguntas: [
       {
         p: "¿Cuántos kilómetros hay de Viedma a ACA Villa Bordeu?",
-        r: "Unos 271 km por la RN 3, medidos desde el centro de Viedma: alrededor de 3 horas 40 minutos de manejo.",
+        r: "Unos 270 km por la RN 3, medidos desde el centro de Viedma: alrededor de 3 horas 40 minutos de manejo.",
       },
       {
         p: "¿Y desde Pedro Luro?",

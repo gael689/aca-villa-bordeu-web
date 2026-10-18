@@ -1,6 +1,6 @@
 import { foto, type Foto } from "./fotos";
 
-// Las 26 habitaciones son similares y traen lo mismo; cambian las camas.
+// Las habitaciones son similares y traen lo mismo; cambian las camas.
 // Sin tarifas: se consultan.
 
 export type TipoHabitacion = {

@@ -28,7 +28,7 @@ export default async function PaginaRubro({ params }: PageProps<"/empresas/[rubr
   const r = buscar((await params).rubro);
   if (!r) notFound();
   const [c, a] = r.foto.split("/");
-  const portada = foto(c, a, r.h1);
+  const portada = foto(c, a, r.fotoAlt);
   const otros = RUBROS.filter((x) => x.slug !== r.slug);
   const cerca = r.cerca ? LUGARES.find((l) => l.slug === r.cerca) : undefined;
 
@@ -118,7 +118,7 @@ export default async function PaginaRubro({ params }: PageProps<"/empresas/[rubr
           <div className="grid gap-3 md:grid-cols-3">
             {otros.map((o) => {
               const [oc, oa] = o.foto.split("/");
-              return <TarjetaEnlace key={o.slug} href={`/empresas/${o.slug}`} foto={foto(oc, oa, o.nombre)} titulo={o.nombre} />;
+              return <TarjetaEnlace key={o.slug} href={`/empresas/${o.slug}`} foto={foto(oc, oa, o.fotoAlt)} titulo={o.nombre} />;
             })}
           </div>
           <div className="mt-6 flex flex-wrap gap-4 text-[15px]">
@@ -127,7 +127,7 @@ export default async function PaginaRubro({ params }: PageProps<"/empresas/[rubr
             </Link>
             {cerca && (
               <Link href={`/cerca-de/${cerca.slug}`} className="enlace">
-                Alojamiento cerca de {cerca.nombre}
+                Alojamiento cerca {cerca.nombreCon}
               </Link>
             )}
             <Link href="/como-llegar" className="enlace">

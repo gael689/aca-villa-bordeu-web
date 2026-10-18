@@ -18,7 +18,7 @@ export const FAQ_GENERAL: Pregunta[] = [
   },
   {
     p: "¿Tienen cochera?",
-    r: "Sí. Cada una de las 26 habitaciones tiene su cochera cubierta enfrente, así que el auto queda a la vista.",
+    r: "Sí. Cada habitación tiene su cochera cubierta enfrente, así que el auto queda a la vista.",
   },
   {
     p: "¿Puedo llegar de noche?",
@@ -49,7 +49,7 @@ export const FAQ_GENERAL: Pregunta[] = [
 export const FAQ_EMPRESAS: Pregunta[] = [
   {
     p: "¿Entra todo mi equipo junto?",
-    r: "Tenemos 26 habitaciones single, doble y triple, todas en el mismo predio. Escribinos por WhatsApp o mail con cuántos son y las fechas, y te decimos cómo los acomodamos.",
+    r: "Tenemos habitaciones single, doble y triple, todas en el mismo predio. Escribinos por WhatsApp o mail con cuántos son y las fechas, y te decimos cómo los acomodamos.",
   },
   {
     p: "¿Pueden quedarse varias semanas?",

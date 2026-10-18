@@ -5,7 +5,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GoogleTagManager } from "@/components/layout/GoogleAds";
 import "./globals.css";
 import { SITIO, urlAbs } from "@/lib/sitio";
-import { JsonLd, organizacionJsonLd } from "@/lib/schema";
+import { JsonLd, motelJsonLd, organizacionJsonLd } from "@/lib/schema";
 import { ConsultaProvider } from "@/components/consulta/ConsultaContext";
 import { ConsultaLazy } from "@/components/consulta/ConsultaLazy";
 import { Header } from "@/components/layout/Header";
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     template: "%s",
   },
   description:
-    "Alojamiento del ACA sobre las rutas 3, 33 y 35 en Bahía Blanca: 26 habitaciones con cochera, restaurante, gimnasio y estación YPF. Ideal para equipos de trabajo.",
+    "Alojamiento del ACA sobre las rutas 3, 33 y 35 en Bahía Blanca: habitaciones con cochera, restaurante, gimnasio y estación YPF. Para equipos de trabajo.",
   applicationName: SITIO.nombre,
   category: "travel",
   verification: {
@@ -36,7 +36,6 @@ export const metadata: Metadata = {
     "geo.position": `${SITIO.direccion.lat};${SITIO.direccion.lng}`,
     ICBM: `${SITIO.direccion.lat}, ${SITIO.direccion.lng}`,
   },
-  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "es_AR",
@@ -79,7 +78,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <ConsultaLazy />
           <Motion />
         </ConsultaProvider>
-        <JsonLd data={organizacionJsonLd()} />
+        {/* La organización, el sitio y el motel en todas las páginas: los @id de cada página apuntan acá. */}
+        <JsonLd data={[...organizacionJsonLd(), motelJsonLd()]} />
         {process.env.VERCEL ? (
           <>
             <Analytics />

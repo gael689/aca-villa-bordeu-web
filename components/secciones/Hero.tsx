@@ -7,7 +7,7 @@ import { BotonConsultar } from "@/components/consulta/ConsultaContext";
 // Solo fotos nítidas, recortadas desde los originales (fotos-seleccion/portada).
 // El salón de noche y la barra quedaron afuera: son de celular con poca luz y en grande se ven blandas.
 const CAPAS = [
-  foto("portada", "02-departamento.jpg", "Habitación con cama matrimonial y cama individual, paredes grafito y cabecera de madera"),
+  foto("portada", "02-habitacion.jpg", "Habitación con cama matrimonial y cama individual, paredes grafito y cabecera de madera"),
   foto("portada", "03-recepcion.jpg", "Recepción con mostrador de madera iluminado y el logo ACA Villa Bordeu"),
   foto("portada", "01-gimnasio.jpg", "Gimnasio con pared verde y cartel de neón ACA"),
   foto("portada", "04-sala.jpg", "Sala de reuniones con mesa larga y pantalla"),
@@ -68,7 +68,7 @@ export function Hero() {
 
         {/* Una sola línea de datos: lo que hace elegir este lugar */}
         <ul className="hero-in mt-10 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[13px] font-semibold tracking-[0.08em] text-white/75 uppercase md:text-[14px]" style={vars(3)}>
-          {["Desde 1984", "26 habitaciones", "Cochera", "Restaurante", "Recepción 24 h"].map((d, i) => (
+          {["Desde 1984", "Habitaciones", "Cochera", "Restaurante", "Recepción 24 h"].map((d, i) => (
             <li key={d} className="flex items-center gap-5">
               {i > 0 && <span aria-hidden="true" className="size-1 rounded-full bg-amarillo" />}
               {d}

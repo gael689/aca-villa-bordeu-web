@@ -48,7 +48,8 @@ function Celda({
  * en celular, y visor a pantalla completa. La primera foto comparte nombre de
  * transición con la tarjeta del inicio: al entrar, la foto «viaja».
  */
-export function Galeria({ fotos, nombre, transicion }: { fotos: Foto[]; nombre: string; transicion?: string }) {
+/** `prioridad` en false para galerías que arrancan ocultas (las pestañas de habitaciones): no precargan la primera foto. */
+export function Galeria({ fotos, nombre, transicion, prioridad = true }: { fotos: Foto[]; nombre: string; transicion?: string; prioridad?: boolean }) {
   const [abierta, setAbierta] = useState<number | null>(null);
   const dlg = useRef<HTMLDialogElement>(null);
   const inicioX = useRef<number | null>(null);
@@ -88,11 +89,11 @@ export function Galeria({ fotos, nombre, transicion }: { fotos: Foto[]; nombre: 
         {transicion ? (
           <ViewTransition name={transicion}>
             <div className="col-span-2 row-span-2">
-              <Celda onAbrir={setAbierta} f={fotos[0]} i={0} className="size-full" sizes="50vw" priority />
+              <Celda onAbrir={setAbierta} f={fotos[0]} i={0} className="size-full" sizes="50vw" priority={prioridad} />
             </div>
           </ViewTransition>
         ) : (
-          <Celda onAbrir={setAbierta} f={fotos[0]} i={0} className="col-span-2 row-span-2" sizes="50vw" priority />
+          <Celda onAbrir={setAbierta} f={fotos[0]} i={0} className="col-span-2 row-span-2" sizes="50vw" priority={prioridad} />
         )}
         {fotos.slice(1, 5).map((f, k) => (
           <Celda onAbrir={setAbierta} key={f.src} f={f} i={k + 1} className="" sizes="25vw" />
@@ -109,7 +110,7 @@ export function Galeria({ fotos, nombre, transicion }: { fotos: Foto[]; nombre: 
       {/* Celular: carrusel */}
       <div className="sin-barra -mx-[var(--gutter)] flex snap-x snap-mandatory gap-2 overflow-x-auto px-[var(--gutter)] md:hidden">
         {fotos.map((f, i) => (
-          <Celda onAbrir={setAbierta} key={f.src} f={f} i={i} className="aspect-[4/5] w-[84vw] shrink-0 snap-center" sizes="84vw" priority={i === 0} />
+          <Celda onAbrir={setAbierta} key={f.src} f={f} i={i} className="aspect-[4/5] w-[84vw] shrink-0 snap-center" sizes="84vw" priority={prioridad && i === 0} />
         ))}
       </div>
       <p className="mt-3 text-[13px] text-tinta/85 md:hidden">Deslizá para ver más · tocá para ampliar</p>

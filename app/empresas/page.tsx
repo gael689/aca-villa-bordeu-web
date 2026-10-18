@@ -2,7 +2,6 @@ import { foto } from "@/lib/fotos";
 import { meta } from "@/lib/meta";
 import { RUBROS } from "@/lib/rubros";
 import { FAQ_EMPRESAS } from "@/lib/faq";
-import { SITIO } from "@/lib/sitio";
 import { JsonLd, motelJsonLd } from "@/lib/schema";
 import { BotonConsultar } from "@/components/consulta/ConsultaContext";
 import { Cierre, Citable, FaqLista, PortadaPagina, Servicios, TarjetaEnlace } from "@/components/secciones/Comunes";
@@ -15,7 +14,7 @@ import { OficinaCortesia } from "@/components/secciones/OficinaCortesia";
 export const metadata = meta({
   title: "Alojamiento para empresas en Bahía Blanca · ACA Villa Bordeu",
   description:
-    "Alojamiento para equipos de trabajo sobre la ruta en Bahía Blanca: 26 habitaciones con cochera, restaurante, lavandería y gimnasio. Consultá por WhatsApp.",
+    "Alojamiento para equipos de trabajo sobre la ruta en Bahía Blanca: habitaciones con cochera, restaurante, lavandería y gimnasio. Consultá por WhatsApp.",
   ruta: "/empresas",
 });
 
@@ -47,7 +46,7 @@ export default function Empresas() {
       <Cinta tono="oscuro" />
 
       <Citable>
-        ACA Villa Bordeu aloja equipos de trabajo en {SITIO.habitaciones} habitaciones con cochera cubierta, sobre las rutas 3, 33 y 35, a minutos del
+        ACA Villa Bordeu aloja equipos de trabajo en habitaciones con cochera cubierta, sobre las rutas 3, 33 y 35, a minutos del
         Polo Petroquímico, el puerto y General Cerri.
       </Citable>
 
@@ -113,14 +112,14 @@ export default function Empresas() {
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {RUBROS.map((r) => {
               const [c, a] = r.foto.split("/");
-              return <TarjetaEnlace key={r.slug} href={`/empresas/${r.slug}`} foto={foto(c, a, r.nombre)} titulo={r.nombre} />;
+              return <TarjetaEnlace key={r.slug} href={`/empresas/${r.slug}`} foto={foto(c, a, r.fotoAlt)} titulo={r.nombre} />;
             })}
           </div>
         </div>
       </section>
 
       <Servicios titulo="Todo lo que el equipo necesita" />
-      <FaqLista preguntas={FAQ_EMPRESAS} titulo="Lo que preguntan las empresas" />
+      <FaqLista preguntas={FAQ_EMPRESAS} titulo="Lo que preguntan las empresas" jsonLd={false} />
       <Cierre modo="empresa" origen="empresas-cierre" imagen={foto("sala-reuniones", "01-mesa.jpg", "Sala de reuniones")} />
       <JsonLd data={motelJsonLd()} />
     </>
