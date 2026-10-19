@@ -65,17 +65,24 @@ try {
     if (!existsSync(join(OUT, ".htaccess"))) throw new Error("Falta out/: correr antes node scripts/exportar.mjs");
     const lista = archivos(OUT).sort((a, b) => (a === ".htaccess") - (b === ".htaccess"));
 
-    // Tamaños de lo que ya está arriba, carpeta por carpeta.
+    // Lo que ya está arriba, carpeta por carpeta. Solo el tamaño no alcanza: los
+    // .txt de Next cambian de build sin cambiar de largo. Se saltea si coincide el
+    // tamaño y lo de arriba es posterior al export.
     const remoto = new Map();
     for (const carpeta of new Set(lista.map((f) => dirname(f)))) {
       const ruta = carpeta === "." ? "web" : `web/${carpeta}`;
       const l = await reintentar(`listar ${ruta}`, () => ftp.list(ruta)).catch(() => []);
-      for (const f of l) remoto.set(`${carpeta === "." ? "" : carpeta + "/"}${f.name}`, f.size);
+      for (const f of l) remoto.set(`${carpeta === "." ? "" : carpeta + "/"}${f.name}`, f);
     }
+    const alDia = (f) => {
+      const r = remoto.get(f);
+      const l = statSync(join(OUT, f));
+      return r && r.size === l.size && r.modifiedAt && r.modifiedAt.getTime() >= l.mtimeMs;
+    };
 
     let subidos = 0;
     for (const [n, f] of lista.entries()) {
-      if (remoto.get(f) === statSync(join(OUT, f)).size) continue;
+      if (alDia(f)) continue;
       process.stdout.write(`\r↑ ${n + 1}/${lista.length} ${f.slice(0, 60).padEnd(60)}`);
       await reintentar(f, async () => {
         await ftp.ensureDir(`/web/${dirname(f) === "." ? "" : dirname(f)}`);
