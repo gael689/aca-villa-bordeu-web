@@ -76,7 +76,11 @@ gtag('js',new Date());gtag('config','${ADS_ID}');`}
   );
 }
 
-/** Conversión de Google Ads (se llama al enviar una consulta). */
+/**
+ * Conversión de Google Ads (se llama al enviar una consulta o un pedido). Es la
+ * acción «Contacto» que ya usaba el sitio viejo (`google_tag_inc.php`): con otro
+ * nombre de evento, Google Ads no la cuenta. `evento` va como dato aparte.
+ */
 export function conversionAds(evento: string) {
-  window.gtag?.("event", evento, { send_to: ADS_ID });
+  window.gtag?.("event", "conversion", { send_to: `${ADS_ID}/na18CJeM85YbENHujuVA`, event_label: evento });
 }
