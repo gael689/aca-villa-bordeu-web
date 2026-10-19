@@ -45,7 +45,8 @@ export type Necesidad = (typeof NECESIDADES)[number];
 export type EstadoReserva = {
   entrada: Date | null;
   salida: Date | null;
-  huespedes: number;
+  adultos: number;
+  ninos: number;
   socio: boolean | null;
   trabajo: boolean | null;
   empresa: string;
@@ -83,7 +84,13 @@ export function mensajeReserva(c: EstadoReserva): string {
   } else {
     l.push("• Fechas a definir");
   }
-  l.push(`• ${c.huespedes} ${c.huespedes === 1 ? "huésped" : "huéspedes"}`);
+  const quienes = [
+    `${c.adultos} ${c.adultos === 1 ? "adulto" : "adultos"}`,
+    c.ninos > 0 ? `${c.ninos} ${c.ninos === 1 ? "chico" : "chicos"}` : "",
+  ]
+    .filter(Boolean)
+    .join(" y ");
+  l.push(`• ${quienes}`);
   if (c.socio !== null) l.push(c.socio ? "• Soy socio ACA" : "• No soy socio ACA");
   if (c.trabajo) {
     l.push("• Es por trabajo");

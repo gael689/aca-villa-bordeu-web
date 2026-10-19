@@ -89,7 +89,8 @@ export function Consulta() {
   const [entrada, setEntrada] = useState<Date | null>(null);
   const [salida, setSalida] = useState<Date | null>(null);
   const [sinFechas, setSinFechas] = useState(false);
-  const [huespedes, setHuespedes] = useState(2);
+  const [adultos, setAdultos] = useState(2);
+  const [ninos, setNinos] = useState(0);
   const [socio, setSocio] = useState<boolean | null>(null);
   const [trabajo, setTrabajo] = useState<boolean | null>(null);
   const [empresa, setEmpresa] = useState("");
@@ -108,7 +109,8 @@ export function Consulta() {
     setEntrada(null);
     setSalida(null);
     setSinFechas(false);
-    setHuespedes(2);
+    setAdultos(2);
+    setNinos(0);
     setSocio(null);
     setTrabajo(null);
     setEmpresa("");
@@ -148,7 +150,8 @@ export function Consulta() {
           setEntrada(vig ? e : null);
           setSalida(vig ? aFecha(g.salida) : null);
           setSinFechas(!!g.sinFechas);
-          setHuespedes(g.huespedes || 2);
+          setAdultos(g.adultos || 2);
+          setNinos(g.ninos || 0);
           setSocio(g.socio ?? null);
           setTrabajo(g.trabajo ?? null);
           setEmpresa(g.empresa ?? "");
@@ -162,7 +165,7 @@ export function Consulta() {
       // Los botones de Empresas abren con «por trabajo» marcado; los de viaje, sin marcar.
       if (apertura.modo === "empresa") setTrabajo(true);
       if (apertura.rubro) setRubro(apertura.rubro);
-      if (apertura.personas) setHuespedes(Math.min(200, apertura.personas));
+      if (apertura.personas) setAdultos(Math.min(200, apertura.personas));
       const ing = aFecha(apertura.ingreso);
       if (ing) {
         setEntrada(ing);
@@ -199,10 +202,10 @@ export function Consulta() {
     try {
       sessionStorage.setItem(
         CLAVE,
-        JSON.stringify({ entrada, salida, sinFechas, huespedes, socio, trabajo, empresa, rubro, necesidades, mascota, adaptado, ...datos }),
+        JSON.stringify({ entrada, salida, sinFechas, adultos, ninos, socio, trabajo, empresa, rubro, necesidades, mascota, adaptado, ...datos }),
       );
     } catch {}
-  }, [abierta, entrada, salida, sinFechas, huespedes, socio, trabajo, empresa, rubro, necesidades, mascota, adaptado, datos]);
+  }, [abierta, entrada, salida, sinFechas, adultos, ninos, socio, trabajo, empresa, rubro, necesidades, mascota, adaptado, datos]);
 
   useEffect(() => {
     if (abierta) titulo.current?.focus({ preventScroll: true });
@@ -222,14 +225,14 @@ export function Consulta() {
       mensajeReserva({
         entrada: sinFechas ? null : entrada,
         salida: sinFechas ? null : salida,
-        huespedes, socio, trabajo, empresa, rubro, necesidades, mascota, adaptado, ...datos,
+        adultos, ninos, socio, trabajo, empresa, rubro, necesidades, mascota, adaptado, ...datos,
       }),
-    [entrada, salida, sinFechas, huespedes, socio, trabajo, empresa, rubro, necesidades, mascota, adaptado, datos],
+    [entrada, salida, sinFechas, adultos, ninos, socio, trabajo, empresa, rubro, necesidades, mascota, adaptado, datos],
   );
 
   // El servidor de mail sigue distinguiendo equipo de trabajo y viaje en el asunto.
   const modo = trabajo ? "empresa" : "viaje";
-  const datosMedicion = () => ({ modo, personas: huespedes, origen: apertura.origen ?? "panel" });
+  const datosMedicion = () => ({ modo, personas: adultos + ninos, origen: apertura.origen ?? "panel" });
 
   // Por mail hacen falta nombre, teléfono y e-mail (el hotel responde a ese mail).
   // Por WhatsApp sale igual: el número ya llega con el mensaje.
@@ -358,15 +361,16 @@ export function Consulta() {
 
               {paso === 1 && (
                 <div className="pt-1">
-                  <Contador etiqueta="Huéspedes" ayuda="Las personas que se alojan" valor={huespedes} min={1} max={200} onCambiar={setHuespedes} />
+                  <Contador etiqueta="Adultos" valor={adultos} min={1} max={200} onCambiar={setAdultos} />
                   {/* Atajos para grupos de trabajo: llegar a 30 con «+» es tedioso. */}
-                  <div className="flex flex-wrap gap-2 border-b border-[color:var(--linea)] pb-4" role="radiogroup" aria-label="Atajos de huéspedes">
+                  <div className="flex flex-wrap gap-2 border-b border-[color:var(--linea)] pb-4" role="radiogroup" aria-label="Atajos de adultos">
                     {[1, 2, 4, 8, 12, 20, 30, 50].map((n) => (
-                      <Opcion key={n} rol="radio" activa={huespedes === n} onClick={() => setHuespedes(n)}>
+                      <Opcion key={n} rol="radio" activa={adultos === n} onClick={() => setAdultos(n)}>
                         {n}
                       </Opcion>
                     ))}
                   </div>
+                  <Contador etiqueta="Chicos" valor={ninos} min={0} max={50} onCambiar={setNinos} />
                   <SiNo pregunta="¿Sos socio ACA?" ayuda="Tenés beneficios en toda la red" icono="escudo" valor={socio} onCambiar={setSocio} />
                   <SiNo pregunta="¿Es por trabajo?" icono="casco" valor={trabajo} onCambiar={setTrabajo} />
                   {trabajo && (
@@ -394,6 +398,9 @@ export function Consulta() {
                   )}
                   <Interruptor etiqueta="Viajo con mascota" ayuda="Somos pet friendly" icono="pata" valor={mascota} onCambiar={setMascota} />
                   <Interruptor etiqueta="Necesito habitación adaptada" icono="accesible" valor={adaptado} onCambiar={setAdaptado} />
+                  <p className="mt-6 rounded-2xl bg-white p-4 text-[15px] text-asfalto shadow-[inset_0_0_0_1px_var(--linea)]">
+                    Habitaciones con cochera cubierta en la puerta, restaurante, gimnasio y estación de servicio en el mismo predio.
+                  </p>
                 </div>
               )}
 
