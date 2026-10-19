@@ -602,7 +602,12 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
             </div>
           ) : (
             // Por mail hacen falta los datos (el hotel responde a ese mail); por WhatsApp sale igual.
-            <div className="grid gap-2.5 sm:grid-cols-2">
+            <div className="flex items-start gap-2.5">
+              <button type="button" onClick={() => ir(paso - 1)} aria-label="Atrás" className="btn btn-fantasma sin-burbuja shrink-0 px-4 sm:px-6">
+                <Icono nombre="izq" className="size-4 sm:hidden" grosor={2} />
+                <span className="max-sm:sr-only">Atrás</span>
+              </button>
+            <div className="grid flex-1 gap-2.5 sm:grid-cols-2">
               <button
                 type="button"
                 onClick={() => void enviarMail()}
@@ -627,6 +632,7 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
                 <Icono nombre="whatsapp" className="size-5" />
                 Enviar por WhatsApp
               </a>
+            </div>
             </div>
           )}
         </footer>

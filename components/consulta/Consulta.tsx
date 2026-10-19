@@ -359,6 +359,14 @@ export function Consulta() {
               {paso === 1 && (
                 <div className="pt-1">
                   <Contador etiqueta="Huéspedes" ayuda="Las personas que se alojan" valor={huespedes} min={1} max={200} onCambiar={setHuespedes} />
+                  {/* Atajos para grupos de trabajo: llegar a 30 con «+» es tedioso. */}
+                  <div className="flex flex-wrap gap-2 border-b border-[color:var(--linea)] pb-4" role="radiogroup" aria-label="Atajos de huéspedes">
+                    {[1, 2, 4, 8, 12, 20, 30, 50].map((n) => (
+                      <Opcion key={n} rol="radio" activa={huespedes === n} onClick={() => setHuespedes(n)}>
+                        {n}
+                      </Opcion>
+                    ))}
+                  </div>
                   <SiNo pregunta="¿Sos socio ACA?" ayuda="Tenés beneficios en toda la red" icono="escudo" valor={socio} onCambiar={setSocio} />
                   <SiNo pregunta="¿Es por trabajo?" icono="casco" valor={trabajo} onCambiar={setTrabajo} />
                   {trabajo && (
@@ -437,7 +445,12 @@ export function Consulta() {
               )}
             </div>
           ) : (
-            <div className="grid gap-2.5 sm:grid-cols-2">
+            <div className="flex items-start gap-2.5">
+              <button type="button" onClick={() => ir(paso - 1)} aria-label="Atrás" className="btn btn-fantasma sin-burbuja shrink-0 px-4 sm:px-6">
+                <Icono nombre="izq" className="size-4 sm:hidden" grosor={2} />
+                <span className="max-sm:sr-only">Atrás</span>
+              </button>
+            <div className="grid flex-1 gap-2.5 sm:grid-cols-2">
               <button
                 type="button"
                 onClick={() => void enviarMail()}
@@ -462,6 +475,7 @@ export function Consulta() {
                 <Icono nombre="whatsapp" className="size-5" />
                 Enviar por WhatsApp
               </a>
+            </div>
             </div>
           )}
         </footer>
