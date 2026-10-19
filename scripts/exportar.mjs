@@ -101,7 +101,7 @@ writeFileSync(
   join(OUT, ".htaccess"),
   `# Generado por scripts/exportar.mjs: no editar a mano en el servidor.
 Options -Indexes -MultiViews
-DirectoryIndex index.html index.php
+DirectoryIndex index.html index.htm index.php
 # Las páginas son archivos .html con carpetas del mismo nombre al lado: sin esto,
 # Apache mandaría /habitaciones a /habitaciones/.
 DirectorySlash Off

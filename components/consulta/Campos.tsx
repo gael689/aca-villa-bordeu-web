@@ -8,9 +8,7 @@ import { Icono } from "@/components/marca/Icono";
 
 /** Escribe el mensaje como si se estuviera tipeando; solo la primera vez que aparece. */
 export function Burbuja({ texto, titulo = "Así nos llega tu consulta" }: { texto: string; titulo?: string }) {
-  const [n, setN] = useState<number>(() =>
-    typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches ? Infinity : 0,
-  );
+  const [n, setN] = useState<number>(0);
   useEffect(() => {
     if (n === Infinity) return;
     const paso = Math.max(1, Math.ceil(texto.length / 40));

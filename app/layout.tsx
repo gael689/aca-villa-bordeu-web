@@ -55,10 +55,11 @@ export const viewport: Viewport = {
 };
 
 // Corre antes del primer pintado. `js` activa los estados iniciales ocultos de
-// las animaciones (si el usuario pide menos movimiento no se agrega nunca).
+// las animaciones. Se animan también con «menos movimiento» del sistema (decisión
+// de Gael, 19/10/2026: con Windows las apagan muchos sin saberlo).
 // A los 8 s, si el motor no arrancó, se saca `js`: ningún contenido puede
 // quedar invisible por una falla.
-const ANTES_DE_PINTAR = `(function(d){try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('js');setTimeout(function(){if(!d.classList.contains('anim-ready'))d.classList.remove('js')},8000)}}catch(e){}})(document.documentElement)`;
+const ANTES_DE_PINTAR = `(function(d){try{d.classList.add('js');setTimeout(function(){if(!d.classList.contains('anim-ready'))d.classList.remove('js')},8000)}catch(e){}})(document.documentElement)`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
