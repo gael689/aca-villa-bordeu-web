@@ -154,9 +154,8 @@ export function linkWhatsApp(texto: string) {
 
 /** Mensaje genérico para los enlaces que funcionan sin JavaScript. */
 export function linkGenerico(contexto?: string) {
-  const t = contexto
-    ? `Hola! Les escribo desde la web de Villa Bordeu por ${contexto}.\n${FIRMA}`
-    : `Hola! Les escribo desde la web de Villa Bordeu.\n${FIRMA}`;
+  // La firma ya dice que viene de la web: el saludo no lo repite.
+  const t = contexto ? `Hola! Quería consultar por ${contexto}.\n${FIRMA}` : `Hola! Quería hacer una consulta.\n${FIRMA}`;
   return linkWhatsApp(t);
 }
 
