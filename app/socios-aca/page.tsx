@@ -48,7 +48,7 @@ export default function Socios() {
         etiqueta="Socios ACA"
         titulo={
           <>
-            Tu carnet <span className="resalte">también vale acá</span>
+            Hotel para socios ACA <span className="resalte">en Bahía Blanca</span>
           </>
         }
         bajada="Villa Bordeu es parte de la Red Hotelera del Automóvil Club Argentino: la primera parada ACA camino al sur."

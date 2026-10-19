@@ -30,7 +30,7 @@ export default function EstacionDeServicio() {
         etiqueta="Estación de servicio"
         titulo={
           <>
-            ACA YPF <span className="resalte">en la ruta</span>
+            Estación de servicio ACA YPF <span className="resalte">en la ruta</span>
           </>
         }
         bajada="Combustible en el mismo predio donde dormís y comés. Para seguir viaje o para la flota del equipo."

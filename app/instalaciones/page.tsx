@@ -68,7 +68,7 @@ export default function Instalaciones() {
         etiqueta="Instalaciones"
         titulo={
           <>
-            Todo en un <span className="resalte">mismo predio</span>
+            Instalaciones: todo en un <span className="resalte">mismo predio</span>
           </>
         }
         bajada="Habitaciones, restaurante, gimnasio, sala de reuniones, oficina de cortesía, tienda y estación de servicio, sobre el cruce de rutas."

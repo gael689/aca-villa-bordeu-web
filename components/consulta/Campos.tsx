@@ -156,7 +156,10 @@ export function Campo({
   ].join(" ");
   return (
     <label className="block">
-      <span className="mb-1.5 block text-[13px] font-semibold text-asfalto">{etiqueta}</span>
+      <span className="mb-1.5 block text-[13px] font-semibold text-asfalto">
+        {etiqueta}
+        {requerido && <span className="text-acento"> *</span>}
+      </span>
       {largo ? (
         <textarea
           id={id}
@@ -192,7 +195,7 @@ export function Campo({
   );
 }
 
-/** Nombre y apellido, teléfono y e-mail: obligatorios para mandar por WhatsApp o por mail. */
+/** Nombre y apellido, teléfono y e-mail, marcados con *: obligatorios para enviar por mail. */
 export function DatosPersonales({
   prefijo,
   datos,
@@ -208,7 +211,7 @@ export function DatosPersonales({
   return (
     <fieldset className="space-y-3">
       <legend className="mb-3 text-[15px] font-semibold">
-        Tus datos <span className="font-normal text-asfalto">· obligatorios</span>
+        Tus datos
       </legend>
       <Campo
         id={`${prefijo}-nombre`}

@@ -5,6 +5,7 @@ import { CARTA } from "@/lib/carta";
 import { MENSAJE_MESA, linkWhatsApp } from "@/lib/mensaje";
 import { JsonLd, restoJsonLd } from "@/lib/schema";
 import { Icono } from "@/components/marca/Icono";
+import { Carrusel } from "@/components/galeria/Carrusel";
 import { Cierre, Citable, PortadaPagina } from "@/components/secciones/Comunes";
 import { BotonAbrirPedido, PedidoProvider } from "@/components/pedido/Pedido";
 
@@ -49,7 +50,7 @@ export default function Restaurante() {
         etiqueta="Resto · desde 1984"
         titulo={
           <>
-            Cocinamos <span className="resalte">desde 1984</span>
+            Restaurante en la ruta, <span className="resalte">desde 1984</span>
           </>
         }
         bajada="El restaurante de Villa Bordeu, sobre la ruta. Para los que se alojan, para los equipos y para los que pasan."
@@ -71,13 +72,13 @@ export default function Restaurante() {
 
       {/* Galería horizontal */}
       <section className="pb-[clamp(56px,6vw,100px)]">
-        <div className="sin-barra flex snap-x snap-mandatory gap-3 overflow-x-auto px-[var(--gutter)]">
+        <Carrusel className="sin-barra flex snap-x snap-mandatory gap-3 overflow-x-auto px-[var(--gutter)]">
           {galeria.map((f, i) => (
             <div key={f.src} className={`tarjeta relative h-[56svh] max-h-[560px] shrink-0 snap-center ${i % 2 ? "w-[62vw] sm:w-[34vw]" : "w-[80vw] sm:w-[46vw]"}`} data-clip data-delay={String(i * 0.06)}>
               <Image src={f.src} alt={f.alt} fill sizes="(min-width: 640px) 46vw, 80vw" placeholder="blur" blurDataURL={f.blurDataURL} className="object-cover" />
             </div>
           ))}
-        </div>
+        </Carrusel>
       </section>
 
       {/* La carta: cada sección es un capítulo con su foto fija al costado */}

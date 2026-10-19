@@ -3,7 +3,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { track } from "@vercel/analytics";
 import { CARTA } from "@/lib/carta";
-import { datosCompletos, fechaCorta, linkWhatsApp, mensajePedido, type Curso, type Datos, type DiaPedido, type ItemPedido } from "@/lib/mensaje";
+import { fechaCorta, linkWhatsApp, mensajePedido, type Curso, type Datos, type DiaPedido, type ItemPedido } from "@/lib/mensaje";
 import { SITIO } from "@/lib/sitio";
 import { Icono } from "@/components/marca/Icono";
 import { bloquearScroll } from "@/components/motion/scroll";
@@ -601,39 +601,33 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
               )}
             </div>
           ) : (
-            <>
-              {!datosCompletos(datos) && <p className="mb-2.5 text-[13px] text-asfalto">Completá nombre y apellido, teléfono y e-mail para enviar.</p>}
-              <div className="grid gap-2.5 sm:grid-cols-[1.4fr_1fr]">
-                <a
-                  href={linkWhatsApp(mensaje)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => {
-                    if (!revisar()) {
-                      e.preventDefault();
-                      return;
-                    }
-                    track("pedido_whatsapp", { platos: total, personas });
-                    conversionAds("pedido_whatsapp");
-                    // Después del clic: el link tiene que abrirse antes de que el botón se reemplace.
-                    window.setTimeout(() => marcarEnviado("whatsapp"));
-                  }}
-                  className="btn btn-wpp sin-burbuja w-full"
-                >
-                  <Icono nombre="whatsapp" className="size-5" />
-                  Enviar por WhatsApp
-                </a>
-                <button
-                  type="button"
-                  onClick={() => void enviarMail()}
-                  disabled={envio === "enviando"}
-                  className="btn btn-fantasma sin-burbuja w-full disabled:opacity-50"
-                >
-                  <Icono nombre="sobre" className="size-5" />
-                  {envio === "enviando" ? "Enviando…" : "Por mail"}
-                </button>
-              </div>
-            </>
+            // Por mail hacen falta los datos (el hotel responde a ese mail); por WhatsApp sale igual.
+            <div className="grid gap-2.5 sm:grid-cols-2">
+              <button
+                type="button"
+                onClick={() => void enviarMail()}
+                disabled={envio === "enviando"}
+                className="btn btn-oscuro sin-burbuja w-full disabled:opacity-50"
+              >
+                <Icono nombre="sobre" className="size-5" />
+                {envio === "enviando" ? "Enviando…" : "Enviar pedido"}
+              </button>
+              <a
+                href={linkWhatsApp(mensaje)}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => {
+                  track("pedido_whatsapp", { platos: total, personas });
+                  conversionAds("pedido_whatsapp");
+                  // Después del clic: el link tiene que abrirse antes de que el botón se reemplace.
+                  window.setTimeout(() => marcarEnviado("whatsapp"));
+                }}
+                className="btn btn-wpp sin-burbuja w-full"
+              >
+                <Icono nombre="whatsapp" className="size-5" />
+                Enviar por WhatsApp
+              </a>
+            </div>
           )}
         </footer>
       </div>

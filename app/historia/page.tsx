@@ -47,7 +47,7 @@ export default function Historia() {
         etiqueta="Nuestra historia"
         titulo={
           <>
-            Más de un siglo <span className="resalte">en la ruta</span>
+            Nuestra historia: más de un siglo <span className="resalte">en la ruta</span>
           </>
         }
         bajada="Del club que en 1904 pedía caminos al cruce de rutas donde hoy paran los equipos que trabajan en Bahía Blanca."

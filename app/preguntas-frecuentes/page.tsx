@@ -23,7 +23,7 @@ export default function Preguntas() {
         etiqueta="Preguntas frecuentes"
         titulo={
           <>
-            Lo que más <span className="resalte">nos preguntan</span>
+            Preguntas <span className="resalte">frecuentes</span>
           </>
         }
         bajada="Y si no está acá, escribinos: la recepción atiende las 24 horas."

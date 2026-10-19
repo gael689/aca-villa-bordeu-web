@@ -23,7 +23,7 @@ export default function Contacto() {
         etiqueta="Contacto"
         titulo={
           <>
-            Estamos <span className="resalte">las 24 horas</span>
+            Contacto: estamos <span className="resalte">las 24 horas</span>
           </>
         }
         bajada="Escribinos, llamanos o vení directo: la recepción siempre está abierta."

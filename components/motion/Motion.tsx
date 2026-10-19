@@ -41,7 +41,9 @@ export function Motion() {
       void cargar();
     };
     eventos.forEach((e) => window.addEventListener(e, una, { passive: true, once: true }));
-    const t = window.setTimeout(una, 4000);
+    // Con un ancla (/restaurante#carta) o la página ya bajada, lo que está a la vista
+    // no es la portada: sin el motor quedaría oculto hasta los 4 s.
+    const t = window.setTimeout(una, location.hash || window.scrollY > 0 ? 0 : 4000);
 
     return () => {
       vivo = false;

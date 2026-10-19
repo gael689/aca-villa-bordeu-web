@@ -22,7 +22,7 @@ export default function PaginaConsulta() {
         etiqueta="Consultar disponibilidad"
         titulo={
           <>
-            Contanos qué <span className="resalte">necesitás</span>
+            Consultá <span className="resalte">disponibilidad</span>
           </>
         }
         bajada="Te respondemos por WhatsApp o mail. La recepción atiende las 24 horas."

@@ -27,7 +27,8 @@ export const metadata: Metadata = {
   applicationName: SITIO.nombre,
   category: "travel",
   verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION,
+    // Search Console (cuenta de Gael, 19/10/2026). Es público: va en el <head> de todas las páginas.
+    google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION ?? "EEiuUcQw1roEFXY3FbkDFOvpnY-OLPoIhQe7cWdtE2w",
     other: process.env.NEXT_PUBLIC_BING_VERIFICATION ? { "msvalidate.01": process.env.NEXT_PUBLIC_BING_VERIFICATION } : undefined,
   },
   other: {
