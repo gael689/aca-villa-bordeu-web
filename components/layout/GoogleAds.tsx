@@ -3,9 +3,14 @@
 import { useEffect, useState } from "react";
 import Script from "next/script";
 
-// Tag de Google Ads que ya usa el sitio viejo (hay campañas activas). Arranca con
-// Consent Mode en «denegado» y se habilita cuando la persona acepta el aviso.
+// Tag de Google Ads que ya usa el sitio viejo (hay campañas activas) y Google Analytics 4
+// (las estadísticas de visitas que prometía la propuesta: Vercel Analytics no corre en el
+// hosting del cliente). Los dos van por el mismo gtag.js, arrancan con Consent Mode en
+// «denegado» y se habilitan cuando la persona acepta el aviso.
 const ADS_ID = "AW-17391925073";
+// ID de la propiedad de Analytics («G-…»). Vacío = Analytics apagado; se completa acá o con
+// NEXT_PUBLIC_GA_ID al exportar.
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID ?? "";
 const CLAVE = "vb-cookies";
 
 declare global {
@@ -52,7 +57,7 @@ export function GoogleTagManager() {
         {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}window.gtag=gtag;
 gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'});
 try{if(localStorage.getItem('${CLAVE}')==='si'){gtag('consent','update',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'})}}catch(e){}
-gtag('js',new Date());gtag('config','${ADS_ID}');`}
+gtag('js',new Date());gtag('config','${ADS_ID}');${GA_ID ? `gtag('config','${GA_ID}');` : ""}`}
       </Script>
       <Script src={`https://www.googletagmanager.com/gtag/js?id=${ADS_ID}`} strategy="lazyOnload" />
       {decision === null && (
@@ -80,7 +85,9 @@ gtag('js',new Date());gtag('config','${ADS_ID}');`}
  * Conversión de Google Ads (se llama al enviar una consulta o un pedido). Es la
  * acción «Contacto» que ya usaba el sitio viejo (`google_tag_inc.php`): con otro
  * nombre de evento, Google Ads no la cuenta. `evento` va como dato aparte.
+ * En Analytics se registra como `generate_lead` (el evento estándar de «contacto»).
  */
 export function conversionAds(evento: string) {
   window.gtag?.("event", "conversion", { send_to: `${ADS_ID}/na18CJeM85YbENHujuVA`, event_label: evento });
+  if (GA_ID) window.gtag?.("event", "generate_lead", { send_to: GA_ID, metodo: evento });
 }
