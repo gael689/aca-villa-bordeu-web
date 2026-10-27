@@ -23,7 +23,9 @@ export function Motion() {
 
     const cargar = () =>
       import("./motor").then((m) => {
-        if (!vivo) return;
+        // Si el respaldo del <head> ya mostró todo (poca señal), no se anima tarde:
+        // los títulos y las fotos volverían a ocultarse para entrar.
+        if (!vivo || !html.classList.contains("js")) return;
         motor.current = m;
         m.arrancar();
         void m.escanear();

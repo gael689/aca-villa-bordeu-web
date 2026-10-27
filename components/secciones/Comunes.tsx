@@ -205,7 +205,7 @@ export function Cierre({
         </h2>
         <div className="mt-10 flex flex-wrap justify-center gap-3" data-reveal>
           <BotonConsultar modo={modo} origen={origen}>
-            {modo === "empresa" ? "Consultar para mi equipo" : "Consultar disponibilidad"}
+            {modo === "empresa" ? "Consultar para mi equipo" : modo === "delegacion" ? "Consultar para la delegación" : "Consultar disponibilidad"}
           </BotonConsultar>
           <a href={linkGenerico()} target="_blank" rel="noopener noreferrer" className="btn btn-wpp sin-burbuja">
             <Icono nombre="whatsapp" className="size-5" /> WhatsApp

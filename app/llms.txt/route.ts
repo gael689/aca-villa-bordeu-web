@@ -1,5 +1,6 @@
 import { SITIO, actualizado, urlAbs } from "@/lib/sitio";
 import { RUBROS } from "@/lib/rubros";
+import { DELEGACIONES } from "@/lib/delegaciones";
 import { RUTAS } from "@/lib/rutas";
 import { LUGARES } from "@/lib/cerca";
 import { DISTANCIAS_TRABAJO, SERVICIOS } from "@/lib/datos";
@@ -43,6 +44,7 @@ export function GET() {
   l.push("", "## Páginas", "");
   l.push(`- [Alojamiento para empresas](${urlAbs("/empresas")})`);
   RUBROS.forEach((r) => l.push(`- [${r.h1}](${urlAbs(`/empresas/${r.slug}`)}): ${r.bajada}`));
+  l.push(`- [${DELEGACIONES.h1}](${urlAbs(`/${DELEGACIONES.slug}`)}): ${DELEGACIONES.bajada}`);
   l.push(`- [Habitaciones](${urlAbs("/habitaciones")})`, `- [Restaurante](${urlAbs("/restaurante")})`, `- [Instalaciones](${urlAbs("/instalaciones")})`);
   l.push(`- [Sala de reuniones](${urlAbs("/sala-de-reuniones")})`, `- [Estación de servicio](${urlAbs("/estacion-de-servicio")})`, `- [Socios ACA](${urlAbs("/socios-aca")})`);
   l.push(`- [Historia](${urlAbs("/historia")})`, `- [Preguntas frecuentes](${urlAbs("/preguntas-frecuentes")})`, `- [Contacto](${urlAbs("/contacto")})`);

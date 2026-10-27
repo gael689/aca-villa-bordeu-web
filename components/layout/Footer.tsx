@@ -11,6 +11,7 @@ import { Escudo } from "@/components/marca/Escudo";
 const PRINCIPAL = [
   { href: "/socios-aca", texto: "Socios ACA" },
   { href: "/empresas", texto: "Empresas" },
+  { href: "/delegaciones-deportivas", texto: "Delegaciones deportivas" },
   { href: "/habitaciones", texto: "Habitaciones" },
   { href: "/restaurante", texto: "Restaurante" },
   { href: "/instalaciones", texto: "Instalaciones" },

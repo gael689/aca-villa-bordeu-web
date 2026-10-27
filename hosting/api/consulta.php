@@ -59,7 +59,7 @@ $email = $linea($texto('email', 120));
 $empresa = $linea($texto('empresa', 120) ?? '');
 $trampa = $texto('sitio', 200);
 
-if (!in_array($modo, ['empresa', 'viaje', 'pedido'], true)) responder(400);
+if (!in_array($modo, ['empresa', 'delegacion', 'viaje', 'pedido'], true)) responder(400);
 if ($mensaje === null || mb_strlen($mensaje, 'UTF-8') < 10) responder(400);
 if (mb_strlen($nombre, 'UTF-8') < 3) responder(400);
 if (strlen(preg_replace('/\D/', '', $telefono)) < 8) responder(400);
@@ -86,7 +86,7 @@ $enviar = function ($para, $responderA, $asunto, $html) use ($asuntoMime) {
 
 $quien = $empresa !== '' ? "$empresa ($nombre)" : $nombre;
 $pedido = $modo === 'pedido';
-$tipo = $modo === 'empresa' ? 'Equipo de trabajo' : ($modo === 'viaje' ? 'Viaje' : 'Pedido del Resto');
+$tipo = ['empresa' => 'Equipo de trabajo', 'delegacion' => 'Delegación deportiva', 'viaje' => 'Viaje', 'pedido' => 'Pedido del Resto'][$modo];
 $que = $pedido ? 'pedido' : 'consulta';
 $caja = '<div style="background:#f6f5f2;border-radius:12px;padding:16px;white-space:pre-line">' . $e($mensaje) . '</div>';
 

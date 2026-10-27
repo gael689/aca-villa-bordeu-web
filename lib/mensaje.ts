@@ -3,7 +3,7 @@ import { SITIO } from "./sitio";
 // Arma los mensajes de la consulta. Nunca menciona precios: el hotel responde
 // por el mismo medio con todo lo que haga falta.
 
-export type Modo = "empresa" | "viaje";
+export type Modo = "empresa" | "viaje" | "delegacion";
 
 /** Datos de quien escribe: obligatorios en la reserva y en el pedido del Resto (pedido del cliente, oct/2026). */
 export type Datos = { nombre: string; telefono: string; email: string };
@@ -28,14 +28,11 @@ function lineasDatos(d: Datos): string[] {
   return l.length ? ["", "Mis datos:", ...l] : [];
 }
 
-export const NECESIDADES = [
-  "Desayuno",
-  "Almuerzo o vianda",
-  "Cena",
-  "Lavandería",
-  "Cochera para vehículos",
-  "Sala de reuniones",
-] as const;
+// Van tildados y fijos en la solicitud: están en la tarifa (pedido del cliente, 20/10/2026).
+export const INCLUIDOS = ["Desayuno", "Cochera"] as const;
+export type Incluido = (typeof INCLUIDOS)[number];
+
+export const NECESIDADES = ["Almuerzo o vianda", "Cena", "Lavandería", "Sala de reuniones"] as const;
 export type Necesidad = (typeof NECESIDADES)[number];
 
 /**
@@ -49,6 +46,8 @@ export type EstadoReserva = {
   ninos: number;
   socio: boolean | null;
   trabajo: boolean | null;
+  /** Delegación deportiva (20/10/2026): `empresa` pasa a ser el club y `rubro`, la disciplina o el torneo. */
+  delegacion: boolean;
   empresa: string;
   rubro: string;
   necesidades: Necesidad[];
@@ -92,7 +91,12 @@ export function mensajeReserva(c: EstadoReserva): string {
     .join(" y ");
   l.push(`• ${quienes}`);
   if (c.socio !== null) l.push(c.socio ? "• Soy socio ACA" : "• No soy socio ACA");
-  if (c.trabajo) {
+  if (c.delegacion) {
+    l.push("• Somos una delegación deportiva");
+    if (c.empresa.trim()) l.push(`• Club o institución: ${c.empresa.trim()}`);
+    if (c.rubro.trim()) l.push(`• Disciplina o torneo: ${c.rubro.trim()}`);
+    if (c.necesidades.length) l.push(`• Necesitamos: ${c.necesidades.join(", ").toLowerCase()}`);
+  } else if (c.trabajo) {
     l.push("• Es por trabajo");
     if (c.empresa.trim()) l.push(`• Empresa: ${c.empresa.trim()}`);
     if (c.rubro.trim()) l.push(`• Trabajo en: ${c.rubro.trim()}`);

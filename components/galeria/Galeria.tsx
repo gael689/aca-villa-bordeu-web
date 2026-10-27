@@ -51,6 +51,8 @@ function Celda({
 /** `prioridad` en false para galerías que arrancan ocultas (las pestañas de habitaciones): no precargan la primera foto. */
 export function Galeria({ fotos, nombre, transicion, prioridad = true }: { fotos: Foto[]; nombre: string; transicion?: string; prioridad?: boolean }) {
   const [abierta, setAbierta] = useState<number | null>(null);
+  // Con poca señal la foto grande tarda: hasta que llega, la borrosa y el aviso.
+  const [cargada, setCargada] = useState<string | null>(null);
   const dlg = useRef<HTMLDialogElement>(null);
   const inicioX = useRef<number | null>(null);
   const total = fotos.length;
@@ -145,7 +147,23 @@ export function Galeria({ fotos, nombre, transicion, prioridad = true }: { fotos
               </button>
             </div>
             <div className="relative min-h-0 flex-1">
-              <Image key={actual.src} src={actual.src} alt={actual.alt} fill sizes="100vw" quality={82} className="visor-entra object-contain" />
+              <Image
+                key={actual.src}
+                src={actual.src}
+                alt={actual.alt}
+                fill
+                sizes="100vw"
+                quality={82}
+                placeholder="blur"
+                blurDataURL={actual.blurDataURL}
+                onLoad={() => setCargada(actual.src)}
+                className="visor-entra object-contain"
+              />
+              {cargada !== actual.src && (
+                <p role="status" className="pointer-events-none absolute inset-0 grid place-items-center">
+                  <span className="rounded-full bg-[#0A0A0A]/75 px-5 py-2.5 font-display text-[14px] tracking-[0.14em] text-[#FAFAFA] uppercase">Cargando foto…</span>
+                </p>
+              )}
             </div>
             <div className="flex items-center justify-between gap-4 px-[var(--gutter)] py-5">
               <p className="max-w-[60ch] text-[14px] text-crema/85">{actual.alt}</p>

@@ -66,8 +66,25 @@ try {
 }
 if (r.status !== 0) process.exit(r.status ?? 1);
 
-// ── 3. PHP y .htaccess ──────────────────────────────────────────────────────
 const OUT = join(RAIZ, "out");
+
+// Next 16 escribe los segmentos de cada página en subcarpetas
+// (socios-aca/__next.socios-aca/__PAGE__.txt) pero el navegador los pide con puntos
+// (socios-aca/__next.socios-aca.__PAGE__.txt). En Vercel lo resuelve el servidor de
+// Next; en Apache daban 404 al navegar. Se copian con el nombre que se pide.
+const segmentos = (dir) =>
+  readdirSync(dir, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? segmentos(join(dir, e.name)) : [join(dir, e.name)]));
+let copiados = 0;
+for (const archivo of segmentos(OUT)) {
+  const partes = relative(OUT, archivo).split(/[\\/]/);
+  const i = partes.findIndex((p) => p.startsWith("__next."));
+  if (i === -1 || i === partes.length - 1) continue;
+  copyFileSync(archivo, join(OUT, ...partes.slice(0, i), partes.slice(i).join(".")));
+  copiados++;
+}
+console.log(`Segmentos: ${copiados} copiados con el nombre que pide el navegador`);
+
+// ── 3. PHP y .htaccess ──────────────────────────────────────────────────────
 mkdirSync(join(OUT, "api"), { recursive: true });
 copyFileSync(join(RAIZ, "hosting", "api", "consulta.php"), join(OUT, "api", "consulta.php"));
 

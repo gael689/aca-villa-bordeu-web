@@ -64,7 +64,8 @@ export function BotonConsultar({
   icono?: boolean;
 }) {
   const { abrir } = useConsulta();
-  const contexto = modo === "empresa" ? "alojamiento para un equipo de trabajo" : modo === "viaje" ? "una estadía" : undefined;
+  const contexto =
+    modo === "empresa" ? "alojamiento para un equipo de trabajo" : modo === "delegacion" ? "alojamiento para una delegación deportiva" : modo === "viaje" ? "una estadía" : undefined;
   return (
     <a
       href={linkGenerico(contexto)}

@@ -58,9 +58,10 @@ export const viewport: Viewport = {
 // Corre antes del primer pintado. `js` activa los estados iniciales ocultos de
 // las animaciones. Se animan también con «menos movimiento» del sistema (decisión
 // de Gael, 19/10/2026: con Windows las apagan muchos sin saberlo).
-// A los 8 s, si el motor no arrancó, se saca `js`: ningún contenido puede
-// quedar invisible por una falla.
-const ANTES_DE_PINTAR = `(function(d){try{d.classList.add('js');setTimeout(function(){if(!d.classList.contains('anim-ready'))d.classList.remove('js')},8000)}catch(e){}})(document.documentElement)`;
+// Con poca señal el motor tarda en bajar y lo oculto quedaba en blanco (20/10/2026):
+// si el motor no arrancó 1,5 s después de que la persona baja o toca, o a los 5 s,
+// se saca `js` y se ve todo sin animar. Con 2G o ahorro de datos ni se agrega.
+const ANTES_DE_PINTAR = `(function(d,w){try{var c=navigator.connection;if(c&&(c.saveData||/2g/.test(c.effectiveType)))return;d.classList.add('js');var sacar=function(){if(!d.classList.contains('anim-ready'))d.classList.remove('js')},ev=['scroll','touchstart','wheel','keydown'],una=function(){ev.forEach(function(e){w.removeEventListener(e,una,true)});setTimeout(sacar,1500)};ev.forEach(function(e){w.addEventListener(e,una,{passive:true,capture:true})});setTimeout(sacar,5000)}catch(e){}})(document.documentElement,window)`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

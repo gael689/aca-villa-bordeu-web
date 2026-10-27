@@ -8,7 +8,7 @@ import { esMail } from "@/lib/mensaje";
 // con «Responder» (reply-to) o llama al teléfono, que va en el asunto.
 
 const Esquema = z.object({
-  modo: z.enum(["empresa", "viaje", "pedido"]),
+  modo: z.enum(["empresa", "delegacion", "viaje", "pedido"]),
   mensaje: z.string().min(10).max(4000),
   nombre: z.string().trim().min(3).max(120),
   telefono: z
@@ -55,7 +55,7 @@ export async function POST(req: Request) {
   const remitente = process.env.CONSULTA_REMITENTE ?? "Villa Bordeu <consultas@envios.acavillabordeu.com.ar>";
   const quien = datos.empresa ? `${datos.empresa} (${datos.nombre})` : datos.nombre;
   const pedido = datos.modo === "pedido";
-  const tipo = datos.modo === "empresa" ? "Equipo de trabajo" : datos.modo === "viaje" ? "Viaje" : "Pedido del Resto";
+  const tipo = { empresa: "Equipo de trabajo", delegacion: "Delegación deportiva", viaje: "Viaje", pedido: "Pedido del Resto" }[datos.modo];
   const que = pedido ? "pedido" : "consulta";
   const { email, telefono } = datos;
 

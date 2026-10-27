@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { track } from "@vercel/analytics";
-import { NECESIDADES, fechaCorta, linkWhatsApp, mensajeReserva, noches, type Datos, type Necesidad } from "@/lib/mensaje";
+import { INCLUIDOS, NECESIDADES, fechaCorta, linkWhatsApp, mensajeReserva, noches, type Datos, type Incluido, type Necesidad } from "@/lib/mensaje";
 import { SITIO } from "@/lib/sitio";
 import { Icono, type IconoNombre } from "@/components/marca/Icono";
 import { bloquearScroll } from "@/components/motion/scroll";
@@ -17,12 +17,12 @@ import { useConsulta } from "./ConsultaContext";
 
 const CLAVE = "vb-consulta-v2";
 const PASOS = ["Fechas", "Huéspedes", "Tus datos"];
-const ICONO_NECESIDAD: Record<Necesidad, IconoNombre> = {
+const ICONO_NECESIDAD: Record<Necesidad | Incluido, IconoNombre> = {
   Desayuno: "taza",
   "Almuerzo o vianda": "cubiertos",
   Cena: "luna",
   Lavandería: "lavarropas",
-  "Cochera para vehículos": "camion",
+  Cochera: "camion",
   "Sala de reuniones": "reunion",
 };
 
@@ -93,6 +93,7 @@ export function Consulta() {
   const [ninos, setNinos] = useState(0);
   const [socio, setSocio] = useState<boolean | null>(null);
   const [trabajo, setTrabajo] = useState<boolean | null>(null);
+  const [delegacion, setDelegacion] = useState(false);
   const [empresa, setEmpresa] = useState("");
   const [rubro, setRubro] = useState("");
   const [necesidades, setNecesidades] = useState<Necesidad[]>([]);
@@ -113,6 +114,7 @@ export function Consulta() {
     setNinos(0);
     setSocio(null);
     setTrabajo(null);
+    setDelegacion(false);
     setEmpresa("");
     setRubro("");
     setNecesidades([]);
@@ -154,16 +156,26 @@ export function Consulta() {
           setNinos(g.ninos || 0);
           setSocio(g.socio ?? null);
           setTrabajo(g.trabajo ?? null);
+          setDelegacion(!!g.delegacion);
           setEmpresa(g.empresa ?? "");
           setRubro(g.rubro ?? "");
-          setNecesidades(g.necesidades ?? []);
+          // Una solicitud guardada antes del 20/10/2026 puede traer «Desayuno» o «Cochera», que ahora van incluidos.
+          setNecesidades(((g.necesidades ?? []) as Necesidad[]).filter((n) => NECESIDADES.includes(n)));
           setMascota(!!g.mascota);
           setAdaptado(!!g.adaptado);
           setDatos({ nombre: g.nombre ?? "", telefono: g.telefono ?? "", email: g.email ?? "" });
         }
       } catch {}
       // Los botones de Empresas abren con «por trabajo» marcado; los de viaje, sin marcar.
-      if (apertura.modo === "empresa") setTrabajo(true);
+      if (apertura.modo === "empresa") {
+        setTrabajo(true);
+        setDelegacion(false);
+      }
+      // Los de Delegaciones abren como delegación: «por trabajo» queda en no.
+      if (apertura.modo === "delegacion") {
+        setTrabajo(false);
+        setDelegacion(true);
+      }
       if (apertura.rubro) setRubro(apertura.rubro);
       if (apertura.personas) setAdultos(Math.min(200, apertura.personas));
       const ing = aFecha(apertura.ingreso);
@@ -202,10 +214,10 @@ export function Consulta() {
     try {
       sessionStorage.setItem(
         CLAVE,
-        JSON.stringify({ entrada, salida, sinFechas, adultos, ninos, socio, trabajo, empresa, rubro, necesidades, mascota, adaptado, ...datos }),
+        JSON.stringify({ entrada, salida, sinFechas, adultos, ninos, socio, trabajo, delegacion, empresa, rubro, necesidades, mascota, adaptado, ...datos }),
       );
     } catch {}
-  }, [abierta, entrada, salida, sinFechas, adultos, ninos, socio, trabajo, empresa, rubro, necesidades, mascota, adaptado, datos]);
+  }, [abierta, entrada, salida, sinFechas, adultos, ninos, socio, trabajo, delegacion, empresa, rubro, necesidades, mascota, adaptado, datos]);
 
   useEffect(() => {
     if (abierta) titulo.current?.focus({ preventScroll: true });
@@ -225,13 +237,13 @@ export function Consulta() {
       mensajeReserva({
         entrada: sinFechas ? null : entrada,
         salida: sinFechas ? null : salida,
-        adultos, ninos, socio, trabajo, empresa, rubro, necesidades, mascota, adaptado, ...datos,
+        adultos, ninos, socio, trabajo, delegacion, empresa, rubro, necesidades, mascota, adaptado, ...datos,
       }),
-    [entrada, salida, sinFechas, adultos, ninos, socio, trabajo, empresa, rubro, necesidades, mascota, adaptado, datos],
+    [entrada, salida, sinFechas, adultos, ninos, socio, trabajo, delegacion, empresa, rubro, necesidades, mascota, adaptado, datos],
   );
 
-  // El servidor de mail sigue distinguiendo equipo de trabajo y viaje en el asunto.
-  const modo = trabajo ? "empresa" : "viaje";
+  // El servidor de mail distingue equipo de trabajo, delegación y viaje en el asunto.
+  const modo = trabajo ? "empresa" : delegacion ? "delegacion" : "viaje";
   const datosMedicion = () => ({ modo, personas: adultos + ninos, origen: apertura.origen ?? "panel" });
 
   // Por mail hacen falta nombre, teléfono y e-mail (el hotel responde a ese mail).
@@ -372,12 +384,32 @@ export function Consulta() {
                   </div>
                   <Contador etiqueta="Chicos" valor={ninos} min={0} max={50} onCambiar={setNinos} />
                   <SiNo pregunta="¿Sos socio ACA?" ayuda="Tenés beneficios en toda la red" icono="escudo" valor={socio} onCambiar={setSocio} />
-                  <SiNo pregunta="¿Es por trabajo?" icono="casco" valor={trabajo} onCambiar={setTrabajo} />
-                  {trabajo && (
+                  <SiNo
+                    pregunta="¿Es por trabajo?"
+                    icono="casco"
+                    valor={trabajo}
+                    onCambiar={(v) => {
+                      setTrabajo(v);
+                      if (v) setDelegacion(false);
+                    }}
+                  />
+                  {trabajo === false && (
+                    <SiNo pregunta="¿Viajan como delegación deportiva?" icono="trofeo" valor={delegacion} onCambiar={setDelegacion} />
+                  )}
+                  {(trabajo || delegacion) && (
                     <div className="paso-entra space-y-4 border-b border-[color:var(--linea)] py-4">
                       <div className="grid gap-3 sm:grid-cols-2">
-                        <Campo etiqueta="Empresa" valor={empresa} onCambiar={setEmpresa} auto="organization" />
-                        <Campo etiqueta="Rubro o lugar de trabajo" valor={rubro} onCambiar={setRubro} placeholder="Ej.: obra en el Polo" />
+                        {delegacion ? (
+                          <>
+                            <Campo etiqueta="Club o institución" valor={empresa} onCambiar={setEmpresa} auto="organization" />
+                            <Campo etiqueta="Disciplina o torneo" valor={rubro} onCambiar={setRubro} placeholder="Ej.: básquet U17" />
+                          </>
+                        ) : (
+                          <>
+                            <Campo etiqueta="Empresa" valor={empresa} onCambiar={setEmpresa} auto="organization" />
+                            <Campo etiqueta="Rubro o lugar de trabajo" valor={rubro} onCambiar={setRubro} placeholder="Ej.: obra en el Polo" />
+                          </>
+                        )}
                       </div>
                       <div>
                         <p className="mb-2.5 text-[13px] font-semibold text-asfalto">¿Qué van a necesitar?</p>
@@ -396,6 +428,18 @@ export function Consulta() {
                       </div>
                     </div>
                   )}
+                  <div className="py-4">
+                    <p className="mb-2.5 text-[13px] font-semibold text-asfalto">Incluido en la tarifa</p>
+                    <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                      {INCLUIDOS.map((n) => (
+                        <li key={n} className="flex min-h-12 items-center gap-2.5 rounded-2xl bg-tinta px-4 py-2.5 text-[15px] font-semibold text-white">
+                          <Icono nombre={ICONO_NECESIDAD[n]} className="size-5 shrink-0 text-amarillo" grosor={1.8} />
+                          {n}
+                          <Icono nombre="check" className="ml-auto size-4" grosor={2.4} />
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                   <Interruptor etiqueta="Viajo con mascota" ayuda="Somos pet friendly" icono="pata" valor={mascota} onCambiar={setMascota} />
                   <Interruptor etiqueta="Necesito habitación adaptada" icono="accesible" valor={adaptado} onCambiar={setAdaptado} />
                   <p className="mt-6 rounded-2xl bg-white p-4 text-[15px] text-asfalto shadow-[inset_0_0_0_1px_var(--linea)]">
