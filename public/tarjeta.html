@@ -1,5 +1,5 @@
 <!doctype html><html lang="es"><head><meta charset="utf-8">
-<meta name="robots" content="noindex"><link rel="icon" href="/favicon.ico"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex"><link rel="icon" href="/favicon.ico"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f1bb01">
 <title>ACA Villa Bordeu · Contacto</title><link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=block" rel="stylesheet">
 <style>
@@ -12,6 +12,9 @@
 
   body { background: #f1bb01; }
   .tel { max-width: 480px; margin: 0 auto; min-height: 100vh; }
+  /* «Guardar contacto» flotante: a un toque apenas se abre y mientras se scrollea. */
+  body { padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
+  .flota { position: fixed; z-index: 20; left: 50%; transform: translateX(-50%); bottom: calc(14px + env(safe-area-inset-bottom)); width: min(448px, calc(100% - 32px)); margin: 0 !important; box-shadow: 0 14px 32px -10px rgb(0 0 0 / .5); }
 
   .tel { display: flex; flex-direction: column; padding: 28px 22px 26px; }
   .marca { display: flex; align-items: center; gap: 12px; }
@@ -40,6 +43,6 @@
     <a class="fila" href="https://www.google.com/maps/dir/?api=1&destination=-38.700554,-62.333004"><span class="burbuja"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.200-7-11a7 7 0 0 1 14 0c0 4.800-7 11-7 11z"/><path d="M9.500 10a2.500 2.500 0 1 0 5 0a2.500 2.500 0 1 0-5 0"/></svg></span><span><small>Cómo llegar</small><b>Camino Parque Sesquicentenario 1699</b></span><svg class="ic flechita" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M8 7h9v9"/></svg></a>
     <a class="fila" href="https://www.acavillabordeu.com.ar"><span class="burbuja"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0"/><path d="M3.5 9h17"/><path d="M3.5 15h17"/><path d="M12 3c2.5 2.6 3.5 5.6 3.5 9s-1 6.4-3.5 9c-2.5-2.6-3.5-5.6-3.5-9s1-6.4 3.5-9z"/></svg></span><span><small>Web</small><b>acavillabordeu.com.ar</b></span><svg class="ic flechita" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M8 7h9v9"/></svg></a>
   </div>
-  <a class="guardar" href="/tarjetas/aca-villa-bordeu.vcf"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 8a4 4 0 1 0 8 0a4 4 0 1 0-8 0"/><path d="M3.5 21a8.5 8.5 0 0 1 12-7.7"/><path d="M19 15v6"/><path d="M16 18h6"/></svg> Guardar contacto</a>
+  <a class="guardar flota" href="/tarjetas/aca-villa-bordeu.vcf"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 8a4 4 0 1 0 8 0a4 4 0 1 0-8 0"/><path d="M3.5 21a8.5 8.5 0 0 1 12-7.7"/><path d="M19 15v6"/><path d="M16 18h6"/></svg> Guardar contacto</a>
   <p class="pie"><span>Desde 1984</span><span>Automóvil Club Argentino</span></p>
 </main></body></html>
