@@ -629,12 +629,6 @@ img {
   @keyframes item-sube {
     from { opacity: 0; transform: translateY(40px); }
   }
-  .mega {
-    animation: mega-abre 0.5s var(--ease-pt) both;
-  }
-  @keyframes mega-abre {
-    from { opacity: 0; transform: translateY(-8px) scale(0.98); }
-  }
   .visor-entra {
     animation: velo-in 0.4s ease both;
   }

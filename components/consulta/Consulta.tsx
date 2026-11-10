@@ -8,7 +8,7 @@ import { Icono, type IconoNombre } from "@/components/marca/Icono";
 import { bloquearScroll } from "@/components/motion/scroll";
 import { conversionAds } from "@/components/layout/GoogleAds";
 import { Calendario } from "./Calendario";
-import { Burbuja, Campo, Contador, DatosPersonales, Enviado, Opcion, revisarDatos } from "./Campos";
+import { AvisoWhatsApp, Burbuja, Campo, Contador, DatosPersonales, Enviado, Opcion, revisarDatos } from "./Campos";
 import { useConsulta } from "./ConsultaContext";
 
 // Solicitud de reserva: un solo formulario para viajeros y equipos de trabajo
@@ -323,7 +323,7 @@ export function Consulta() {
 
         <div data-lenis-prevent className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pb-6 md:px-8">
           {ultimo && enviado ? (
-            <Enviado canal={envio === "whatsapp" ? "whatsapp" : "mail"} que="consulta" email={datos.email} />
+            <Enviado canal={envio === "whatsapp" ? "whatsapp" : "mail"} que="consulta" email={datos.email} whatsapp={linkWhatsApp(mensaje)} />
           ) : (
             <div key={paso} className={claseEntra}>
               {paso === 0 && (
@@ -526,6 +526,7 @@ export function Consulta() {
                 <Icono nombre="whatsapp" className="size-5" />
                 Enviar por WhatsApp
               </a>
+              <AvisoWhatsApp />
             </div>
             </div>
           )}

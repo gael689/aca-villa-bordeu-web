@@ -3,6 +3,7 @@ import Link from "next/link";
 import { foto } from "@/lib/fotos";
 import { Icono } from "@/components/marca/Icono";
 import { BotonConsultar } from "@/components/consulta/ConsultaContext";
+import { linkGenerico } from "@/lib/mensaje";
 
 // Solo fotos nítidas, recortadas desde los originales (fotos-seleccion/portada).
 // El salón de noche y la barra quedaron afuera: son de celular con poca luz y en grande se ven blandas.
@@ -65,6 +66,18 @@ export function Hero() {
             </span>
           </Link>
         </div>
+
+        {/* Pedido del cliente (nov/2026): por WhatsApp contestan antes que por mail. */}
+        <a
+          href={linkGenerico()}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hero-in mt-4 inline-flex items-center gap-2 text-[14px] font-medium text-white/80 underline-offset-4 hover:text-white hover:underline"
+          style={vars(2)}
+        >
+          <Icono nombre="whatsapp" className="size-4 text-wpp" />
+          Por WhatsApp te respondemos más rápido
+        </a>
 
         {/* Una sola línea de datos: lo que hace elegir este lugar */}
         <ul className="hero-in mt-10 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[13px] font-semibold tracking-[0.08em] text-white/75 uppercase md:text-[14px]" style={vars(3)}>

@@ -9,7 +9,7 @@ import { Icono } from "@/components/marca/Icono";
 import { bloquearScroll } from "@/components/motion/scroll";
 import { conversionAds } from "@/components/layout/GoogleAds";
 import { Calendario } from "@/components/consulta/Calendario";
-import { Burbuja, Campo, Contador, DatosPersonales, Enviado, Opcion, revisarDatos } from "@/components/consulta/Campos";
+import { AvisoWhatsApp, Burbuja, Campo, Contador, DatosPersonales, Enviado, Opcion, revisarDatos } from "@/components/consulta/Campos";
 
 // «Prepará tu pedido» (pedido del cliente, oct/2026), pensado para empresas que
 // vienen a comer con su equipo. Un asistente que acompaña paso a paso, como una
@@ -544,7 +544,7 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
 
             {paso === 5 && <Cuando dias={dias} setDias={setDias} mismo={mismo} setMismo={setMismo} />}
 
-            {ultimo && enviado && <Enviado canal={envio === "whatsapp" ? "whatsapp" : "mail"} que="pedido" email={datos.email} />}
+            {ultimo && enviado && <Enviado canal={envio === "whatsapp" ? "whatsapp" : "mail"} que="pedido" email={datos.email} whatsapp={linkWhatsApp(mensaje)} />}
 
             {ultimo && !enviado && (
               <div className="mx-auto max-w-[680px] space-y-5">
@@ -632,6 +632,7 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
                 <Icono nombre="whatsapp" className="size-5" />
                 Enviar por WhatsApp
               </a>
+              <AvisoWhatsApp />
             </div>
             </div>
           )}

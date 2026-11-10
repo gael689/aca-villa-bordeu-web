@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { MENU } from "@/lib/navegacion";
+import { MENU, type EntradaMenu } from "@/lib/navegacion";
 import { foto } from "@/lib/fotos";
 import { SITIO, telLink } from "@/lib/sitio";
 import { linkGenerico } from "@/lib/mensaje";
@@ -21,9 +21,41 @@ export function Header() {
   const pathname = usePathname();
   const [arriba, setArriba] = useState(true);
   const [menu, setMenu] = useState(false);
-  const [mega, setMega] = useState(false);
-  const [submenu, setSubmenu] = useState(false);
+  // Cada desplegable tiene su estado: se guarda cuál está abierto (su href), así nunca se abren dos.
+  const [abierto, setAbierto] = useState<string | null>(null);
+  const [submenu, setSubmenu] = useState<string | null>(null);
   const cierreMega = useRef<number | undefined>(undefined);
+  const navRef = useRef<HTMLElement>(null);
+
+  const abrir = (href: string) => {
+    window.clearTimeout(cierreMega.current);
+    setAbierto(href);
+  };
+  const cerrar = () => {
+    window.clearTimeout(cierreMega.current);
+    setAbierto(null);
+  };
+
+  // Abierto: Escape lo cierra y devuelve el foco al botón; tocar afuera también lo cierra.
+  useEffect(() => {
+    if (!abierto) return;
+    const alTeclear = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      setAbierto(null);
+      navRef.current?.querySelector<HTMLButtonElement>(`[data-menu="${abierto}"]`)?.focus();
+    };
+    const alTocarAfuera = (e: PointerEvent) => {
+      if (!navRef.current?.contains(e.target as Node)) setAbierto(null);
+    };
+    window.addEventListener("keydown", alTeclear);
+    document.addEventListener("pointerdown", alTocarAfuera);
+    return () => {
+      window.removeEventListener("keydown", alTeclear);
+      document.removeEventListener("pointerdown", alTocarAfuera);
+    };
+  }, [abierto]);
+
+  useEffect(() => () => window.clearTimeout(cierreMega.current), []);
 
   useEffect(() => {
     let raf = 0;
@@ -46,8 +78,8 @@ export function Header() {
   if (rutaPrevia !== pathname) {
     setRutaPrevia(pathname);
     setMenu(false);
-    setMega(false);
-    setSubmenu(false);
+    setAbierto(null);
+    setSubmenu(null);
   }
 
   useEffect(() => {
@@ -89,38 +121,76 @@ export function Header() {
               <Lockup tono={claro || menu ? "claro" : "oscuro"} />
             </Link>
 
-            <nav aria-label="Principal" className="hidden items-center gap-1 min-[1100px]:flex">
-              {MENU.map((m) =>
-                m.hijos ? (
+            <nav ref={navRef} aria-label="Principal" className="hidden items-center gap-1 min-[1100px]:flex">
+              {MENU.map((m) => {
+                if (!m.hijos) {
+                  return (
+                    <Link
+                      key={m.href}
+                      href={m.href}
+                      aria-current={activo(m.href) ? "page" : undefined}
+                      className={`flex h-10 items-center rounded-full px-4 text-[15px] font-semibold whitespace-nowrap transition-colors ${claro ? "hover:bg-white/12" : "hover:bg-tinta/6"} ${activo(m.href) ? (claro ? "text-amarillo" : "text-dorado") : ""}`}
+                    >
+                      {m.texto}
+                    </Link>
+                  );
+                }
+                const esteAbierto = abierto === m.href;
+                const id = `panel${m.href.replaceAll("/", "-")}`;
+                const [carpeta, archivo] = m.panel ? m.panel.foto.split("/") : [];
+                const f = m.panel && foto(carpeta, archivo, m.panel.alt);
+                return (
                   <div
                     key={m.href}
                     className="relative"
-                    onMouseEnter={() => {
+                    // Solo el mouse abre al pasar por encima: en pantallas táctiles abre y cierra el toque.
+                    onPointerEnter={(e) => e.pointerType === "mouse" && abrir(m.href)}
+                    onPointerLeave={(e) => {
+                      if (e.pointerType !== "mouse") return;
                       window.clearTimeout(cierreMega.current);
-                      setMega(true);
+                      cierreMega.current = window.setTimeout(() => setAbierto((a) => (a === m.href ? null : a)), 160);
                     }}
-                    onMouseLeave={() => {
-                      cierreMega.current = window.setTimeout(() => setMega(false), 160);
+                    onBlur={(e) => {
+                      // Con el teclado, al salir del desplegable con Tab se cierra.
+                      if (e.relatedTarget && !e.currentTarget.contains(e.relatedTarget as Node)) setAbierto((a) => (a === m.href ? null : a));
                     }}
                   >
                     <button
                       type="button"
-                      aria-expanded={mega}
-                      onClick={() => setMega((v) => !v)}
+                      data-menu={m.href}
+                      aria-expanded={esteAbierto}
+                      aria-controls={id}
+                      onClick={(e) => {
+                        // Con el mouse ya se abrió al pasar: el clic no lo vuelve a cerrar.
+                        if (esteAbierto && (e.nativeEvent as PointerEvent).pointerType === "mouse") return;
+                        if (esteAbierto) cerrar();
+                        else abrir(m.href);
+                      }}
                       className={`flex h-10 items-center gap-1.5 rounded-full px-4 text-[15px] font-semibold whitespace-nowrap transition-colors ${claro ? "hover:bg-white/12" : "hover:bg-tinta/6"} ${activo(m.href) || m.hijos.some((h) => activo(h.href)) ? (claro ? "text-amarillo" : "text-dorado") : ""}`}
                     >
                       {m.texto}
-                      <Icono nombre="der" className={`size-3.5 transition-transform duration-300 ${mega ? "-rotate-90" : "rotate-90"}`} grosor={2.2} />
+                      <Icono nombre="der" className={`size-3.5 transition-transform duration-300 ${esteAbierto ? "-rotate-90" : "rotate-90"}`} grosor={2.2} />
                     </button>
-                    {mega && (
-                      <div className="mega absolute top-full left-1/2 w-[640px] -translate-x-1/2 pt-3">
-                        <div className="grid grid-cols-[1fr_1.1fr] gap-2 rounded-[24px] bg-white p-2 text-tinta shadow-[0_30px_70px_-30px_rgb(0_0_0/0.5)]">
-                          <ul className="p-1">
+                    {/* Siempre en el HTML, así Google ve los enlaces; cerrado, `invisible` lo saca de la vista y del Tab. */}
+                    <div
+                      id={id}
+                      onClick={(e) => {
+                        if ((e.target as HTMLElement).closest("a")) cerrar();
+                      }}
+                      className={`absolute top-full left-1/2 w-[640px] -translate-x-1/2 pt-3 transition-[opacity,translate,scale,visibility] duration-300 ease-[var(--ease-pt)] ${esteAbierto ? "visible translate-y-0 scale-100 opacity-100" : "pointer-events-none invisible -translate-y-2 scale-[0.98] opacity-0"}`}
+                    >
+                      <div className="grid grid-cols-[1fr_1.1fr] gap-2 rounded-[24px] bg-white p-2 text-tinta shadow-[0_30px_70px_-30px_rgb(0_0_0/0.5)]">
+                        <div className="p-1">
+                          {m.rotulo && (
+                            <p className="px-2.5 pt-1.5 pb-1 font-display text-[13px] font-semibold tracking-[0.18em] text-asfalto uppercase">{m.rotulo}</p>
+                          )}
+                          <ul>
                             {m.hijos.map((h) => (
                               <li key={h.href}>
                                 <Link
                                   href={h.href}
-                                  className="group flex items-center gap-3 rounded-2xl p-2.5 transition-colors hover:bg-papel"
+                                  aria-current={pathname === h.href ? "page" : undefined}
+                                  className="group flex items-center gap-3 rounded-2xl p-2.5 transition-colors hover:bg-papel focus-visible:bg-papel"
                                 >
                                   <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-papel text-acento transition-colors group-hover:bg-amarillo group-hover:text-tinta">
                                     {h.icono && <Icono nombre={h.icono} className="size-5" grosor={1.7} />}
@@ -133,33 +203,23 @@ export function Header() {
                               </li>
                             ))}
                           </ul>
+                        </div>
+                        {f && m.panel && (
                           <div className="relative overflow-hidden rounded-[18px]">
-                            {(() => {
-                              const f = foto("gimnasio", "01-gym-pared-verde.jpg", "Gimnasio de Villa Bordeu");
-                              return <Image src={f.src} alt="" fill sizes="340px" className="object-cover" placeholder="blur" blurDataURL={f.blurDataURL} />;
-                            })()}
+                            <Image src={f.src} alt="" fill sizes="340px" className="object-cover" placeholder="blur" blurDataURL={f.blurDataURL} />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
                             <p className="absolute inset-x-4 bottom-4 font-display text-[26px] leading-none font-bold text-white uppercase">
-                              Todo en
+                              {m.panel.lema[0]}
                               <br />
-                              un mismo predio
+                              {m.panel.lema[1]}
                             </p>
                           </div>
-                        </div>
+                        )}
                       </div>
-                    )}
+                    </div>
                   </div>
-                ) : (
-                  <Link
-                    key={m.href}
-                    href={m.href}
-                    aria-current={activo(m.href) ? "page" : undefined}
-                    className={`flex h-10 items-center rounded-full px-4 text-[15px] font-semibold whitespace-nowrap transition-colors ${claro ? "hover:bg-white/12" : "hover:bg-tinta/6"} ${activo(m.href) ? (claro ? "text-amarillo" : "text-dorado") : ""}`}
-                  >
-                    {m.texto}
-                  </Link>
-                ),
-              )}
+                );
+              })}
             </nav>
 
             <div className="flex items-center gap-2">
@@ -196,23 +256,26 @@ export function Header() {
           <div className="flex min-h-full flex-col px-[var(--gutter)] pt-[calc(var(--header-h)+24px)] pb-[max(24px,env(safe-area-inset-bottom))]">
             <nav aria-label="Menú" className="flex-1">
               <ul>
-                {/* Mismo orden que en escritorio; «Instalaciones» se despliega como en el mega menú. */}
-                {[{ href: "/", texto: "Inicio" }, ...MENU].map((m, i) => (
+                {/* Mismo orden que en escritorio; «Empresas» e «Instalaciones» se despliegan como en el mega menú, de a uno. */}
+                {[{ href: "/", texto: "Inicio" } as EntradaMenu, ...MENU].map((m, i) => (
                   <li key={m.href + m.texto} className="item border-b border-white/10" style={{ ["--i" as string]: i }}>
-                    {"hijos" in m && m.hijos ? (
+                    {m.hijos ? (
                       <>
                         <button
                           type="button"
-                          onClick={() => setSubmenu((v) => !v)}
-                          aria-expanded={submenu}
-                          aria-controls="submenu-movil"
+                          onClick={() => setSubmenu((v) => (v === m.href ? null : m.href))}
+                          aria-expanded={submenu === m.href}
+                          aria-controls={`submenu-movil${m.href.replaceAll("/", "-")}`}
                           className={`flex w-full items-center justify-between py-3.5 text-left font-display text-[34px] leading-none font-bold uppercase sm:text-[42px] ${m.hijos.some((h) => activo(h.href)) ? "text-acento" : ""}`}
                         >
                           {m.texto}
-                          <Icono nombre="der" className={`size-6 text-white/60 transition-transform duration-300 ${submenu ? "-rotate-90" : "rotate-90"}`} grosor={1.8} />
+                          <Icono nombre="der" className={`size-6 text-white/60 transition-transform duration-300 ${submenu === m.href ? "-rotate-90" : "rotate-90"}`} grosor={1.8} />
                         </button>
-                        <div id="submenu-movil" className={`grid transition-[grid-template-rows] duration-500 ease-[var(--ease-pt)] ${submenu ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
-                          <ul className="overflow-hidden" inert={!submenu}>
+                        <div
+                          id={`submenu-movil${m.href.replaceAll("/", "-")}`}
+                          className={`grid transition-[grid-template-rows] duration-500 ease-[var(--ease-pt)] ${submenu === m.href ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+                        >
+                          <ul className="overflow-hidden" inert={submenu !== m.href}>
                             {m.hijos.map((h) => (
                               <li key={h.href}>
                                 <Link href={h.href} className="flex items-center gap-3 rounded-2xl py-2.5 pl-1">

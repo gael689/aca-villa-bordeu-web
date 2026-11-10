@@ -266,7 +266,18 @@ export function revisarDatos(prefijo: string, datos: Datos): boolean {
  * Lo que queda a la vista después de enviar. Al cerrar el panel se borra todo
  * (pedido del cliente, oct/2026): la próxima consulta o pedido arranca en blanco.
  */
-export function Enviado({ canal, que, email }: { canal: "whatsapp" | "mail"; que: "consulta" | "pedido"; email: string }) {
+export function Enviado({
+  canal,
+  que,
+  email,
+  whatsapp,
+}: {
+  canal: "whatsapp" | "mail";
+  que: "consulta" | "pedido";
+  email: string;
+  /** Link de WhatsApp con el mismo mensaje: después de mandar por mail, se ofrece como la vía más rápida. */
+  whatsapp: string;
+}) {
   const titulo = canal === "whatsapp" ? "Se abrió WhatsApp" : que === "pedido" ? "Recibimos tu pedido" : "Recibimos tu consulta";
   const texto =
     canal === "whatsapp"
@@ -275,14 +286,36 @@ export function Enviado({ canal, que, email }: { canal: "whatsapp" | "mail"; que
         ? `Te lo confirmamos a ${email.trim()} lo antes posible.`
         : `Te respondemos a ${email.trim()} lo antes posible. Recepción abierta las 24 horas.`;
   return (
-    <div className="paso-entra mx-auto mt-2 flex max-w-[620px] items-start gap-3 rounded-2xl bg-tinta p-5 text-white" role="status">
-      <span className="grid size-9 shrink-0 place-items-center rounded-full bg-wpp">
-        <Icono nombre={canal === "whatsapp" ? "whatsapp" : "check"} className="size-5" grosor={2.4} />
-      </span>
-      <p>
-        <strong className="block font-display text-2xl uppercase">{titulo}</strong>
-        {texto}
-      </p>
+    <div className="paso-entra mx-auto mt-2 max-w-[620px] rounded-2xl bg-tinta p-5 text-white" role="status">
+      <div className="flex items-start gap-3">
+        <span className="grid size-9 shrink-0 place-items-center rounded-full bg-wpp">
+          <Icono nombre={canal === "whatsapp" ? "whatsapp" : "check"} className="size-5" grosor={2.4} />
+        </span>
+        <p>
+          <strong className="block font-display text-2xl uppercase">{titulo}</strong>
+          {texto}
+        </p>
+      </div>
+      {canal === "mail" && (
+        // Pedido del cliente (nov/2026): por WhatsApp contestan antes que por mail.
+        <div className="mt-4 border-t border-white/15 pt-4 sm:pl-12">
+          <p className="text-white/85">Si lo necesitás antes, por WhatsApp la atención suele ser más rápida.</p>
+          <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="btn btn-wpp sin-burbuja mt-3 w-full sm:w-auto">
+            <Icono nombre="whatsapp" className="size-5" />
+            {que === "pedido" ? "Mandalo también por WhatsApp" : "Mandala también por WhatsApp"}
+          </a>
+        </div>
+      )}
     </div>
+  );
+}
+
+/** Junto a los botones de envío: WhatsApp suele ser la vía más rápida (pedido del cliente, nov/2026). */
+export function AvisoWhatsApp() {
+  return (
+    <p className="flex items-center justify-center gap-1.5 text-center text-[14px] text-tinta/70 sm:col-span-2">
+      <Icono nombre="whatsapp" className="size-4 text-wpp" />
+      Por WhatsApp te respondemos más rápido.
+    </p>
   );
 }

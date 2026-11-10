@@ -1,0 +1,11 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Gomez;Rodrigo;H.;;
+FN:Rodrigo H. Gomez
+ORG:ACA Villa Bordeu
+TEL;TYPE=CELL:+5492916421037
+TEL;TYPE=WORK,VOICE:+542914886855
+EMAIL;TYPE=WORK:rodrigogomez@acavillabordeu.com.ar
+ADR;TYPE=WORK:;;Avda. Sesquicentenario 1699;Bahía Blanca;Buenos Aires;B8000;Argentina
+URL:https://www.acavillabordeu.com.ar
+END:VCARD

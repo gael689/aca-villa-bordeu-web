@@ -175,6 +175,10 @@ RewriteRule ^(.+)$ /$1.html [L]
 </IfModule>
 
 AddType text/plain .txt
+# Tarjeta digital (public/rodrigo-gomez.vcf): con este tipo el iPhone abre «Agregar contacto»
+# en vez de bajar el archivo.
+AddType text/vcard .vcf
+AddCharset utf-8 .vcf
 AddDefaultCharset utf-8
 `,
 );
