@@ -28,7 +28,7 @@ export function ViajeSocios() {
         </Link>
 
         <Link href="/socios-aca" className="group tarjeta relative flex min-h-[440px] flex-col justify-between bg-amarillo p-7 text-tinta md:p-10" data-reveal data-delay="0.1">
-          <LogoACA className="h-12 w-auto self-start text-tinta" />
+          <LogoACA className="h-12 w-auto self-start text-marca-aca" />
           <p aria-hidden="true" className="pointer-events-none absolute -right-6 -bottom-10 font-display text-[min(46vw,340px)] leading-none font-bold text-tinta/10">
             1904
           </p>

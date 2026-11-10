@@ -1,6 +1,7 @@
 import type { IconoNombre } from "@/components/marca/Icono";
 
-export type ItemMenu = { href: string; texto: string; detalle?: string; icono?: IconoNombre; foto?: string };
+/** `principal`: va arriba de todo, antes del rótulo (en Empresas, la página /empresas antes que los rubros). */
+export type ItemMenu = { href: string; texto: string; detalle?: string; icono?: IconoNombre; foto?: string; principal?: boolean };
 
 /** Un desplegable del menú: sus enlaces y la foto con el lema que acompaña al panel en escritorio. */
 export type EntradaMenu = {
@@ -22,14 +23,14 @@ export const MENU: EntradaMenu[] = [
     texto: "Empresas",
     rotulo: "Por rubro",
     hijos: [
+      { href: "/empresas", texto: "Empresas", detalle: "Todo para tu equipo: cochera, Resto, lavandería y oficina", icono: "reunion", principal: true },
       { href: "/empresas/petroquimica-y-puerto", texto: "Petroquímica y puerto", detalle: "A 12 km de Ingeniero White", icono: "casco" },
       { href: "/empresas/energia", texto: "Energía", detalle: "Gas, ductos y parques eólicos", icono: "sol" },
       { href: "/empresas/obra-vial-y-transporte", texto: "Obra vial y transporte", detalle: "Sobre el cruce de las rutas 3 y 33", icono: "camion" },
       { href: "/empresas/agro", texto: "Agro", detalle: "Al lado del predio de la Rural", icono: "hoja" },
       { href: "/delegaciones-deportivas", texto: "Delegaciones deportivas", detalle: "Clubes y equipos de viaje", icono: "trofeo" },
-      { href: "/empresas", texto: "Todo para empresas", detalle: "Cochera, Resto, lavandería y oficina", icono: "reunion" },
     ],
-    panel: { foto: "predio/cocheras-noche.jpg", alt: "Cocheras de Villa Bordeu de noche", lema: ["Tu equipo,", "en un mismo predio"] },
+    panel: { foto: "predio/01-exterior-atardecer.jpg", alt: "Villa Bordeu al atardecer", lema: ["Tu equipo,", "en un mismo predio"] },
   },
   { href: "/habitaciones", texto: "Habitaciones" },
   { href: "/restaurante", texto: "Restaurante" },

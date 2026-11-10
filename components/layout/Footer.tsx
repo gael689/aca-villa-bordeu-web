@@ -121,14 +121,16 @@ export function Footer() {
           Villa Bordeu
         </p>
 
-        <div className="mt-6 border-t border-white/10 pt-6 text-[13px] text-white/50">
+        <div className="mt-6 flex flex-col gap-3 border-t border-white/10 pt-6 text-[13px] text-white/50 sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {new Date().getFullYear()} ACA Villa Bordeu · Red Hotelera del{" "}
             <a href={SITIO.aca.red} target="_blank" rel="noopener noreferrer" className="enlace font-normal">
               Automóvil Club Argentino
-            </a>{" "}
-            · Sitio por{" "}
-            <a href="https://gaelgonzalez.com.ar" target="_blank" rel="noopener" className="enlace font-semibold text-white/85">
+            </a>
+          </p>
+          <p className="self-end text-right text-[15px] sm:self-auto">
+            Sitio por{" "}
+            <a href="https://gaelgonzalez.com.ar" target="_blank" rel="noopener" className="enlace text-[17px] font-semibold text-white/90">
               Gael González
             </a>
           </p>

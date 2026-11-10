@@ -181,11 +181,27 @@ export function Header() {
                     >
                       <div className="grid grid-cols-[1fr_1.1fr] gap-2 rounded-[24px] bg-white p-2 text-tinta shadow-[0_30px_70px_-30px_rgb(0_0_0/0.5)]">
                         <div className="p-1">
+                          {m.hijos.filter((h) => h.principal).map((h) => (
+                            <Link
+                              key={h.href}
+                              href={h.href}
+                              aria-current={pathname === h.href ? "page" : undefined}
+                              className="group mb-1 flex items-center gap-3 rounded-2xl bg-papel p-2.5 transition-colors hover:bg-amarillo/25 focus-visible:bg-amarillo/25"
+                            >
+                              <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-amarillo text-tinta">
+                                {h.icono && <Icono nombre={h.icono} className="size-5" grosor={1.7} />}
+                              </span>
+                              <span>
+                                <span className="block text-[16px] leading-tight font-bold">{h.texto}</span>
+                                <span className="block text-[13px] text-asfalto">{h.detalle}</span>
+                              </span>
+                            </Link>
+                          ))}
                           {m.rotulo && (
                             <p className="px-2.5 pt-1.5 pb-1 font-display text-[13px] font-semibold tracking-[0.18em] text-asfalto uppercase">{m.rotulo}</p>
                           )}
                           <ul>
-                            {m.hijos.map((h) => (
+                            {m.hijos.filter((h) => !h.principal).map((h) => (
                               <li key={h.href}>
                                 <Link
                                   href={h.href}
@@ -276,8 +292,11 @@ export function Header() {
                           className={`grid transition-[grid-template-rows] duration-500 ease-[var(--ease-pt)] ${submenu === m.href ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
                         >
                           <ul className="overflow-hidden" inert={submenu !== m.href}>
-                            {m.hijos.map((h) => (
+                            {[...m.hijos].sort((x, y) => Number(!!y.principal) - Number(!!x.principal)).map((h, i, lista) => (
                               <li key={h.href}>
+                                {m.rotulo && !h.principal && lista[i - 1]?.principal && (
+                                  <p className="pt-2 pb-1 pl-1 font-display text-[12px] font-semibold tracking-[0.18em] text-white/50 uppercase">{m.rotulo}</p>
+                                )}
                                 <Link href={h.href} className="flex items-center gap-3 rounded-2xl py-2.5 pl-1">
                                   <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-white/8 text-amarillo">
                                     {h.icono && <Icono nombre={h.icono} className="size-5" grosor={1.7} />}

@@ -16,7 +16,8 @@ import { useConsulta } from "./ConsultaContext";
 // y lo que necesitan.
 
 const CLAVE = "vb-consulta-v2";
-const PASOS = ["Fechas", "Huéspedes", "Tus datos"];
+// Los datos van en su propio paso y sin ellos no se avanza (Gael, 10/11/2026); el resumen y el envío, después.
+const PASOS = ["Fechas", "Huéspedes", "Tus datos", "Enviar"];
 const ICONO_NECESIDAD: Record<Necesidad | Incluido, IconoNombre> = {
   Desayuno: "taza",
   "Almuerzo o vianda": "cubiertos",
@@ -231,6 +232,13 @@ export function Consulta() {
   };
 
   const puedeSeguir = paso === 0 ? sinFechas || (!!entrada && !!salida) : true;
+  const siguiente = () => {
+    if (paso === 2) {
+      setIntentado(true);
+      if (!revisarDatos("consulta", datos)) return;
+    }
+    ir(paso + 1);
+  };
 
   const mensaje = useMemo(
     () =>
@@ -246,8 +254,7 @@ export function Consulta() {
   const modo = trabajo ? "empresa" : delegacion ? "delegacion" : "viaje";
   const datosMedicion = () => ({ modo, personas: adultos + ninos, origen: apertura.origen ?? "panel" });
 
-  // Por mail hacen falta nombre, teléfono y e-mail (el hotel responde a ese mail).
-  // Por WhatsApp sale igual: el número ya llega con el mensaje.
+  // Nombre, teléfono y e-mail se piden antes de llegar acá (paso «Tus datos»); se revisan de nuevo por las dudas.
   async function enviarMail() {
     setIntentado(true);
     if (!revisarDatos("consulta", datos)) return;
@@ -451,9 +458,12 @@ export function Consulta() {
               {paso === 2 && (
                 <div className="space-y-3 pt-2">
                   <DatosPersonales prefijo="consulta" datos={datos} onCambiar={setDatos} mostrarErrores={intentado} />
-                  <div className="pt-3">
-                    <Burbuja texto={mensaje} titulo="Así nos llega tu solicitud" />
-                  </div>
+                </div>
+              )}
+
+              {paso === 3 && (
+                <div className="pt-2">
+                  <Burbuja texto={mensaje} titulo="Así nos llega tu solicitud" />
                 </div>
               )}
 
@@ -476,7 +486,7 @@ export function Consulta() {
                   Atrás
                 </button>
               )}
-              <button type="button" onClick={() => ir(paso + 1)} disabled={!puedeSeguir} className="btn btn-oscuro flex-1 disabled:cursor-not-allowed disabled:opacity-40">
+              <button type="button" onClick={siguiente} disabled={!puedeSeguir} className="btn btn-oscuro flex-1 disabled:cursor-not-allowed disabled:opacity-40">
                 <span>{paso === 0 && !puedeSeguir ? "Elegí las fechas" : "Siguiente"}</span>
                 <span className="burbuja" aria-hidden="true">
                   <Icono nombre="der" className="size-4" grosor={2} />

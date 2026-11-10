@@ -44,7 +44,9 @@ const PASOS: Paso[] = [
   { corto: "Bebida", titulo: "Bebidas y café", ayuda: "Opcional: gaseosas, agua, cerveza, café.", curso: "Bebida", opcional: true },
   { corto: "Postre", titulo: "¿Y de postre?", ayuda: "Es opcional.", curso: "Postre", opcional: true },
   { corto: "Cuándo", titulo: "¿Qué días y a qué hora?", ayuda: "Podés marcar uno o varios días. Te lo confirmamos por WhatsApp o mail." },
-  { corto: "Enviar", titulo: "Tus datos", ayuda: "Revisá el pedido y envialo." },
+  // Los datos van en su propio paso y sin ellos no se avanza (Gael, 10/11/2026); el resumen y el envío, después.
+  { corto: "Tus datos", titulo: "Tus datos", ayuda: "Con estos datos te confirmamos el pedido." },
+  { corto: "Enviar", titulo: "Revisá y enviá", ayuda: "Así nos llega tu pedido. Envialo por WhatsApp o por mail." },
 ];
 
 type Ctx = {
@@ -439,6 +441,10 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
     setIntentado(true);
     return revisarDatos("pedido", datos);
   };
+  const siguiente = () => {
+    if (paso === PASOS.length - 2 && !revisar()) return;
+    ir(paso + 1);
+  };
 
   async function enviarMail() {
     if (!revisar()) return;
@@ -546,7 +552,7 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
 
             {ultimo && enviado && <Enviado canal={envio === "whatsapp" ? "whatsapp" : "mail"} que="pedido" email={datos.email} whatsapp={linkWhatsApp(mensaje)} />}
 
-            {ultimo && !enviado && (
+            {paso === PASOS.length - 2 && (
               <div className="mx-auto max-w-[680px] space-y-5">
                 <DatosPersonales prefijo="pedido" datos={datos} onCambiar={setDatos} mostrarErrores={intentado} />
                 <Campo etiqueta="Empresa (opcional)" valor={empresa} onCambiar={setEmpresa} auto="organization" />
@@ -557,6 +563,11 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
                   placeholder="Ej.: 3 milanesas napolitanas y 2 suizas, una sin sal"
                   largo
                 />
+              </div>
+            )}
+
+            {ultimo && !enviado && (
+              <div className="mx-auto max-w-[680px] space-y-5">
                 <Burbuja texto={mensaje} titulo="Así nos llega tu pedido" />
                 <button type="button" onClick={() => ir(1)} className="enlace text-sm">
                   Cambiar platos
@@ -581,7 +592,7 @@ function PanelPedido({ abierta, cerrar }: { abierta: boolean; cerrar: () => void
                   Atrás
                 </button>
               )}
-              <button type="button" onClick={() => ir(paso + 1)} disabled={!puedeSeguir} className="btn btn-oscuro flex-1 disabled:cursor-not-allowed disabled:opacity-40">
+              <button type="button" onClick={siguiente} disabled={!puedeSeguir} className="btn btn-oscuro flex-1 disabled:cursor-not-allowed disabled:opacity-40">
                 <span>{textoSeguir}</span>
                 <span className="burbuja" aria-hidden="true">
                   <Icono nombre="der" className="size-4" grosor={2} />
