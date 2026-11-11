@@ -87,11 +87,11 @@ const RESENA = 'https://search.google.com/local/writereview?placeid=ChIJ5yEyw8G7
 
 // Los QR: clave, nombre, dónde va.
 $QRS = [
-    ['resto', 'Resto: carta y pedidos', 'Mesas y mostrador del Resto'],
-    ['resenas', 'Reseñas de Google', 'Recepción y habitaciones'],
-    ['contacto', 'Contacto del ACA', 'Recepción'],
-    ['predio', 'Conocé el predio', 'Recepción, empresas y delegaciones'],
-    ['rodrigo', 'Tu tarjeta personal', 'Tu escritorio y reuniones'],
+    ['resto', 'Resto: carta y pedidos', 'Mesas y mostrador del Resto', 'Abre la carta y el cliente arma su pedido.'],
+    ['resenas', 'Reseñas de Google', 'Recepción y habitaciones', 'El huésped deja su opinión en Google.'],
+    ['contacto', 'Contacto del ACA', 'Recepción', 'Teléfonos, WhatsApp, mail y dirección.'],
+    ['predio', 'Conocé el predio', 'Recepción, empresas y delegaciones', 'Habitaciones, Resto, YPF, fotos y cómo llegar.'],
+    ['rodrigo', 'Tu tarjeta personal', 'Tu escritorio y reuniones', 'Tu contacto, con el botón para guardarlo.'],
 ];
 // Las tarjetas digitales: nombre, ruta, mensaje para mandar.
 $TARJETAS = [
@@ -138,11 +138,17 @@ $TARJETAS = [
   .imprimir p { margin: 6px 0 16px; opacity: .85; }
   .imprimir .btn { background: var(--amarillo); color: var(--tinta); }
   .lista { margin-top: 12px; display: grid; gap: 10px; }
-  .qr { display: grid; grid-template-columns: 78px 1fr; gap: 14px; align-items: center; background: #fff; border: 1px solid var(--linea); border-radius: 16px; padding: 10px; }
-  .ver { border: 0; background: none; padding: 0; cursor: zoom-in; border-radius: 8px; display: block; }
-  .ver img { width: 78px; height: auto; display: block; border-radius: 8px; }
-  .qr h3 { font: 700 19px/1.05 "Barlow Condensed", sans-serif; text-transform: uppercase; }
-  .qr p { font-size: 14px; color: var(--gris); margin-top: 2px; }
+  .lista { gap: 14px; }
+  .qr { display: grid; grid-template-columns: 128px 1fr; gap: 16px; align-items: center; background: #fff; border: 1px solid var(--linea); border-radius: 18px; padding: 14px; }
+  .ver { position: relative; border: 0; background: none; padding: 0; cursor: zoom-in; border-radius: 10px; display: block; }
+  .ver img { width: 128px; height: auto; display: block; border-radius: 10px; box-shadow: 0 6px 16px -10px rgb(20 21 22 / .6); }
+  .ver span { position: absolute; left: 50%; bottom: 8px; transform: translateX(-50%); white-space: nowrap; background: var(--tinta); color: #fff; font: 700 12px/1 "Barlow Condensed", sans-serif; letter-spacing: .08em; text-transform: uppercase; padding: 6px 9px; border-radius: 999px; }
+  .qr h3 { font: 700 24px/1 "Barlow Condensed", sans-serif; text-transform: uppercase; }
+  .qr .hace { font-size: 16px; color: var(--tinta); margin-top: 6px; }
+  .qr .va { font-size: 15px; color: var(--gris); margin-top: 6px; }
+  .qr .va b { color: var(--tinta); font-weight: 600; }
+  .qr .acciones { grid-column: 1 / -1; margin-top: 0; flex-wrap: nowrap; }
+  .qr .acciones .btn { flex: 1; min-height: 48px; font-size: 17px; }
   .acciones { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
   .acciones .btn { min-height: 38px; padding: 8px 12px; font-size: 15px; }
   .compartir[hidden] { display: none; }
@@ -198,19 +204,20 @@ $TARJETAS = [
 
   <section>
     <h2>Los QR</h2>
-    <p class="sub">Tocá un QR para mostrarlo en pantalla grande.</p>
+    <p class="sub">Tocá la imagen para verla grande y que la escaneen desde tu celular.</p>
     <div class="lista">
       <?php foreach ($QRS as $q): ?>
       <div class="qr">
-        <button class="ver" type="button" data-archivo="<?= $q[0] ?>" aria-label="Mostrar en pantalla: <?= e($q[1]) ?>"><img src="<?= $m($q[0]) ?>" alt="" width="78" height="109" loading="lazy"></button>
+        <button class="ver" type="button" data-archivo="<?= $q[0] ?>" aria-label="Ver grande: <?= e($q[1]) ?>"><img src="<?= $m($q[0]) ?>" alt="" width="128" height="179" loading="lazy"><span>Ver grande</span></button>
         <div>
           <h3><?= e($q[1]) ?></h3>
-          <p>Va en: <?= e($q[2]) ?></p>
+          <p class="hace"><?= e($q[3]) ?></p>
+          <p class="va"><b>Va en:</b> <?= e($q[2]) ?></p>
+        </div>
           <div class="acciones">
             <a class="btn claro" href="<?= $a($q[0]) ?>&amp;descargar=1" download="<?= e($ARCHIVOS[$q[0]][1]) ?>"><?= $icoBajar ?>Bajar PNG</a>
             <button class="btn wa compartir" type="button" data-archivo="<?= $q[0] ?>" data-nombre="<?= e($ARCHIVOS[$q[0]][1]) ?>" hidden><?= $icoWa ?>Enviar</button>
           </div>
-        </div>
       </div>
       <?php endforeach; ?>
     </div>

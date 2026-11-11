@@ -117,7 +117,7 @@ copyFileSync(join(RAIZ, "hosting", "api", "consulta.php"), join(OUT, "api", "con
     for (const [destino, fuente] of Object.entries(ARCHIVOS)) {
       copyFileSync(join(MAT, fuente), join(DEST, destino));
       if (destino.endsWith(".png") && destino !== "fondo.png")
-        await sharp(join(MAT, fuente)).resize({ width: 240 }).webp({ quality: 82 }).toFile(join(DEST, "mini", destino.replace(".png", ".webp")));
+        await sharp(join(MAT, fuente)).resize({ width: 400 }).webp({ quality: 82 }).toFile(join(DEST, "mini", destino.replace(".png", ".webp")));
     }
     const sal = randomBytes(16).toString("hex");
     const pinHash = createHash("sha256").update(sal + env.MATERIAL_PIN).digest("hex");
