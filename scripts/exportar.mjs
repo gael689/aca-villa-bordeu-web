@@ -88,6 +88,47 @@ console.log(`Segmentos: ${copiados} copiados con el nombre que pide el navegador
 mkdirSync(join(OUT, "api"), { recursive: true });
 copyFileSync(join(RAIZ, "hosting", "api", "consulta.php"), join(OUT, "api", "consulta.php"));
 
+// /material: QR y tarjetas para Rodrigo detrás de un PIN (hosting/material.php). El repo es
+// público: los archivos salen de ../Material para Rodrigo y el PIN de .env.hosting
+// (MATERIAL_PIN, MATERIAL_SECRETO), y quedan en out/_material/, que el .htaccess cierra.
+{
+  const MAT = join(RAIZ, "..", "Material para Rodrigo");
+  const env = existsSync(join(RAIZ, ".env.hosting"))
+    ? Object.fromEntries(readFileSync(join(RAIZ, ".env.hosting"), "utf8").split(/\r?\n/).filter((l) => /^\w+=/.test(l)).map((l) => [l.slice(0, l.indexOf("=")), l.slice(l.indexOf("=") + 1).trim()]))
+    : {};
+  if (!existsSync(MAT) || !env.MATERIAL_PIN || !env.MATERIAL_SECRETO) {
+    console.log("Sin /material: falta ../Material para Rodrigo o MATERIAL_PIN/MATERIAL_SECRETO en .env.hosting");
+  } else {
+    const { createHash, randomBytes } = await import("node:crypto");
+    const DEST = join(OUT, "_material");
+    mkdirSync(join(DEST, "mini"), { recursive: true });
+    const QR = "QR sueltos (para mandar por WhatsApp)", CEL = "Para tu celular (no imprimir)";
+    const ARCHIVOS = {
+      "imprimir.pdf": "IMPRIMIR - 4 hojas A4.pdf",
+      "resto.png": `${QR}/1 - Resto, carta y pedidos.png`,
+      "resenas.png": `${QR}/2 - Reseñas de Google.png`,
+      "contacto.png": `${QR}/3 - Contacto del ACA.png`,
+      "predio.png": `${QR}/4 - Conocé el predio.png`,
+      "rodrigo.png": `${QR}/5 - Tarjeta de Rodrigo.png`,
+      "fondo.png": `${CEL}/Fondo de pantalla con tu QR.png`,
+      "rodrigo-gomez.vcf": `${CEL}/Rodrigo Gomez - contacto.vcf`,
+    };
+    for (const [destino, fuente] of Object.entries(ARCHIVOS)) {
+      copyFileSync(join(MAT, fuente), join(DEST, destino));
+      if (destino.endsWith(".png") && destino !== "fondo.png")
+        await sharp(join(MAT, fuente)).resize({ width: 240 }).webp({ quality: 82 }).toFile(join(DEST, "mini", destino.replace(".png", ".webp")));
+    }
+    const sal = randomBytes(16).toString("hex");
+    const pinHash = createHash("sha256").update(sal + env.MATERIAL_PIN).digest("hex");
+    writeFileSync(join(DEST, "_pin.php"), `<?php return ['pin_hash' => '${pinHash}', 'sal' => '${sal}', 'secreto' => '${env.MATERIAL_SECRETO.replace(/'/g, "")}'];\n`);
+    writeFileSync(join(DEST, ".htaccess"), "<IfModule mod_authz_core.c>\n  Require all denied\n</IfModule>\n<IfModule !mod_authz_core.c>\n  Deny from all\n</IfModule>\n");
+    const logoTs = readFileSync(join(RAIZ, "lib", "logo.ts"), "utf8");
+    const logoSvg = `<svg viewBox="${logoTs.match(/LOGO_ACA_VIEWBOX = "([^"]+)"/)[1]}" aria-hidden="true"><path d="${logoTs.match(/LOGO_ACA_PATH = "([^"]+)"/)[1]}" fill="currentColor"/></svg>`;
+    writeFileSync(join(OUT, "material.php"), readFileSync(join(RAIZ, "hosting", "material.php"), "utf8").replace("{{LOGO}}", logoSvg));
+    console.log("Material: out/material.php y out/_material/");
+  }
+}
+
 // «/Default.:ext(asp|htm|html)» (sintaxis de Next) → «^Default\.(?:asp|htm|html)$» (Apache);
 // «:resto*» → «.*». Los .php viejos también respondían con algo detrás (/index.php/x, PATH_INFO).
 const aRegex = (fuente) =>
@@ -133,6 +174,10 @@ ${reglas}
 RewriteCond %{HTTPS} off [OR]
 RewriteCond %{HTTP_HOST} !^www\\. [NC]
 RewriteRule ^ ${HOST}%{REQUEST_URI} [R=301,L]
+
+# Material de Rodrigo: la página va con PIN y los archivos solo salen por ella.
+RewriteRule ^_material(/|$) - [F,L]
+RewriteRule ^material$ /material.php [L]
 
 # Carpetas viejas que se conservan: con barra final, y sin tocar lo de adentro.
 RewriteRule ^(${CARPETAS.join("|")})$ /$1/ [R=301,L]
