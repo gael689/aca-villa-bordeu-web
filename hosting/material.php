@@ -81,71 +81,90 @@ $LOGO = '{{LOGO}}';
 $entro = adentro($cfg);
 $a = function ($clave) { return '/material?archivo=' . $clave; };
 $m = function ($clave) { return '/material?mini=' . $clave; };
+$wa = function ($texto) { return 'https://wa.me/?text=' . rawurlencode($texto); };
+const WEB = 'https://www.acavillabordeu.com.ar';
+const RESENA = 'https://search.google.com/local/writereview?placeid=ChIJ5yEyw8G77ZURqP9up-6eN8E';
+
+// Los QR: clave, nombre, dónde va.
+$QRS = [
+    ['resto', 'Resto: carta y pedidos', 'Mesas y mostrador del Resto'],
+    ['resenas', 'Reseñas de Google', 'Recepción y habitaciones'],
+    ['contacto', 'Contacto del ACA', 'Recepción'],
+    ['predio', 'Conocé el predio', 'Recepción, empresas y delegaciones'],
+    ['rodrigo', 'Tu tarjeta personal', 'Tu escritorio y reuniones'],
+];
+// Las tarjetas digitales: nombre, ruta, mensaje para mandar.
+$TARJETAS = [
+    ['Tarjeta extensa del ACA', '/tarjeta-completa', 'Te paso la info de ACA Villa Bordeu: habitaciones, Resto, Estación YPF y cómo llegar.'],
+    ['Tarjeta corta del ACA', '/tarjeta', 'Te paso el contacto de ACA Villa Bordeu:'],
+    ['Tu tarjeta personal', '/rodrigo', 'Te paso mi contacto:'],
+];
 ?><!doctype html>
 <html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Material para imprimir · ACA Villa Bordeu</title>
+<title>QR y tarjetas · ACA Villa Bordeu</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
 <style>
-  :root { --tinta: #141516; --amarillo: #f1bb01; --rojo: #df1d2e; --papel: #faf8f3; --gris: #5b5d60; --linea: #e4e0d5; }
+  :root { --tinta: #141516; --amarillo: #f1bb01; --rojo: #df1d2e; --papel: #faf8f3; --gris: #5b5d60; --linea: #e4e0d5; --wa: #1a8f4c; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font: 16px/1.5 Barlow, system-ui, sans-serif; color: var(--tinta); background: var(--papel); -webkit-text-size-adjust: 100%; }
+  body { font: 16px/1.45 Barlow, system-ui, sans-serif; color: var(--tinta); background: var(--papel); -webkit-text-size-adjust: 100%; }
   a { color: inherit; }
+  button { font: inherit; color: inherit; }
+  .ancho { max-width: 640px; margin: 0 auto; }
   .marca { display: flex; align-items: center; gap: 12px; }
-  .marca svg { height: 44px; width: auto; color: var(--rojo); display: block; }
+  .marca svg { height: 40px; width: auto; color: var(--rojo); display: block; }
   .marca b { font: 700 14px/.95 "Barlow Condensed", sans-serif; letter-spacing: .12em; text-transform: uppercase; border-left: 1.5px solid rgb(20 21 22 / .35); padding-left: 12px; }
   h1, h2 { font-family: "Barlow Condensed", sans-serif; text-transform: uppercase; line-height: .95; }
-  h1 { font-size: clamp(40px, 11vw, 64px); margin-top: 22px; }
-  h2 { font-size: 30px; margin-bottom: 14px; }
-  .rot { font: 600 13px/1 "Barlow Condensed", sans-serif; letter-spacing: .22em; text-transform: uppercase; margin-top: 26px; }
-  header { background: var(--amarillo); padding: 22px 16px 30px; }
-  .ancho { max-width: 760px; margin: 0 auto; }
-  header p.bajada { margin-top: 12px; font-size: 17px; max-width: 34em; }
-  main { padding: 8px 16px 48px; }
-  section { margin-top: 34px; }
-  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 12px 20px; border-radius: 999px; background: var(--tinta); color: var(--amarillo); text-decoration: none; font: 700 18px/1 "Barlow Condensed", sans-serif; letter-spacing: .05em; text-transform: uppercase; border: 0; cursor: pointer; }
-  .btn.claro { background: #fff; color: var(--tinta); border: 1.5px solid var(--tinta); }
-  .btn.chico { min-height: 40px; padding: 9px 16px; font-size: 16px; }
-  .imprimir { background: #fff; border: 2px solid var(--tinta); border-radius: 20px; padding: 22px; }
-  .imprimir h2 { margin-bottom: 8px; }
-  .imprimir ul { margin: 12px 0 18px 20px; }
-  .imprimir li + li { margin-top: 4px; }
-  .hoja { display: grid; grid-template-columns: 96px 1fr; gap: 16px; padding: 18px 0; border-top: 1px solid var(--linea); align-items: start; }
-  .hoja:last-child { border-bottom: 1px solid var(--linea); }
-  .hoja img { width: 96px; height: auto; border-radius: 8px; display: block; box-shadow: 0 6px 16px -10px rgb(20 21 22 / .6); }
-  .num { font: 700 13px/1 "Barlow Condensed", sans-serif; letter-spacing: .18em; text-transform: uppercase; color: var(--gris); }
-  .hoja h3 { font: 700 22px/1.05 "Barlow Condensed", sans-serif; text-transform: uppercase; margin: 4px 0 6px; }
-  .hoja p { font-size: 15.5px; }
-  .hoja p b { font-weight: 600; }
-  .hoja .btn { margin-top: 10px; }
-  .dos { display: grid; gap: 14px; }
-  @media (min-width: 620px) { .dos { grid-template-columns: 1fr 1fr; } .hoja { grid-template-columns: 120px 1fr; } .hoja img { width: 120px; } }
-  .caja { background: #fff; border: 1px solid var(--linea); border-radius: 16px; padding: 18px; }
-  .caja h3 { font: 700 20px/1.05 "Barlow Condensed", sans-serif; text-transform: uppercase; margin-bottom: 8px; }
-  .caja p + p, .caja ol { margin-top: 8px; }
-  .caja ol { margin-left: 20px; }
-  .caja .btn { margin-top: 12px; }
-  .nota { margin-top: 34px; font-size: 15px; color: var(--gris); }
+  h1 { font-size: 46px; margin-top: 18px; }
+  h2 { font-size: 26px; }
+  header { background: var(--amarillo); padding: 18px 16px 24px; }
+  header .fila { display: flex; justify-content: space-between; align-items: center; }
+  .salir { font-size: 14px; color: var(--tinta); opacity: .7; }
+  main { padding: 0 16px 40px; }
+  section { margin-top: 28px; }
+  .sub { color: var(--gris); font-size: 15px; margin-top: 4px; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px; padding: 10px 18px; border-radius: 999px; background: var(--tinta); color: var(--amarillo); text-decoration: none; font: 700 17px/1 "Barlow Condensed", sans-serif; letter-spacing: .05em; text-transform: uppercase; border: 0; cursor: pointer; }
+  .btn.claro { background: #fff; color: var(--tinta); box-shadow: inset 0 0 0 1.5px var(--tinta); }
+  .btn.wa { background: var(--wa); color: #fff; }
+  .btn.ancho100 { width: 100%; }
+  .btn svg { width: 18px; height: 18px; flex: none; }
+  .imprimir { margin-top: -12px; background: var(--tinta); color: #fff; border-radius: 18px; padding: 20px; }
+  .imprimir h2 { color: var(--amarillo); }
+  .imprimir p { margin: 6px 0 16px; opacity: .85; }
+  .imprimir .btn { background: var(--amarillo); color: var(--tinta); }
+  .lista { margin-top: 12px; display: grid; gap: 10px; }
+  .qr { display: grid; grid-template-columns: 78px 1fr; gap: 14px; align-items: center; background: #fff; border: 1px solid var(--linea); border-radius: 16px; padding: 10px; }
+  .ver { border: 0; background: none; padding: 0; cursor: zoom-in; border-radius: 8px; display: block; }
+  .ver img { width: 78px; height: auto; display: block; border-radius: 8px; }
+  .qr h3 { font: 700 19px/1.05 "Barlow Condensed", sans-serif; text-transform: uppercase; }
+  .qr p { font-size: 14px; color: var(--gris); margin-top: 2px; }
+  .acciones { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .acciones .btn { min-height: 38px; padding: 8px 12px; font-size: 15px; }
+  .compartir[hidden] { display: none; }
+  .caja { background: #fff; border: 1px solid var(--linea); border-radius: 16px; padding: 16px; margin-top: 12px; }
+  .caja h3 { font: 700 19px/1.05 "Barlow Condensed", sans-serif; text-transform: uppercase; }
+  .caja p { font-size: 15px; color: var(--gris); margin: 4px 0 12px; }
+  .tarjeta { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 0; border-top: 1px solid var(--linea); }
+  .tarjeta:first-child { border-top: 0; padding-top: 0; }
+  .tarjeta:last-child { padding-bottom: 0; }
+  .tarjeta b { font-weight: 600; }
+  .tarjeta .acciones { margin-top: 0; flex-wrap: nowrap; }
+  .nota { font-size: 14px; color: var(--gris); margin-top: 28px; }
+  dialog { border: 0; padding: 0; width: 100%; height: 100%; max-width: none; max-height: none; background: var(--amarillo); }
+  dialog::backdrop { background: var(--amarillo); }
+  dialog .dentro { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; padding: 16px; }
+  dialog img { max-width: 100%; max-height: calc(100% - 80px); width: auto; height: auto; border-radius: 12px; }
   .pin { min-height: 100vh; min-height: 100dvh; background: var(--amarillo); display: grid; place-items: center; padding: 24px 16px; }
   .pin form { width: 100%; max-width: 360px; }
-  .pin h1 { margin-top: 26px; }
   .pin p { margin-top: 10px; }
   .pin input { width: 100%; margin-top: 18px; font: 700 32px/1 "Barlow Condensed", sans-serif; letter-spacing: .4em; text-align: center; padding: 14px; border: 2px solid var(--tinta); border-radius: 14px; background: #fff; color: var(--tinta); }
   .pin .btn { width: 100%; margin-top: 12px; }
   .error { margin-top: 12px; font-weight: 600; color: #9b0d1a; }
-  .acciones { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-  .acciones .btn { margin-top: 0; }
-  .compartir[hidden] { display: none; }
-  .enlaces { display: grid; gap: 10px; margin-top: 14px; }
-  .enlaces a { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 16px; background: #fff; border: 1px solid var(--linea); border-radius: 14px; text-decoration: none; }
-  .enlaces a span { color: var(--gris); font-size: 14px; }
-  .ideal { background: var(--amarillo); border-radius: 16px; padding: 18px; margin-bottom: 14px; font-size: 17px; }
-  .salir { font-size: 14px; color: var(--gris); }
 </style>
 </head>
 <body>
@@ -153,128 +172,119 @@ $m = function ($clave) { return '/material?mini=' . $clave; };
 <div class="pin">
   <form method="post" action="/material">
     <div class="marca"><?= $LOGO ?><b>Villa<br>Bordeu</b></div>
-    <h1>Material<br>para imprimir</h1>
-    <p>QR, tarjetas y reseñas. Ingresá el PIN que te pasó Gael.</p>
+    <h1>QR y tarjetas</h1>
+    <p>Ingresá el PIN que te pasó Gael.</p>
     <input name="pin" type="password" inputmode="numeric" autocomplete="one-time-code" maxlength="8" aria-label="PIN" required autofocus>
     <button class="btn" type="submit">Entrar</button>
     <?php if ($error): ?><p class="error" role="alert"><?= e($error) ?></p><?php endif; ?>
   </form>
 </div>
-<?php else: ?>
+<?php else:
+  $icoBajar = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m-5-5 5 5 5-5M5 20h14"/></svg>';
+  $icoWa = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>';
+?>
 <header>
   <div class="ancho">
-    <div class="marca"><?= $LOGO ?><b>Villa<br>Bordeu</b></div>
-    <p class="rot">QR y tarjetas</p>
-    <h1>Qué imprimir<br>y para qué</h1>
-    <p class="bajada">Todo en un lugar. Esto reemplaza lo que te mandé suelto por WhatsApp.</p>
+    <div class="fila"><div class="marca"><?= $LOGO ?><b>Villa<br>Bordeu</b></div><a class="salir" href="/material?salir=1">Salir</a></div>
+    <h1>QR y tarjetas</h1>
   </div>
 </header>
 <main class="ancho">
   <section class="imprimir">
-    <p class="num">Paso 1</p>
-    <h2>Imprimí un solo archivo</h2>
-    <p>Son 4 hojas A4 con 4 QR cada una, listas para recortar.</p>
-    <ul>
-      <li>A4, <b>a color</b>, tamaño real (100 %).</li>
-      <li>Recortá por la línea punteada.</li>
-      <li>Mejor en papel grueso. Los de las mesas, plastificados.</li>
-    </ul>
-    <a class="btn" href="<?= $a('imprimir') ?>">Descargar para imprimir</a>
+    <h2>Imprimí todo de una</h2>
+    <p>4 hojas A4, a color y a tamaño real. Recortá por la línea punteada.</p>
+    <a class="btn ancho100" href="<?= $a('imprimir') ?>">Abrir para imprimir</a>
   </section>
 
   <section>
-    <p class="num">Paso 2</p>
-    <h2>Qué es cada uno y dónde va</h2>
-    <?php foreach ([
-      ['resto', 'Hoja 1', 'Resto: carta y pedidos', 'Abre la carta. El cliente elige los platos y manda el pedido por WhatsApp o mail.', 'En las mesas y el mostrador del Resto.'],
-      ['resenas', 'Hoja 2', 'Reseñas de Google', 'Abre Google para que el huésped deje su opinión sobre el alojamiento.', 'En recepción, a la vista al hacer el check-out, y en las habitaciones.'],
-      ['contacto', 'Hoja 3', 'Contacto del ACA', 'Teléfonos, WhatsApp, mail y dirección del ACA, con el botón para guardarlos.', 'En recepción.'],
-      ['predio', 'Hoja 3', 'Conocé el predio', 'Habitaciones, Resto, Estación YPF, fotos y cómo llegar.', 'En recepción y para entregar a empresas y delegaciones.'],
-      ['rodrigo', 'Hoja 4', 'Tu tarjeta personal', 'Tu tarjeta digital: celular, teléfono laboral, mail y el botón para guardar tu contacto.', 'En tu escritorio y en reuniones.'],
-    ] as $h): ?>
-    <div class="hoja">
-      <a href="<?= $a($h[0]) ?>"><img src="<?= $m($h[0]) ?>" alt="QR <?= e($h[2]) ?>" width="120" height="168" loading="lazy"></a>
-      <div>
-        <p class="num"><?= e($h[1]) ?></p>
-        <h3><?= e($h[2]) ?></h3>
-        <p><b>Al escanearlo:</b> <?= e($h[3]) ?></p>
-        <p><b>Dónde va:</b> <?= e($h[4]) ?></p>
-        <div class="acciones">
-          <a class="btn chico" href="<?= $a($h[0]) ?>&amp;descargar=1" download="<?= e($ARCHIVOS[$h[0]][1]) ?>">Descargar imagen PNG</a>
-          <button class="btn claro chico compartir" type="button" data-archivo="<?= $h[0] ?>" data-nombre="<?= e($ARCHIVOS[$h[0]][1]) ?>" hidden>Enviar por WhatsApp</button>
+    <h2>Los QR</h2>
+    <p class="sub">Tocá un QR para mostrarlo en pantalla grande.</p>
+    <div class="lista">
+      <?php foreach ($QRS as $q): ?>
+      <div class="qr">
+        <button class="ver" type="button" data-archivo="<?= $q[0] ?>" aria-label="Mostrar en pantalla: <?= e($q[1]) ?>"><img src="<?= $m($q[0]) ?>" alt="" width="78" height="109" loading="lazy"></button>
+        <div>
+          <h3><?= e($q[1]) ?></h3>
+          <p>Va en: <?= e($q[2]) ?></p>
+          <div class="acciones">
+            <a class="btn claro" href="<?= $a($q[0]) ?>&amp;descargar=1" download="<?= e($ARCHIVOS[$q[0]][1]) ?>"><?= $icoBajar ?>Bajar PNG</a>
+            <button class="btn wa compartir" type="button" data-archivo="<?= $q[0] ?>" data-nombre="<?= e($ARCHIVOS[$q[0]][1]) ?>" hidden><?= $icoWa ?>Enviar</button>
+          </div>
         </div>
       </div>
-    </div>
-    <?php endforeach; ?>
-  </section>
-
-  <section>
-    <h2>Tus tarjetas digitales</h2>
-    <p>Son páginas de la web. Podés mandar el link por WhatsApp o abrirlas para mostrarlas.</p>
-    <div class="enlaces">
-      <a href="/tarjeta-completa" target="_blank" rel="noopener"><b>Tarjeta extensa del ACA</b><span>Habitaciones, Resto, YPF, fotos →</span></a>
-      <a href="/tarjeta" target="_blank" rel="noopener"><b>Tarjeta corta del ACA</b><span>Teléfonos y contacto →</span></a>
-      <a href="/rodrigo" target="_blank" rel="noopener"><b>Tu tarjeta personal</b><span>Rodrigo H. Gomez →</span></a>
-      <a href="<?= $a('tarjetas') ?>"><b>Cómo funcionan las tarjetas (PDF)</b><span>Explicación completa →</span></a>
+      <?php endforeach; ?>
     </div>
   </section>
 
   <section>
-    <h2>¿Por qué hay dos QR tuyos?</h2>
-    <p class="ideal"><b>Lo ideal:</b> todo lo que se imprime lleva el QR con link (hoja 4). El otro es solo para el fondo de pantalla de tu celular.</p>
-    <div class="dos">
-      <div class="caja">
-        <h3>QR con link: el que se imprime</h3>
-        <p>Abre tu tarjeta digital en la web. Si mañana cambia un teléfono, lo corrijo en la web y lo impreso sigue sirviendo.</p>
-        <p>Necesita internet en el celular del que escanea.</p>
-      </div>
-      <div class="caja">
-        <h3>QR con tu contacto adentro: el del celular</h3>
-        <p>Guarda tu contacto directo, sin internet. Sirve cara a cara: mostrás tu celular bloqueado y el otro escanea.</p>
-        <p>No se imprime: si cambia un dato, hay que hacer otro.</p>
-      </div>
+    <h2>Pedí una reseña</h2>
+    <div class="caja">
+      <p>Mandale el link a un huésped cuando se va. Elegís el contacto en WhatsApp y enviás.</p>
+      <a class="btn wa ancho100" href="<?= e($wa("¡Gracias por elegir ACA Villa Bordeu! Si nos dejás tu opinión en Google nos ayudás muchísimo, es un minuto: " . RESENA)) ?>" target="_blank" rel="noopener"><?= $icoWa ?>Pedir reseña por WhatsApp</a>
     </div>
   </section>
 
   <section>
-    <h2>Para tu celular (no imprimir)</h2>
-    <div class="dos">
-      <div class="caja">
-        <h3>Fondo de pantalla con tu QR</h3>
-        <ol>
-          <li>Abrila y guardala en Fotos.</li>
-          <li>Fotos → la imagen → Compartir → «Usar como fondo».</li>
-          <li>Elegí solo la pantalla de bloqueo.</li>
-        </ol>
-        <a class="btn chico" href="<?= $a('fondo') ?>">Abrir el fondo</a>
+    <h2>Tarjetas digitales</h2>
+    <div class="caja">
+      <?php foreach ($TARJETAS as $t): ?>
+      <div class="tarjeta">
+        <b><?= e($t[0]) ?></b>
+        <div class="acciones">
+          <a class="btn claro" href="<?= e($t[1]) ?>" target="_blank" rel="noopener">Abrir</a>
+          <a class="btn wa" href="<?= e($wa($t[2] . ' ' . WEB . $t[1])) ?>" target="_blank" rel="noopener"><?= $icoWa ?>Enviar</a>
+        </div>
       </div>
-      <div class="caja">
-        <h3>Tu contacto en tu iPhone</h3>
-        <ol>
-          <li>Tocá el botón → «Crear contacto nuevo».</li>
-          <li>Ajustes → Apps → Contactos → «Mis datos» → elegí «Rodrigo H. Gomez».</li>
-        </ol>
-        <p>Así podés pasarlo acercando dos iPhone (NameDrop).</p>
-        <a class="btn chico" href="<?= $a('vcf') ?>">Guardar mi contacto</a>
-      </div>
+      <?php endforeach; ?>
     </div>
   </section>
 
-  <p class="nota">¿Cambió un teléfono o un dato? Avisame y lo corrijo en la web: los QR impresos siguen sirviendo. · <a class="salir" href="/material?salir=1">Salir</a></p>
+  <section>
+    <h2>Tu celular</h2>
+    <div class="caja">
+      <h3>Fondo de pantalla con tu QR</h3>
+      <p>Mostrás el celular bloqueado y te agendan, sin internet. Guardala en Fotos → Compartir → «Usar como fondo».</p>
+      <a class="btn" href="<?= $a('fondo') ?>">Abrir el fondo</a>
+    </div>
+    <div class="caja">
+      <h3>Tu contacto en tu iPhone</h3>
+      <p>Guardalo y elegilo en Ajustes → Contactos → «Mis datos». Así lo pasás acercando dos iPhone.</p>
+      <a class="btn" href="<?= $a('vcf') ?>">Guardar mi contacto</a>
+    </div>
+    <p class="nota"><b>¿Dos QR tuyos?</b> El del fondo tiene tu contacto adentro: es solo para el celular. Para imprimir, siempre el de «Tu tarjeta personal»: si cambia un dato, se corrige en la web y lo impreso sigue sirviendo.</p>
+  </section>
+
+  <p class="nota">¿Cambió un dato? Avisale a Gael. · <a href="<?= $a('tarjetas') ?>">Cómo funcionan las tarjetas (PDF)</a></p>
 </main>
+
+<dialog id="pantalla" aria-label="QR en pantalla grande">
+  <div class="dentro">
+    <img alt="">
+    <button class="btn" type="button" data-cerrar>Cerrar</button>
+  </div>
+</dialog>
 <script>
 (function () {
-  if (!navigator.canShare) return;
-  document.querySelectorAll('.compartir').forEach(function (b) {
-    var prueba = new File([''], 'x.png', { type: 'image/png' });
-    if (!navigator.canShare({ files: [prueba] })) return;
-    b.hidden = false;
+  var d = document.getElementById('pantalla'), img = d.querySelector('img');
+  document.querySelectorAll('.ver').forEach(function (b) {
     b.addEventListener('click', function () {
-      fetch('/material?archivo=' + b.dataset.archivo, { credentials: 'same-origin' })
-        .then(function (r) { return r.blob(); })
-        .then(function (blob) { return navigator.share({ files: [new File([blob], b.dataset.nombre, { type: 'image/png' })] }); })
-        .catch(function () {});
+      img.src = '/material?archivo=' + b.dataset.archivo;
+      if (d.showModal) d.showModal(); else location.href = img.src;
     });
+  });
+  d.querySelector('[data-cerrar]').addEventListener('click', function () { d.close(); });
+  d.addEventListener('click', function (ev) { if (ev.target === d || ev.target.classList.contains('dentro')) d.close(); });
+
+  // «Enviar» comparte la imagen con el menú del celular (WhatsApp incluido), si el navegador puede.
+  if (!navigator.canShare || !navigator.canShare({ files: [new File([''], 'x.png', { type: 'image/png' })] })) return;
+  // La imagen se baja antes: Safari solo deja compartir en el mismo toque, sin esperar una descarga.
+  document.querySelectorAll('.compartir').forEach(function (b) {
+    var archivo = null;
+    fetch('/material?archivo=' + b.dataset.archivo, { credentials: 'same-origin' })
+      .then(function (r) { return r.blob(); })
+      .then(function (blob) { archivo = new File([blob], b.dataset.nombre, { type: 'image/png' }); b.hidden = false; })
+      .catch(function () {});
+    b.addEventListener('click', function () { if (archivo) navigator.share({ files: [archivo] }).catch(function () {}); });
   });
 })();
 </script>
