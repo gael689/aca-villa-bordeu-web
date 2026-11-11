@@ -22,6 +22,7 @@ $ARCHIVOS = [
     'rodrigo'  => ['rodrigo.png', 'QR Tarjeta de Rodrigo.png', 'image/png'],
     'fondo'    => ['fondo.png', 'Fondo de pantalla con tu QR.png', 'image/png'],
     'vcf'      => ['rodrigo-gomez.vcf', 'Rodrigo Gomez.vcf', 'text/vcard; charset=utf-8'],
+    'tarjetas' => ['tarjetas-digitales.pdf', 'ACA Villa Bordeu - Tarjetas digitales.pdf', 'application/pdf'],
 ];
 
 function e($s) { return htmlspecialchars($s, ENT_QUOTES, 'UTF-8'); }
@@ -71,7 +72,7 @@ if (isset($_GET['archivo']) || isset($_GET['mini'])) {
     if (!is_file($ruta)) { http_response_code(404); exit; }
     header('Content-Type: ' . (isset($_GET['mini']) ? 'image/webp' : $tipo));
     header('Content-Length: ' . filesize($ruta));
-    if (!isset($_GET['mini'])) header("Content-Disposition: inline; filename*=UTF-8''" . rawurlencode($nombre));
+    if (!isset($_GET['mini'])) header('Content-Disposition: ' . (isset($_GET['descargar']) ? 'attachment' : 'inline') . "; filename*=UTF-8''" . rawurlencode($nombre));
     readfile($ruta);
     exit;
 }
@@ -96,8 +97,7 @@ $m = function ($clave) { return '/material?mini=' . $clave; };
   body { font: 16px/1.5 Barlow, system-ui, sans-serif; color: var(--tinta); background: var(--papel); -webkit-text-size-adjust: 100%; }
   a { color: inherit; }
   .marca { display: flex; align-items: center; gap: 12px; }
-  .chapa { background: #fff; border-radius: 9px; padding: 6px 9px; display: grid; }
-  .chapa svg { height: 24px; width: auto; color: var(--rojo); display: block; }
+  .marca svg { height: 44px; width: auto; color: var(--rojo); display: block; }
   .marca b { font: 700 14px/.95 "Barlow Condensed", sans-serif; letter-spacing: .12em; text-transform: uppercase; border-left: 1.5px solid rgb(20 21 22 / .35); padding-left: 12px; }
   h1, h2 { font-family: "Barlow Condensed", sans-serif; text-transform: uppercase; line-height: .95; }
   h1 { font-size: clamp(40px, 11vw, 64px); margin-top: 22px; }
@@ -138,6 +138,13 @@ $m = function ($clave) { return '/material?mini=' . $clave; };
   .pin input { width: 100%; margin-top: 18px; font: 700 32px/1 "Barlow Condensed", sans-serif; letter-spacing: .4em; text-align: center; padding: 14px; border: 2px solid var(--tinta); border-radius: 14px; background: #fff; color: var(--tinta); }
   .pin .btn { width: 100%; margin-top: 12px; }
   .error { margin-top: 12px; font-weight: 600; color: #9b0d1a; }
+  .acciones { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .acciones .btn { margin-top: 0; }
+  .compartir[hidden] { display: none; }
+  .enlaces { display: grid; gap: 10px; margin-top: 14px; }
+  .enlaces a { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 16px; background: #fff; border: 1px solid var(--linea); border-radius: 14px; text-decoration: none; }
+  .enlaces a span { color: var(--gris); font-size: 14px; }
+  .ideal { background: var(--amarillo); border-radius: 16px; padding: 18px; margin-bottom: 14px; font-size: 17px; }
   .salir { font-size: 14px; color: var(--gris); }
 </style>
 </head>
@@ -145,7 +152,7 @@ $m = function ($clave) { return '/material?mini=' . $clave; };
 <?php if (!$entro): ?>
 <div class="pin">
   <form method="post" action="/material">
-    <div class="marca"><span class="chapa"><?= $LOGO ?></span><b>Villa<br>Bordeu</b></div>
+    <div class="marca"><?= $LOGO ?><b>Villa<br>Bordeu</b></div>
     <h1>Material<br>para imprimir</h1>
     <p>QR, tarjetas y reseñas. Ingresá el PIN que te pasó Gael.</p>
     <input name="pin" type="password" inputmode="numeric" autocomplete="one-time-code" maxlength="8" aria-label="PIN" required autofocus>
@@ -156,7 +163,7 @@ $m = function ($clave) { return '/material?mini=' . $clave; };
 <?php else: ?>
 <header>
   <div class="ancho">
-    <div class="marca"><span class="chapa"><?= $LOGO ?></span><b>Villa<br>Bordeu</b></div>
+    <div class="marca"><?= $LOGO ?><b>Villa<br>Bordeu</b></div>
     <p class="rot">QR y tarjetas</p>
     <h1>Qué imprimir<br>y para qué</h1>
     <p class="bajada">Todo en un lugar. Esto reemplaza lo que te mandé suelto por WhatsApp.</p>
@@ -192,24 +199,39 @@ $m = function ($clave) { return '/material?mini=' . $clave; };
         <h3><?= e($h[2]) ?></h3>
         <p><b>Al escanearlo:</b> <?= e($h[3]) ?></p>
         <p><b>Dónde va:</b> <?= e($h[4]) ?></p>
-        <a class="btn claro chico" href="<?= $a($h[0]) ?>">Imagen para WhatsApp</a>
+        <div class="acciones">
+          <a class="btn chico" href="<?= $a($h[0]) ?>&amp;descargar=1" download="<?= e($ARCHIVOS[$h[0]][1]) ?>">Descargar imagen PNG</a>
+          <button class="btn claro chico compartir" type="button" data-archivo="<?= $h[0] ?>" data-nombre="<?= e($ARCHIVOS[$h[0]][1]) ?>" hidden>Enviar por WhatsApp</button>
+        </div>
       </div>
     </div>
     <?php endforeach; ?>
   </section>
 
   <section>
-    <h2>¿Por qué tenés dos QR?</h2>
+    <h2>Tus tarjetas digitales</h2>
+    <p>Son páginas de la web. Podés mandar el link por WhatsApp o abrirlas para mostrarlas.</p>
+    <div class="enlaces">
+      <a href="/tarjeta-completa" target="_blank" rel="noopener"><b>Tarjeta extensa del ACA</b><span>Habitaciones, Resto, YPF, fotos →</span></a>
+      <a href="/tarjeta" target="_blank" rel="noopener"><b>Tarjeta corta del ACA</b><span>Teléfonos y contacto →</span></a>
+      <a href="/rodrigo" target="_blank" rel="noopener"><b>Tu tarjeta personal</b><span>Rodrigo H. Gomez →</span></a>
+      <a href="<?= $a('tarjetas') ?>"><b>Cómo funcionan las tarjetas (PDF)</b><span>Explicación completa →</span></a>
+    </div>
+  </section>
+
+  <section>
+    <h2>¿Por qué hay dos QR tuyos?</h2>
+    <p class="ideal"><b>Lo ideal:</b> todo lo que se imprime lleva el QR con link (hoja 4). El otro es solo para el fondo de pantalla de tu celular.</p>
     <div class="dos">
       <div class="caja">
-        <h3>El impreso: lleva a un link</h3>
-        <p>Abre tu tarjeta en la web. Si cambia un dato, lo corrijo en la web y el papel sigue sirviendo. Necesita internet.</p>
-        <p><b>Es el de la hoja 4.</b></p>
+        <h3>QR con link: el que se imprime</h3>
+        <p>Abre tu tarjeta digital en la web. Si mañana cambia un teléfono, lo corrijo en la web y lo impreso sigue sirviendo.</p>
+        <p>Necesita internet en el celular del que escanea.</p>
       </div>
       <div class="caja">
-        <h3>El del celular: lleva tu contacto adentro</h3>
-        <p>Se agenda directo, sin internet. Va de fondo de pantalla: mostrás el celular bloqueado y el otro lo escanea.</p>
-        <p><b>No se imprime:</b> si cambia un dato, hay que hacer otro.</p>
+        <h3>QR con tu contacto adentro: el del celular</h3>
+        <p>Guarda tu contacto directo, sin internet. Sirve cara a cara: mostrás tu celular bloqueado y el otro escanea.</p>
+        <p>No se imprime: si cambia un dato, hay que hacer otro.</p>
       </div>
     </div>
   </section>
@@ -240,6 +262,22 @@ $m = function ($clave) { return '/material?mini=' . $clave; };
 
   <p class="nota">¿Cambió un teléfono o un dato? Avisame y lo corrijo en la web: los QR impresos siguen sirviendo. · <a class="salir" href="/material?salir=1">Salir</a></p>
 </main>
+<script>
+(function () {
+  if (!navigator.canShare) return;
+  document.querySelectorAll('.compartir').forEach(function (b) {
+    var prueba = new File([''], 'x.png', { type: 'image/png' });
+    if (!navigator.canShare({ files: [prueba] })) return;
+    b.hidden = false;
+    b.addEventListener('click', function () {
+      fetch('/material?archivo=' + b.dataset.archivo, { credentials: 'same-origin' })
+        .then(function (r) { return r.blob(); })
+        .then(function (blob) { return navigator.share({ files: [new File([blob], b.dataset.nombre, { type: 'image/png' })] }); })
+        .catch(function () {});
+    });
+  });
+})();
+</script>
 <?php endif; ?>
 </body>
 </html>

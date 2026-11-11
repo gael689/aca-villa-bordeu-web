@@ -112,6 +112,7 @@ copyFileSync(join(RAIZ, "hosting", "api", "consulta.php"), join(OUT, "api", "con
       "rodrigo.png": `${QR}/5 - Tarjeta de Rodrigo.png`,
       "fondo.png": `${CEL}/Fondo de pantalla con tu QR.png`,
       "rodrigo-gomez.vcf": `${CEL}/Rodrigo Gomez - contacto.vcf`,
+      "tarjetas-digitales.pdf": "Tarjetas digitales (explicación)/ACA Villa Bordeu - Tarjetas digitales.pdf",
     };
     for (const [destino, fuente] of Object.entries(ARCHIVOS)) {
       copyFileSync(join(MAT, fuente), join(DEST, destino));
